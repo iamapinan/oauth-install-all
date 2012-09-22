@@ -83,11 +83,6 @@ cat docs/registration.json \
 
 php docs/registerClients.php docs/myregistration.json
 
-# add some more clients
-echo '[{"id":"debug_client","name":"OAuth Debug Client","description":"Debug Client","secret":"s3cr3t","redirect_uri":"http:\/\/localhost\/oauth\/debug\/index.php","type":"web_application","icon":null,"allowed_scope":"read","contact_email":null},{"id":"demo","name":"OAuth Client Library Demo","description":"Simple Client Library Demo App","secret":"foo","redirect_uri":"http:\/\/localhost\/oauth\/client\/index.php","type":"web_application","icon":null,"allowed_scope":"read","contact_email":null}]' > docs/additional.json
-
-php docs/registerClients.php docs/additional.json
-
 # AS config
 cat config/oauth.ini.defaults \
     | sed "s|authenticationMechanism = \"DummyResourceOwner\"|;authenticationMechanism = \"DummyResourceOwner\"|g" \
@@ -140,11 +135,29 @@ git clone https://github.com/fkooman/php-oauth-demo-client.git .
 # use libs from php-oauth
 ln -s ${INSTALL_DIR}/as/lib lib
 
-# Client config
 cat config.json \
     | sed "s|http://localhost/php-oauth|http://localhost/oauth/as|g" \
     | sed "s|php-oauth-code-client|debug_client|g" > tmp_config.json
 mv tmp_config.json config.json
+
+# add some more clients
+
+cat > client.json << END
+[
+    {
+        "allowed_scope": "read grades", 
+        "contact_email": null, 
+        "description": "Debug Client", 
+        "icon": null, 
+        "id": "debug_client", 
+        "name": "OAuth Debug Client", 
+        "redirect_uri": "http://localhost/oauth/debug/index.php", 
+        "secret": "s3cr3t", 
+        "type": "web_application"
+    }
+]
+END
+php ${INSTALL_DIR}/as/docs/registerClients.php client.json
 )
 
 ####################
@@ -156,7 +169,6 @@ cd ${INSTALL_DIR}/client
 git clone https://github.com/fkooman/php-oauth-client.git .
 sh docs/configure.sh
 
-# Client config
 cat config/client.ini \
     | sed "s|http://localhost/php-oauth/|http://localhost/oauth/as/|g" \
     | sed "s|http://localhost/php-oauth-client/index.php|http://localhost/oauth/client/index.php|g" > config/tmp_client.ini
@@ -165,6 +177,42 @@ mv config/tmp_client.ini config/client.ini
 cat index.php \
     | sed "s|http://localhost/php-oauth|http://localhost/oauth/as|g" > tmp_index.php
 mv tmp_index.php index.php
+
+cat > client.json << END
+[
+    {
+        "allowed_scope": "read", 
+        "contact_email": null, 
+        "description": "Simple Client Library Demo App", 
+        "icon": null, 
+        "id": "demo", 
+        "name": "OAuth Client Library Demo", 
+        "redirect_uri": "http://localhost/oauth/client/index.php", 
+        "secret": "foo", 
+        "type": "web_application"
+    }
+]
+END
+php ${INSTALL_DIR}/as/docs/registerClients.php client.json
+)
+
+#######################
+# php-oauth-grades-rs #
+#######################
+(
+mkdir -p ${INSTALL_DIR}/grades
+cd ${INSTALL_DIR}/grades
+git clone https://github.com/fkooman/php-oauth-grades-rs.git .
+sh docs/configure.sh
+
+cat config/rs.ini \
+    | sed "s|/var/www/html/php-oauth|${INSTALL_DIR}/as|g" > config/tmp_rs.ini
+mv config/tmp_rs.ini config/rs.ini
+
+# Apache config
+cat docs/apache.conf \
+    | sed "s|/APPNAME|/oauth/grades|g" \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/grades|g" > ${INSTALL_DIR}/apache/oauth_grades.conf
 )
 
 # Done

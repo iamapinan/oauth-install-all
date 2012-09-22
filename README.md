@@ -60,7 +60,7 @@ them and run the script again.
 On a minimal Debian (base) install you need to install the following software, 
 e.g. using `apt-get`:
 
-    $ su -c "apt-get install git unzip php5-cli php5 php5-sqlite curl php5-curl"
+    $ su -c "apt-get install git unzip php5-cli php5 php5-sqlite curl php5-curl sqlite3"
 
 Now you have to add the Apache configuration files to the correct location. 
 They are generated in the `INSTALL_DIR/apache` directory and can be copied to
