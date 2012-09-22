@@ -1,7 +1,14 @@
 #!/bin/sh
 
-# make sure this directory exists and is owned by the user running the script
+# Make sure this directory exists and is owned by the user running the script
+
+# Fedora, CentOS, RHEL
 #INSTALL_DIR="/var/www/html/oauth"
+
+# Debian, Ubuntu
+#INSTALL_DIR="/var/www/oauth"
+
+# Mac OS X
 INSTALL_DIR="/Library/WebServer/Documents/oauth"
 
 SIMPLESAMLPHP_VERSION=1.9.2
@@ -16,17 +23,11 @@ SIMPLESAMLPHP_VERSION=1.9.2
 # * html-manage-applications (management interface for the OAuth AS for       #
 #   administrators)                                                           #
 # * html-manage-authorization (manage OAuth client consent, for end users)    #
-# * php-summerschool (sample OAuth resource server)                           #
+# * php-oauth-grades-rs (sample OAuth resource server)                        #
 # * simpleSAMLphp (both as a SAML identity and service provider)              #
 # * php-oauth-demo-client (a client to debug OAuth servers)                   #
 # * php-oauth-client (a client library)                                       #
 #                                                                             #
-# The following dependencies are required:                                    #
-#                                                                             #
-# * php (command line version)                                                #
-# * git                                                                       #
-# * ...                                                                       #
-# * ...                                                                       #
 ###############################################################################
 
 LAUNCH_DIR=`pwd`
