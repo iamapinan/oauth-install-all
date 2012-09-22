@@ -1,0 +1,192 @@
+diff -urN simplesamlphp-1.9.2.orig/cert/idp.crt simplesamlphp-1.9.2/cert/idp.crt
+--- simplesamlphp-1.9.2.orig/cert/idp.crt	1970-01-01 01:00:00.000000000 +0100
++++ simplesamlphp-1.9.2/cert/idp.crt	2012-09-22 13:42:06.000000000 +0200
+@@ -0,0 +1,20 @@
++-----BEGIN CERTIFICATE-----
++MIIDSTCCAjGgAwIBAgIJAPNtvr8TYH5TMA0GCSqGSIb3DQEBBQUAMCExHzAdBgNV
++BAMTFkRlbW8gSWRlbnRpdHkgUHJvdmlkZXIwHhcNMTIwOTIyMTE0MjA2WhcNMjIw
++OTIyMTE0MjA2WjAhMR8wHQYDVQQDExZEZW1vIElkZW50aXR5IFByb3ZpZGVyMIIB
++IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApg/S3czru5S/J2q8jf0jiEeH
++0V4nuIrD0x5G/9oS4XnnpyfCMarh/WrjjlKvNyW+SmGxoksngGYf1NwPM4Twzz2b
++NDI83aeZrGmYZ9EtlMT/ohoBoCqQN4aY66xOcRjk17fMgHx+DjsT2XcvWsjYEsF5
++sl0K1PexV7gvvVoskHMU4lgx39rHzxL+y+9qHajhN22uUgS8z4ehHqKZyr/PqxYl
++me2BGXLudUvvvlM+Mb2XCU7YRPuSKMqCM4mSRFNnOghxFaU/bzStSVLdmYkMTCQj
++/Q3LxH1NvKzqSIl4ifPXOnU/A7qlgKZXil/yFPHWF09QimsrU0yTwhfuV4sBwwID
++AQABo4GDMIGAMB0GA1UdDgQWBBTSiWkUUNyNcuXcjeMleFr1liDQGjBRBgNVHSME
++SjBIgBTSiWkUUNyNcuXcjeMleFr1liDQGqElpCMwITEfMB0GA1UEAxMWRGVtbyBJ
++ZGVudGl0eSBQcm92aWRlcoIJAPNtvr8TYH5TMAwGA1UdEwQFMAMBAf8wDQYJKoZI
++hvcNAQEFBQADggEBAIkY+rS9jwkPIm97CNC/1H22vr+6P1ckawAgkPIqG8mQArom
++fcpa9JhApVHOkKKEtx1QsyUyG6ApeNpop4i4ywHVAfu4ZW1CremLe10loItq/yN/
++s4K2XzbHLEcJK5j+q568VkaNatD1oZUznNX040XkQ63nzFEcmFK8IvkJKf1qbylS
++ivEV7DEdeB2cWScoYq9sD+tKoybnzWOsvAn9OAoPev4QdhjMHN/8jOL9IHqLKtQr
++U56XuXKBS5NA42LTxBfSmHaXtYVbmhpf9Mq5fgoLWOUPHC20Hllw7Hp01dB0D/Xi
++BRouHo5ECMstGD22qs9tvSdMTaEKohS7ggyagZ0=
++-----END CERTIFICATE-----
+diff -urN simplesamlphp-1.9.2.orig/cert/idp.pem simplesamlphp-1.9.2/cert/idp.pem
+--- simplesamlphp-1.9.2.orig/cert/idp.pem	1970-01-01 01:00:00.000000000 +0100
++++ simplesamlphp-1.9.2/cert/idp.pem	2012-09-22 13:42:06.000000000 +0200
+@@ -0,0 +1,27 @@
++-----BEGIN RSA PRIVATE KEY-----
++MIIEowIBAAKCAQEApg/S3czru5S/J2q8jf0jiEeH0V4nuIrD0x5G/9oS4XnnpyfC
++Marh/WrjjlKvNyW+SmGxoksngGYf1NwPM4Twzz2bNDI83aeZrGmYZ9EtlMT/ohoB
++oCqQN4aY66xOcRjk17fMgHx+DjsT2XcvWsjYEsF5sl0K1PexV7gvvVoskHMU4lgx
++39rHzxL+y+9qHajhN22uUgS8z4ehHqKZyr/PqxYlme2BGXLudUvvvlM+Mb2XCU7Y
++RPuSKMqCM4mSRFNnOghxFaU/bzStSVLdmYkMTCQj/Q3LxH1NvKzqSIl4ifPXOnU/
++A7qlgKZXil/yFPHWF09QimsrU0yTwhfuV4sBwwIDAQABAoIBAFHvXMuzYFydd/Oq
++5n3oeK+1G35iRpb3YMe6GK4Em2xFCdef9mErP3YaV0zR30IGjW2F5m99RXBE80/D
++hHyXC3o1m26VmxKCr4AyWdBflW3iBX+l9UdhuOassqcVzV5gOgl11qFOy6OZ4qFZ
++/TN+BZ67d6BZ6A5MaGQvrN5wr6xVUG4K2VF8z4vUwoJsmSxoJVZUOuNLUTbc94lD
++kPIiomUa/oJsbqjTjmObqSiVFXhCCrsBQtMLanN8eGABEIVQVaGtl9UDALT/v8nn
++6ce25cE8+dTfQ7dPmtO5Yd6d2gTpKk9EM4v+RaCoVpTx7uG5uZdNn8frKpbDt1ca
++LRioPgECgYEA0IlNLltqeMJl4pojPLyam0C1fF/UUN4c/n9zNt9feOvn9lhE1fXp
++jbKLEj/HPZEDUwa+33+CglzGl2j2t6hgkD1wQrDnGdlUdA4FYrs6u3ITujAZ7vtN
++o7k7sCWs+awEBby8roX59ggLxYkr11gYl2YJYhSKEkQX08G6/rPiRLMCgYEAy9ut
++WKsmtJIGjWFuusxVs4ubjty7mKPorz1O2K1oB6S6IFRyMR0vgwgWxeZuH67a7EBI
++SzMObOh2FF3xWHf3sXn44bzRvEJlkbKQlfqMRwioM/OD0XXPoaB6z0pCBDqB3/3L
++y8Vu+HEFCt6OIvE4yocpX+myFV7lFvAjJC9VdrECgYBqq0DajJJK0Q1yuut5XvQq
++pA/xXcdp0iO8no7dq6bXYLxXi1EyrMZZ39E5dXxB5tJvfszV4BBvBGvk+SDyUuOK
++BJNO2dRsqXmEn8NrfGAPj8u9emtZjhxpug9pC+yODcpE8QUGtKtmiTkUQxU04vA5
++SU1VaTIzI7eYbslrDbKY9wKBgBp6+aR37vorscAxtNF883D0JIvFLnUgbXw96X0J
++4WaExkymy4KHuQE7TsH8MbfZ3cQsgXeLNUd+VsBEh7InOzyJjIO+JDxhH5JycIea
++2RftDvRYoHnX5NWo4+sDSVoFQ5OWAyAAEG8jNzV3PV1amjbsobo8wA44mmeFX/s2
++TtKxAoGBAJPXgfDiJPM/g0a7EVWK+d0Rxlw3sFox+Obvk6xR3Pbk8Fb9Qi3oTPuK
++ALZTJUbmvf3pxvfuN+o/4oIr2b0+ytnP/nB3I9KV35d0AmERcLg9TCjdsKH0Ne7I
++sJuhWSpuTB8a95POIXUFUoGLnqBBPHAZW/PVrx/5n0ZfZJTGgBRT
++-----END RSA PRIVATE KEY-----
+diff -urN simplesamlphp-1.9.2.orig/config/authsources.php simplesamlphp-1.9.2/config/authsources.php
+--- simplesamlphp-1.9.2.orig/config/authsources.php	2012-08-29 11:17:41.000000000 +0200
++++ simplesamlphp-1.9.2/config/authsources.php	2012-09-22 14:00:47.000000000 +0200
+@@ -22,7 +22,7 @@
+ 
+ 		// The entity ID of the IdP this should SP should contact.
+ 		// Can be NULL/unset, in which case the user will be shown a list of available IdPs.
+-		'idp' => NULL,
++		'idp' => 'http://localhost/oauth/ssp/saml2/idp/metadata.php',
+ 
+ 		// The URL to the discovery service.
+ 		// Can be NULL/unset, in which case a builtin discovery service will be used.
+@@ -49,6 +49,26 @@
+ 	),
+ 	*/
+ 
++        'my-userpass' => array(
++		'exampleauth:UserPass',
++                'admin:adm1n' => array(
++                        'uid' => array('admin'),
++			// entitlement to manage OAuth clients
++                        'eduPersonEntitlement' => array('urn:vnd:oauth2:applications'),
++                        'eduPersonAffiliation' => array('member', 'employee'),
++                ),
++                'student:stud3nt' => array(
++                        'uid' => array('student'),
++                        'eduPersonAffiliation' => array('member', 'student'),
++                ),
++                'teacher:teach3r' => array(
++                        'uid' => array('teacher'),
++			// entitlement to view grades of all students
++                        'eduPersonEntitlement' => array('urn:vnd:grades:administration'),
++                        'eduPersonAffiliation' => array('member', 'employee'),
++                ),
++	),
++
+ 	/*
+ 	'example-userpass' => array(
+ 		'exampleauth:UserPass',
+diff -urN simplesamlphp-1.9.2.orig/config/config.php simplesamlphp-1.9.2/config/config.php
+--- simplesamlphp-1.9.2.orig/config/config.php	2012-08-29 11:17:41.000000000 +0200
++++ simplesamlphp-1.9.2/config/config.php	2012-09-22 13:45:53.000000000 +0200
+@@ -22,7 +22,7 @@
+ 	 * external url, no matter where you come from (direct access or via the
+ 	 * reverse proxy).
+ 	 */
+-	'baseurlpath'           => 'simplesaml/',
++	'baseurlpath'           => 'oauth/ssp/',
+ 	'certdir'               => 'cert/',
+ 	'loggingdir'            => 'log/',
+ 	'datadir'               => 'data/',
+@@ -69,7 +69,7 @@
+ 	 * metadata listing and diagnostics pages.
+ 	 * You can also put a hash here; run "bin/pwgen.php" to generate one.
+ 	 */
+-	'auth.adminpassword'		=> '123',
++	'auth.adminpassword'		=> 'sU8kqhii',
+ 	'admin.protectindexpage'	=> false,
+ 	'admin.protectmetadata'		=> false,
+ 
+@@ -81,7 +81,7 @@
+ 	 * A possible way to generate a random salt is by running the following command from a unix shell:
+ 	 * tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo
+ 	 */
+-	'secretsalt' => 'defaultsecretsalt',
++	'secretsalt' => 'b2y656d7m6zuz8ufbuf7vn0xbnfoq5pv',
+ 	
+ 	/*
+ 	 * Some information about the technical persons running this installation.
+@@ -98,7 +98,7 @@
+ 	 *
+ 	 * See this page for a list of valid timezones: http://php.net/manual/en/timezones.php
+ 	 */
+-	'timezone' => NULL,
++	'timezone' => "Europe/Amsterdam",
+ 
+ 	/*
+ 	 * Logging.
+@@ -171,7 +171,7 @@
+ 	 * one of the functionalities below, but in some cases you could run multiple functionalities.
+ 	 * In example when you are setting up a federation bridge.
+ 	 */
+-	'enable.saml20-idp'		=> false,
++	'enable.saml20-idp'		=> true,
+ 	'enable.shib13-idp'		=> false,
+ 	'enable.adfs-idp'		=> false,
+ 	'enable.wsfed-sp'		=> false,
+diff -urN simplesamlphp-1.9.2.orig/metadata/saml20-idp-hosted.php simplesamlphp-1.9.2/metadata/saml20-idp-hosted.php
+--- simplesamlphp-1.9.2.orig/metadata/saml20-idp-hosted.php	2012-08-29 11:17:41.000000000 +0200
++++ simplesamlphp-1.9.2/metadata/saml20-idp-hosted.php	2012-09-22 14:48:20.000000000 +0200
+@@ -14,14 +14,14 @@
+ 	'host' => '__DEFAULT__',
+ 
+ 	/* X.509 key and certificate. Relative to the cert directory. */
+-	'privatekey' => 'server.pem',
+-	'certificate' => 'server.crt',
++	'privatekey' => 'idp.pem',
++	'certificate' => 'idp.crt',
+ 
+ 	/*
+ 	 * Authentication source to use. Must be one that is configured in
+ 	 * 'config/authsources.php'.
+ 	 */
+-	'auth' => 'example-userpass',
++	'auth' => 'my-userpass',
+ 
+ 	/* Uncomment the following to use the uri NameFormat on attributes. */
+ 	/*
+diff -urN simplesamlphp-1.9.2.orig/metadata/saml20-idp-remote.php simplesamlphp-1.9.2/metadata/saml20-idp-remote.php
+--- simplesamlphp-1.9.2.orig/metadata/saml20-idp-remote.php	2012-08-29 11:17:41.000000000 +0200
++++ simplesamlphp-1.9.2/metadata/saml20-idp-remote.php	2012-09-22 14:48:20.000000000 +0200
+@@ -89,3 +89,12 @@
+ 	'SingleLogoutService'  => 'https://testidp.wayf.dk/saml2/idp/SingleLogoutService.php',
+ 	'certFingerprint'      => '04b3b08bce004c27458b3e85b125273e67ef062b'
+ );
++
++$metadata['http://localhost/oauth/ssp/saml2/idp/metadata.php'] = array(
++	'name' => array(
++		'en' => 'OAuth Demo IdP',
++	),
++	'SingleSignOnService' => 'http://localhost/oauth/ssp/saml2/idp/SSOService.php',
++	'SingleLogoutService' => 'http://localhost/oauth/ssp/saml2/idp/SingleLogoutService.php',
++	'certFingerprint' => '13BCD143B011B87A6B05533C6991610AB8D5AC87',
++);
+diff -urN simplesamlphp-1.9.2.orig/metadata/saml20-sp-remote.php simplesamlphp-1.9.2/metadata/saml20-sp-remote.php
+--- simplesamlphp-1.9.2.orig/metadata/saml20-sp-remote.php	2012-08-29 11:17:41.000000000 +0200
++++ simplesamlphp-1.9.2/metadata/saml20-sp-remote.php	2012-09-22 14:48:20.000000000 +0200
+@@ -25,3 +25,9 @@
+ 	'simplesaml.nameidattribute' => 'uid',
+ 	'simplesaml.attributes' => FALSE,
+ );
++
++$metadata['http://localhost/oauth/ssp/module.php/saml/sp/metadata.php/default-sp'] = array(
++	'NameIDFormat' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
++	'AssertionConsumerService' => 'http://localhost/oauth/ssp/module.php/saml/sp/saml2-acs.php/default-sp',
++	'SingleLogoutService' => 'http://localhost/oauth/ssp/module.php/saml/sp/saml2-logout.php/default-sp',
++);

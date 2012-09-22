@@ -1,0 +1,15 @@
+diff --git a/js/manage.js b/js/manage.js
+index 3f7a681..118694c 100644
+--- a/js/manage.js
++++ b/js/manage.js
+@@ -2,8 +2,8 @@ $(document).ready(function () {
+     var apiClientId = 'authorization_manager';
+     var apiScope = ["authorizations"];
+ 
+-    var authorizeEndpoint = 'http://localhost/php-oauth/authorize.php';
+-    var apiEndpoint = 'http://localhost/php-oauth/api.php';
++    var authorizeEndpoint = 'http://localhost/oauth/as/authorize.php';
++    var apiEndpoint = 'http://localhost/oauth/as/api.php';
+ 
+     jso_configure({
+         "authorization_manager": {
