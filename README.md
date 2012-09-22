@@ -8,7 +8,7 @@ and service provider. That way, the full stack is controlled and there are
 no outside dependencies anymore which is perfect for development purposes and
 running it for instance in a virtual machine.
 
-You can run this script on but Linux and Mac OS X systems.
+You can run this script on Linux and Mac OS X systems.
 
 # Configuration
 There are some things you can configure in the script. One is the path to 
@@ -60,5 +60,18 @@ them and run the script again.
 On a minimal Debian (base) install you need to install the following software, 
 e.g. using `apt-get`:
 
-    $ su -c "apt-get install git unzip php5-cli php5 php5-sqlite"
+    $ su -c "apt-get install git unzip php5-cli php5 php5-sqlite curl php5-curl"
 
+Now you have to add the Apache configuration files to the correct location. 
+They are generated in the `INSTALL_DIR/apache` directory and can be copied to
+`/etc/apache2/conf.d` on Debian and Ubuntu, to `/etc/apache2/other` on Mac OS X
+and `/etc/httpd/conf.d` on Fedora, CentOS and RHEL. For example:
+
+    $ su -c "/var/www/html/oauth/apache/* /etc/httpd/conf.d/"
+
+Don't forget to restart Apache after modifying these files. On Ubuntu/Debian
+use `su -c "service apache2 restart"`, on Fedora, CentOS and RHEL use 
+`su -c "service httpd restart"` and on Mac OS X use `apachectl restart`. 
+
+That should be about it! After you are done installing, visit 
+`http://localhost/oauth` to see what is available!
