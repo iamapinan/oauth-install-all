@@ -93,6 +93,9 @@ cat config/oauth.ini.defaults \
     | sed "s|enableApi = FALSE|enableApi = TRUE|g" \
     | sed "s|/var/simplesamlphp|${INSTALL_DIR}/ssp|g" > config/oauth.ini
 
+# add entitlement for "grades" demo resource server
+echo "entitlementValueMapping[\"administration\"] = \"urn:vnd:grades:administration\"" >> config/oauth.ini
+
 # Apache config
 cat docs/apache.conf \
     | sed "s|/APPNAME|/oauth/as|g" \
@@ -136,13 +139,39 @@ git clone https://github.com/fkooman/php-oauth-demo-client.git .
 # use libs from php-oauth
 ln -s ${INSTALL_DIR}/as/lib lib
 
-cat config.json \
-    | sed "s|http://localhost/php-oauth|http://localhost/oauth/as|g" \
-    | sed "s|php-oauth-code-client|debug_client|g" > tmp_config.json
-mv tmp_config.json config.json
+cat > config.json << END
+{
+    "local_resource_owner_id": {
+        "api_endpoint": "http://localhost/oauth/as/api.php/resource_owner/id", 
+        "authorize_endpoint": "http://localhost/oauth/as/authorize.php", 
+        "client_id": "debug_client", 
+        "redirect_uri": null, 
+        "scope": "read", 
+        "secret": "s3cr3t", 
+        "token_endpoint": "http://localhost/oauth/as/token.php"
+    },
+    "local_resource_owner_entitlement": {
+        "api_endpoint": "http://localhost/oauth/as/api.php/resource_owner/entitlement", 
+        "authorize_endpoint": "http://localhost/oauth/as/authorize.php", 
+        "client_id": "debug_client", 
+        "redirect_uri": null, 
+        "scope": "read", 
+        "secret": "s3cr3t", 
+        "token_endpoint": "http://localhost/oauth/as/token.php"
+    },
+    "local_get_grades": {
+        "api_endpoint": "http://localhost/oauth/grades/api.php/grades/@me", 
+        "authorize_endpoint": "http://localhost/oauth/as/authorize.php", 
+        "client_id": "debug_client", 
+        "redirect_uri": null, 
+        "scope": "grades", 
+        "secret": "s3cr3t", 
+        "token_endpoint": "http://localhost/oauth/as/token.php"
+    }
+}
+END
 
 # add some more clients
-
 cat > client.json << END
 [
     {
