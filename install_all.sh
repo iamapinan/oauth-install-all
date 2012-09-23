@@ -191,6 +191,20 @@ cat docs/apache.conf \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/grades|g" > ${INSTALL_DIR}/apache/oauth_grades.conf
 )
 
+########################
+# php-oauth-example-rs #
+########################
+(
+mkdir -p ${INSTALL_DIR}/rs
+cd ${INSTALL_DIR}/rs
+git clone https://github.com/fkooman/php-oauth-example-rs.git .
+sh docs/configure.sh
+
+cat config/rs.ini \
+    | sed "s|http://localhost/php-oauth/token.php|${BASE_URL}/as/token.php|g" > config/tmp_rs.ini
+mv config/tmp_rs.ini config/rs.ini
+)
+
 # Done
 echo "**********************************************************************"
 echo "* INSTALLATION DONE                                                  *"

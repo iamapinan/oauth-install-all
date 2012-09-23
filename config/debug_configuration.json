@@ -25,5 +25,14 @@
         "scope": "grades", 
         "secret": "s3cr3t", 
         "token_endpoint": "{BASE_URL}/as/token.php"
+    },
+    "example_rs": {
+        "api_endpoint": "{BASE_URL}/rs/index.php?protected=1", 
+        "authorize_endpoint": "{BASE_URL}/as/authorize.php", 
+        "client_id": "debug_client", 
+        "redirect_uri": null, 
+        "scope": "grades", 
+        "secret": "s3cr3t", 
+        "token_endpoint": "{BASE_URL}/as/token.php"
     }
 }
