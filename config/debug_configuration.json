@@ -1,0 +1,29 @@
+{
+    "local_resource_owner_id": {
+        "api_endpoint": "{BASE_URL}/as/api.php/resource_owner/id", 
+        "authorize_endpoint": "{BASE_URL}/as/authorize.php", 
+        "client_id": "debug_client", 
+        "redirect_uri": null, 
+        "scope": "read", 
+        "secret": "s3cr3t", 
+        "token_endpoint": "{BASE_URL}/as/token.php"
+    },
+    "local_resource_owner_entitlement": {
+        "api_endpoint": "{BASE_URL}/as/api.php/resource_owner/entitlement", 
+        "authorize_endpoint": "{BASE_URL}/as/authorize.php", 
+        "client_id": "debug_client", 
+        "redirect_uri": null, 
+        "scope": "read", 
+        "secret": "s3cr3t", 
+        "token_endpoint": "{BASE_URL}/as/token.php"
+    },
+    "local_get_grades": {
+        "api_endpoint": "{BASE_URL}/grades/api.php/grades/@me", 
+        "authorize_endpoint": "{BASE_URL}/as/authorize.php", 
+        "client_id": "debug_client", 
+        "redirect_uri": null, 
+        "scope": "grades", 
+        "secret": "s3cr3t", 
+        "token_endpoint": "{BASE_URL}/as/token.php"
+    }
+}

@@ -11,6 +11,13 @@
 # Mac OS X
 INSTALL_DIR="/Library/WebServer/Documents/oauth"
 
+# Set the base URL under which this software will be available through a 
+# web server, can be http://localhost/oauth or some PageKite host, or an 
+# actual host!
+
+#BASE_URL="https://fkooman.pagekite.me/oauth"
+BASE_URL="http://localhost/oauth"
+
 SIMPLESAMLPHP_VERSION=1.9.2
 
 ###############################################################################
@@ -58,8 +65,10 @@ tar -xzf downloads/simplesamlphp-${SIMPLESAMLPHP_VERSION}.tar.gz
 mv simplesamlphp-${SIMPLESAMLPHP_VERSION} ssp
 cd ${INSTALL_DIR}/ssp
 
-# apply simpleSAMLphp configuration patch for both IdP and SP
-patch -p1 < ${LAUNCH_DIR}/config/simpleSAMLphp.diff
+# update the BASE_URL in the patch and apply the simpleSAMLphp configuration 
+# patch to configure an IdP and SP
+cat ${LAUNCH_DIR}/config/simpleSAMLphp.diff \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" | patch -p1
 
 # enable the example-userpass module
 touch modules/exampleauth/enable
@@ -78,12 +87,6 @@ git clone https://github.com/fkooman/php-oauth.git .
 sh docs/configure.sh
 php docs/initOAuthDatabase.php
 
-cat docs/registration.json \
-    | sed "s|http://localhost/html-manage-applications|http://localhost/oauth/apps|g" \
-    | sed "s|http://localhost/html-manage-authorizations|http://localhost/oauth/auth|g" > docs/myregistration.json
-
-php docs/registerClients.php docs/myregistration.json
-
 # AS config
 cat config/oauth.ini.defaults \
     | sed "s|authenticationMechanism = \"DummyResourceOwner\"|;authenticationMechanism = \"DummyResourceOwner\"|g" \
@@ -100,6 +103,11 @@ echo "entitlementValueMapping[\"administration\"] = \"urn:vnd:grades:administrat
 cat docs/apache.conf \
     | sed "s|/APPNAME|/oauth/as|g" \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/as|g" > ${INSTALL_DIR}/apache/oauth_as.conf
+
+# Register Clients
+cat ${LAUNCH_DIR}/config/client_registrations.json \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" > docs/myregistration.json
+php docs/registerClients.php docs/myregistration.json
 )
 
 ############################
@@ -112,7 +120,8 @@ git clone https://github.com/fkooman/html-manage-applications.git .
 sh docs/install_dependencies.sh
 
 # configure
-patch -p1 < ${LAUNCH_DIR}/config/html-manage-applications.diff
+cat ${LAUNCH_DIR}/config/html-manage-applications.diff \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" | patch -p1
 )
 
 ##############################
@@ -125,7 +134,8 @@ git clone https://github.com/fkooman/html-manage-authorizations.git .
 sh docs/install_dependencies.sh
 
 # configure
-patch -p1 < ${LAUNCH_DIR}/config/html-manage-authorizations.diff
+cat ${LAUNCH_DIR}/config/html-manage-authorizations.diff \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" | patch -p1
 )
 
 #########################
@@ -139,55 +149,8 @@ git clone https://github.com/fkooman/php-oauth-demo-client.git .
 # use libs from php-oauth
 ln -s ${INSTALL_DIR}/as/lib lib
 
-cat > config.json << END
-{
-    "local_resource_owner_id": {
-        "api_endpoint": "http://localhost/oauth/as/api.php/resource_owner/id", 
-        "authorize_endpoint": "http://localhost/oauth/as/authorize.php", 
-        "client_id": "debug_client", 
-        "redirect_uri": null, 
-        "scope": "read", 
-        "secret": "s3cr3t", 
-        "token_endpoint": "http://localhost/oauth/as/token.php"
-    },
-    "local_resource_owner_entitlement": {
-        "api_endpoint": "http://localhost/oauth/as/api.php/resource_owner/entitlement", 
-        "authorize_endpoint": "http://localhost/oauth/as/authorize.php", 
-        "client_id": "debug_client", 
-        "redirect_uri": null, 
-        "scope": "read", 
-        "secret": "s3cr3t", 
-        "token_endpoint": "http://localhost/oauth/as/token.php"
-    },
-    "local_get_grades": {
-        "api_endpoint": "http://localhost/oauth/grades/api.php/grades/@me", 
-        "authorize_endpoint": "http://localhost/oauth/as/authorize.php", 
-        "client_id": "debug_client", 
-        "redirect_uri": null, 
-        "scope": "grades", 
-        "secret": "s3cr3t", 
-        "token_endpoint": "http://localhost/oauth/as/token.php"
-    }
-}
-END
-
-# add some more clients
-cat > client.json << END
-[
-    {
-        "allowed_scope": "read grades", 
-        "contact_email": null, 
-        "description": "Debug Client", 
-        "icon": null, 
-        "id": "debug_client", 
-        "name": "OAuth Debug Client", 
-        "redirect_uri": "http://localhost/oauth/debug/index.php", 
-        "secret": "s3cr3t", 
-        "type": "web_application"
-    }
-]
-END
-php ${INSTALL_DIR}/as/docs/registerClients.php client.json
+cat ${LAUNCH_DIR}/config/debug_configuration.json \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" > config.json
 )
 
 ####################
@@ -200,30 +163,13 @@ git clone https://github.com/fkooman/php-oauth-client.git .
 sh docs/configure.sh
 
 cat config/client.ini \
-    | sed "s|http://localhost/php-oauth/|http://localhost/oauth/as/|g" \
-    | sed "s|http://localhost/php-oauth-client/index.php|http://localhost/oauth/client/index.php|g" > config/tmp_client.ini
+    | sed "s|http://localhost/php-oauth/|${BASE_URL}/as/|g" \
+    | sed "s|http://localhost/php-oauth-client/index.php|${BASE_URL}/client/index.php|g" > config/tmp_client.ini
 mv config/tmp_client.ini config/client.ini
 
 cat index.php \
-    | sed "s|http://localhost/php-oauth|http://localhost/oauth/as|g" > tmp_index.php
+    | sed "s|http://localhost/php-oauth|${BASE_URL}/as|g" > tmp_index.php
 mv tmp_index.php index.php
-
-cat > client.json << END
-[
-    {
-        "allowed_scope": "read", 
-        "contact_email": null, 
-        "description": "Simple Client Library Demo App", 
-        "icon": null, 
-        "id": "demo", 
-        "name": "OAuth Client Library Demo", 
-        "redirect_uri": "http://localhost/oauth/client/index.php", 
-        "secret": "foo", 
-        "type": "web_application"
-    }
-]
-END
-php ${INSTALL_DIR}/as/docs/registerClients.php client.json
 )
 
 #######################
@@ -248,8 +194,7 @@ cat docs/apache.conf \
 # Done
 echo "**********************************************************************"
 echo "* INSTALLATION DONE                                                  *"
-echo "*                                                                    *" 
-echo "* Please visit http://localhost/oauth to see a list of all installed *"
-echo "* services and what you can do with them.                            *"
-echo "*                                                                    *"
 echo "**********************************************************************"
+echo
+echo Please visit ${BASE_URL}.
+echo

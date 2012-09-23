@@ -12,8 +12,11 @@ You can run this script on Linux and Mac OS X systems.
 
 # Configuration
 There are some things you can configure in the script. One is the path to 
-which to install the software. Some stuff is hardcoded, like the web directory
-under which the software will be available, which is `http://localhost/oauth/`.
+which to install the software. The other is the URL at which the installation
+will be available. The default is `http://localhost/oauth/`. The URL can be
+set by modifying `BASE_URL` to the full URL under which to install the software.
+This can for instance be used together with PageKite to create an installation
+that is fully functional and accessible from the web, even using HTTPS.
 
 The directory for installation can be specified by modifying the `INSTALL_DIR`
 parameter in the `install_all.sh` script. Here are some examples of what this
