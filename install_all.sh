@@ -18,7 +18,7 @@ INSTALL_DIR="/Library/WebServer/Documents/oauth"
 #BASE_URL="https://fkooman.pagekite.me/oauth"
 BASE_URL="http://localhost/oauth"
 
-SIMPLESAMLPHP_VERSION=1.9.2
+SIMPLESAMLPHP_VERSION=1.10.0
 
 ###############################################################################
 # This script installs the following components to have a fully functional    #
