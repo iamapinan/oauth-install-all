@@ -34,23 +34,23 @@ SIMPLESAMLPHP_VERSION=1.10.0
 # * simpleSAMLphp (both as a SAML identity and service provider)              #
 # * php-oauth-demo-client (a client to debug OAuth servers)                   #
 # * php-oauth-client (a client library)                                       #
-#                                                                             #
+# * php-oauth-example-rs (a resource server library and example)              #
 ###############################################################################
+
+if [ ! -d "${INSTALL_DIR}" ]
+then
+    echo "install dir ${INSTALL_DIR} does not exist (yet) make sure you created it and have write permission to it!";
+    exit 1
+fi
 
 LAUNCH_DIR=`pwd`
 
 # some simpleSAMLphp variables
-SSP_ADMIN_PASSWORD=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=12 count=1 2>/dev/null;echo`
+SSP_ADMIN_PASSWORD=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=8 count=1 2>/dev/null;echo`
 SSP_SECRET_SALT=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo`
 
 # remove the existing installation
 rm -rf ${INSTALL_DIR}/*
-
-#if [ ! -f ${INSTALL_DIR} ]
-#then
-#    echo "install dir ${INSTALL_DIR} does not exist";
-#    exit 1
-#fi
 
 mkdir -p ${INSTALL_DIR}/downloads
 mkdir -p ${INSTALL_DIR}/apache
