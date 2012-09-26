@@ -39,6 +39,10 @@ SIMPLESAMLPHP_VERSION=1.10.0
 
 LAUNCH_DIR=`pwd`
 
+# some simpleSAMLphp variables
+SSP_ADMIN_PASSWORD=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=12 count=1 2>/dev/null;echo`
+SSP_SECRET_SALT=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo`
+
 # remove the existing installation
 rm -rf ${INSTALL_DIR}/*
 
@@ -52,7 +56,8 @@ mkdir -p ${INSTALL_DIR}/downloads
 mkdir -p ${INSTALL_DIR}/apache
 
 # the index page
-cp ${LAUNCH_DIR}/res/index.html ${INSTALL_DIR}/index.html
+cat ${LAUNCH_DIR}/res/index.html \
+    | sed "s|{ADMIN_PASSWORD}|${SSP_ADMIN_PASSWORD}|g" > ${INSTALL_DIR}/index.html
 
 #################
 # simpleSAMLphp #
@@ -65,10 +70,19 @@ tar -xzf downloads/simplesamlphp-${SIMPLESAMLPHP_VERSION}.tar.gz
 mv simplesamlphp-${SIMPLESAMLPHP_VERSION} ssp
 cd ${INSTALL_DIR}/ssp
 
+# generate IdP certificate
+openssl req -subj '/O=Snake Oil, CN=Demo Identity Provider/' -newkey rsa:2048 -new -x509 -days 3652 -nodes -out cert/idp.crt -keyout cert/idp.pem
+
+# figure out the fingerprint of the certificate
+CERT_FINGERPRINT=`openssl x509 -inform PEM -in cert/idp.crt -noout -fingerprint | cut -d '=' -f 2 | sed "s|:||g"`
+
 # update the BASE_URL in the patch and apply the simpleSAMLphp configuration 
 # patch to configure an IdP and SP
 cat ${LAUNCH_DIR}/config/simpleSAMLphp.diff \
-    | sed "s|{BASE_URL}|${BASE_URL}|g" | patch -p1
+    | sed "s|{BASE_URL}|${BASE_URL}|g" \
+    | sed "s|{ADMIN_PASSWORD}|${SSP_ADMIN_PASSWORD}|g" \
+    | sed "s|{SECRET_SALT}|${SSP_SECRET_SALT}|g" \
+    | sed "s|{CERT_FINGERPRINT}|${CERT_FINGERPRINT}|g" | patch -p1
 
 # enable the example-userpass module
 touch modules/exampleauth/enable
