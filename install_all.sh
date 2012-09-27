@@ -74,7 +74,7 @@ cd ${INSTALL_DIR}/ssp
 openssl req -subj '/O=Snake Oil, CN=Demo Identity Provider/' -newkey rsa:2048 -new -x509 -days 3652 -nodes -out cert/idp.crt -keyout cert/idp.pem
 
 # figure out the fingerprint of the certificate
-CERT_FINGERPRINT=`openssl x509 -inform PEM -in cert/idp.crt -noout -fingerprint | cut -d '=' -f 2 | sed "s|:||g"`
+CERT_FINGERPRINT=`openssl x509 -inform PEM -in cert/idp.crt -noout -fingerprint | cut -d '=' -f 2 | sed "s|:||g" | tr '[A-F]' '[a-f]'`
 
 # update the BASE_URL in the patch and apply the simpleSAMLphp configuration 
 # patch to configure an IdP and SP
