@@ -4,6 +4,11 @@
 <head>
   <meta charset="utf-8">
   <title>Demo OAuth Service</title>
+  <style>
+    table { border: 1px solid #000; border-collapse: collapse}
+    td, th { padding: 5px; }
+    td, th { border: 1px solid #000; }
+  </style>
 </head>
 <body>
 <h1>Demo OAuth Service</h1>
@@ -12,47 +17,31 @@ This page lists all the available components and services installed and some
 sample user accounts configured.
 </p>
 
-<h2>For Students</h2>
-<p>
-The <tt>student</tt> account has password <tt>stud3nt</tt>.
-</p>
+<h2>Accounts</h2>
 
-<h3>Available Services</h3>
+<p>
+There are 7 accounts you can use:
+</p>
+<table>
+<tr><th>Name</th><th>Account</th><th>Password</th><th>Remarks</th></tr>
+<tr><td>Carlos Catalano</td><td><tt>admin</tt></td><td><tt>adm1n</tt></td><td>This user has <tt>application</tt> entitlement which means OAuth applications can be managed.</td></tr>
+<tr><td>Margie Korn</td><td><tt>teacher</tt></td><td><tt>teach3r</tt></td><td>This user has <tt>administration</tt> entitlement which means that all grades from all students can be viewed.</td></tr>
+<tr>
+<tr><td>Jerry Stroud</td><td><tt>jstroud</tt></td><td><tt>xDIosd9j</tt></td><td>Student</td></tr>
+<tr><td>Myra Wisdom</td><td><tt>mwisdom</tt></td><td><tt>LQ32xvaV</tt></td><td>Student</td></tr>
+<tr><td>Bobby Mcatee</td><td><tt>bmcatee</tt></td><td><tt>ySVk4B9d</tt></td><td>Student</td></tr>
+<tr><td>Janie Matson</td><td><tt>jmatson</tt></td><td><tt>8r5yyIV3</tt></td><td>Student</td></tr>
+<tr><td>Margaret Cram</td><td><tt>mcram</tt></td><td><tt>62xX1Fid</tt></td><td>Student</td></tr>
+</table>
+
+<h2>Available Services</h2>
 <ul>
 <li><a href="auth/index.html">Application Authorizations</a></li>
 <li><a href="client/index.php">Demo Client</a></li>
-</ul>
-
-<h2>For Teachers</h2>
-<p>
-The <tt>teacher</tt> account has password <tt>teach3r</tt>.
-</p>
-
-<h3>Available Services</h3>
-<ul>
-<li><a href="auth/index.html">Application Authorizations</a></li>
-<li><a href="client/index.php">Demo Client</a></li>
-</ul>
-
-<h2>For Administrators</h2>
-<p>
-The <tt>admin</tt> account has password <tt>adm1n</tt>.
-</p>
-
-<h3>Available Services</h3>
-<ul>
 <li><a href="apps/index.html">Application Registration</a> (manage OAuth application registrations)</li>
-<li><a href="auth/index.html">Application Authorizations</a> (manage application consent)</li>
-<li><a href="client/index.php">Demo Client</a></li>
-<li><a href="ssp">simpleSAMLphp</a> (view the simpleSAMLphp admin panel, password: <tt>{ADMIN_PASSWORD}</tt>)</li>
-</ul>
-
-<h2>Debug</h2>
-<p>
-Services for debugging OAuth
-</p>
-<ul>
+<li><a href="ssp">simpleSAMLphp</a> (view the simpleSAMLphp admin panel, simpleSAMLphp admin password: <tt>{ADMIN_PASSWORD}</tt>)</li>
 <li><a href="debug/index.php">OAuth Client to debug servers</a></li>
 </ul>
+
 </body>
 </html>

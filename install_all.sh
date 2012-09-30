@@ -1,22 +1,35 @@
 #!/bin/sh
 
-# Make sure this directory exists and is owned by the user running the script
+if [ -z "$1" ]
+then
 
-# Fedora, CentOS, RHEL
-#INSTALL_DIR="/var/www/html/oauth"
+cat << EOF
+    Please specify the location to install to. 
 
-# Debian, Ubuntu
-#INSTALL_DIR="/var/www/oauth"
+    Examples:
+    
+    Fedora, CentOS, RHEL: /var/www/html/oauth
+    Debian, Ubuntu: /var/www/oauth
+    Mac OS X: /Library/WebServer/Documents/oauth
+EOF
+exit 1
+else
+    INSTALL_DIR=$1
+fi
 
-# Mac OS X
-INSTALL_DIR="/Library/WebServer/Documents/oauth"
+if [ -z "$2" ]
+then
+cat << EOF
+    Please also specify the URL at which this installation will be available.
+    Examples:
 
-# Set the base URL under which this software will be available through a 
-# web server, can be http://localhost/oauth or some PageKite host, or an 
-# actual host!
-
-#BASE_URL="https://fkooman.pagekite.me/oauth"
-BASE_URL="http://localhost/oauth"
+    http://localhost/oauth
+    https://www.example.edu/oauth
+EOF
+exit 1
+else
+    BASE_URL=$2
+fi
 
 SIMPLESAMLPHP_VERSION=1.10.0
 

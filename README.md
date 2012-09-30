@@ -10,25 +10,15 @@ running it for instance in a virtual machine.
 
 You can run this script on Linux and Mac OS X systems.
 
-# Configuration
-There are some things you can configure in the script. One is the path to 
-which to install the software. The other is the URL at which the installation
-will be available. The default is `http://localhost/oauth/`. The URL can be
-set by modifying `BASE_URL` to the full URL under which to install the software.
-This can for instance be used together with PageKite to create an installation
-that is fully functional and accessible from the web, even using HTTPS.
-
-The directory for installation can be specified by modifying the `INSTALL_DIR`
-parameter in the `install_all.sh` script. Here are some examples of what this
-path should be on various operating systems:
+# Installation Directory
+The directory for installation needs to exist before running the script. Here 
+are some examples of what this path should be on various operating systems:
 
 * Linux (Fedora/CentOS/RHEL): `/var/www/html/oauth`
 * Linux (Debian/Ubuntu): `/var/www/oauth`
 * Mac OS X: `/Library/WebServer/Documents/oauth`
 
-The script does not need root permissions, however, as the installation 
-directory as suggested above are inside system paths you do need root permissions
-to create this directory. Assuming your user account name is `fkooman` you can
+Assuming your user account name is `fkooman` you can
 run the following commands to create the directory and change the permissions:
 
 On Fedora, CentOS and RHEL:
@@ -47,15 +37,25 @@ On Mac OS X:
     $ sudo mkdir /Library/WebServer/Documents/oauth
     $ sudo chown fkooman:staff /Library/WebServer/Documents/oauth
 
-Now you can run the script as a regular user. 
+# Web Location
+You also need to know the web location at which the installation will be 
+available. By default this will be `http://localhost/oauth`.
 
-*NOTE*: the script will remove all files under the `INSTALL_DIR` location as
-configured in `install_all.sh`. 
+# Running
+The script does not need root permissions, but the installation directory
+needs to be available and writeable by the current user.
+
+*NOTE*: the script will remove all files under the directory you install 
+to!
 
 So assuming you are in the directory where you downloaded this project to, you
 can simply run it:
 
-    $ sh ./install_all.sh
+    $ sh ./install_all.sh /var/www/html/oauth http://localhost/oauth
+
+The two parameters can be modified to reflect your installation directory
+and URL. The installation URL is optional and will default to 
+`http://localhost/oauth`.
 
 If there are any warnings or errors about missing software you can just install
 them and run the script again.
@@ -65,10 +65,12 @@ e.g. using `apt-get`:
 
     $ su -c "apt-get install git unzip php5-cli php5 php5-sqlite curl php5-curl sqlite3"
 
-Now you have to add the Apache configuration files to the correct location. 
-They are generated in the `INSTALL_DIR/apache` directory and can be copied to
-`/etc/apache2/conf.d` on Debian and Ubuntu, to `/etc/apache2/other` on Mac OS X
-and `/etc/httpd/conf.d` on Fedora, CentOS and RHEL. For example:
+# Apache Configuration
+You have to add the Apache configuration files to the correct location. 
+They are generated in the installation directory under the `apache` directory.
+They can be copied to `/etc/apache2/conf.d` on Debian and Ubuntu, to 
+`/etc/apache2/other` on Mac OS X and `/etc/httpd/conf.d` on Fedora, CentOS and 
+RHEL. For example:
 
     $ su -c "/var/www/html/oauth/apache/* /etc/httpd/conf.d/"
 
@@ -77,4 +79,4 @@ use `su -c "service apache2 restart"`, on Fedora, CentOS and RHEL use
 `su -c "service httpd restart"` and on Mac OS X use `apachectl restart`. 
 
 That should be about it! After you are done installing, visit 
-`http://localhost/oauth` to see what is available!
+`http://localhost/oauth`, or the URL you specified to see what is available!
