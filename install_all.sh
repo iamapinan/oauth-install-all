@@ -123,9 +123,6 @@ cat config/oauth.ini.defaults \
     | sed "s|enableApi = FALSE|enableApi = TRUE|g" \
     | sed "s|/var/simplesamlphp|${INSTALL_DIR}/ssp|g" > config/oauth.ini
 
-# add entitlement for "grades" demo resource server
-echo "entitlementValueMapping[\"administration\"] = \"urn:vnd:grades:administration\"" >> config/oauth.ini
-
 # Apache config
 cat docs/apache.conf \
     | sed "s|/APPNAME|/oauth/as|g" \
@@ -230,6 +227,16 @@ sh docs/configure.sh
 cat config/rs.ini \
     | sed "s|http://localhost/php-oauth/token.php|${BASE_URL}/as/token.php|g" > config/tmp_rs.ini
 mv config/tmp_rs.ini config/rs.ini
+)
+
+###################################
+# SAML attribute list application #
+###################################
+(
+mkdir -p ${INSTALL_DIR}/saml_info
+cd ${INSTALL_DIR}/saml_info
+cat ${LAUNCH_DIR}/res/saml_info.php \
+    | sed "s|{INSTALL_DIR}|${INSTALL_DIR}|g" > ${INSTALL_DIR}/saml_info/index.php
 )
 
 # Done
