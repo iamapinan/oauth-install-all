@@ -24,8 +24,8 @@ There are 7 accounts you can use:
 </p>
 <table>
 <tr><th>Name</th><th>Account</th><th>Password</th><th>Remarks</th></tr>
-<tr><td>Carlos Catalano</td><td><tt>admin</tt></td><td><tt>adm1n</tt></td><td>This user has <tt>application</tt> entitlement which means OAuth applications can be managed.</td></tr>
-<tr><td>Margie Korn</td><td><tt>teacher</tt></td><td><tt>teach3r</tt></td><td>This user has <tt>administration</tt> entitlement which means that all grades from all students can be viewed.</td></tr>
+<tr><td>Carlos Catalano</td><td><strong><tt>admin</tt></strong></td><td><tt>adm1n</tt></td><td>This user has <tt>urn:vnd:oauth2:applications</tt> entitlement which means OAuth applications can be managed.</td></tr>
+<tr><td>Margie Korn</td><td><strong><tt>teacher</tt></strong></td><td><tt>teach3r</tt></td><td>This user has <tt>urn:vnd:grades:administration</tt> entitlement which means that all grades from all students can be viewed.</td></tr>
 <tr>
 <tr><td>Jerry Stroud</td><td><tt>jstroud</tt></td><td><tt>xDIosd9j</tt></td><td>Student</td></tr>
 <tr><td>Myra Wisdom</td><td><tt>mwisdom</tt></td><td><tt>LQ32xvaV</tt></td><td>Student</td></tr>
@@ -35,13 +35,26 @@ There are 7 accounts you can use:
 </table>
 
 <h2>Available Services</h2>
+<p>
+Below is a list of available services.
+</p>
+
+<h3>OAuth Management Services</h3>
 <ul>
-<li><a href="auth/index.html">Application Authorizations</a></li>
-<li><a href="client/index.php">Demo Client</a></li>
-<li><a href="apps/index.html">Application Registration</a> (manage OAuth application registrations)</li>
+<li><a href="auth/index.html">Application Authorizations</a> (revoke application access to this service)</li>
+<li><a href="apps/index.html">Application Management</a> (manage application registrations, requires <tt>urn:vnd:oauth2:applications</tt> entitlement)</li>
+</ul>
+
+<h3>SAML Related</h3>
+<ul>
 <li><a href="ssp">simpleSAMLphp</a> (view the simpleSAMLphp admin panel, simpleSAMLphp admin password: <tt>{ADMIN_PASSWORD}</tt>)</li>
-<li><a href="debug/index.php">OAuth Client to debug servers</a></li>
 <li><a href="saml_info/index.php">SAML attribute information</a></li>
+</ul>
+
+<h3>OAuth Applications</h3>
+<ul>
+<li><a href="client/index.php">Demo Client</a></li>
+<li><a href="debug/index.php">OAuth Client to debug servers</a></li>
 </ul>
 
 </body>
