@@ -162,6 +162,20 @@ cat ${LAUNCH_DIR}/config/html-manage-authorizations.diff \
     | sed "s|{BASE_URL}|${BASE_URL}|g" | patch -p1
 )
 
+####################
+# html-view-grades #
+####################
+(
+mkdir -p ${INSTALL_DIR}/view-grades
+cd ${INSTALL_DIR}/view-grades
+git clone https://github.com/fkooman/html-view-grades.git .
+sh docs/install_dependencies.sh
+
+# configure
+cat ${LAUNCH_DIR}/config/html-view-grades.diff \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" | patch -p1
+)
+
 #########################
 # php-oauth-demo-client #
 #########################

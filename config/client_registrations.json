@@ -42,5 +42,16 @@
         "redirect_uri": "{BASE_URL}/client/index.php", 
         "secret": "foo", 
         "type": "web_application"
+    },
+    {
+        "allowed_scope": "grades", 
+        "contact_email": null, 
+        "description": "This application can be used to view your grades.", 
+        "icon": null, 
+        "id": "html-view-grades", 
+        "name": "View Grades", 
+        "redirect_uri": "{BASE_URL}/view-grades/index.html", 
+        "secret": null, 
+        "type": "user_agent_based_application"
     }
 ]
