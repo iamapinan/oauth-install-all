@@ -6,7 +6,7 @@
         "icon": null, 
         "id": "authorization_manager", 
         "name": "Manage Authorizations", 
-        "redirect_uri": "{BASE_URL}/auth/index.html", 
+        "redirect_uri": "{BASE_URL}/html-manage-authorizations/index.html", 
         "secret": null, 
         "type": "user_agent_based_application"
     }, 
@@ -17,7 +17,7 @@
         "icon": null, 
         "id": "application_manager", 
         "name": "Manage Applications", 
-        "redirect_uri": "{BASE_URL}/apps/index.html", 
+        "redirect_uri": "{BASE_URL}/html-manage-applications/index.html", 
         "secret": null, 
         "type": "user_agent_based_application"
     },
@@ -28,7 +28,7 @@
         "icon": null, 
         "id": "debug_client", 
         "name": "OAuth Debug Client", 
-        "redirect_uri": "{BASE_URL}/debug/index.php", 
+        "redirect_uri": "{BASE_URL}/php-oauth-demo-client/index.php", 
         "secret": "s3cr3t", 
         "type": "web_application"
     },
@@ -39,7 +39,7 @@
         "icon": null, 
         "id": "demo", 
         "name": "OAuth Client Library Demo", 
-        "redirect_uri": "{BASE_URL}/client/index.php", 
+        "redirect_uri": "{BASE_URL}/php-oauth-client/index.php", 
         "secret": "foo", 
         "type": "web_application"
     },
@@ -50,7 +50,7 @@
         "icon": null, 
         "id": "html-view-grades", 
         "name": "View Grades", 
-        "redirect_uri": "{BASE_URL}/view-grades/index.html", 
+        "redirect_uri": "{BASE_URL}/html-view-grades/index.html", 
         "secret": null, 
         "type": "user_agent_based_application"
     }

@@ -8,8 +8,8 @@ index 3f7a681..118694c 100644
  
 -    var authorizeEndpoint = 'http://localhost/php-oauth/authorize.php';
 -    var apiEndpoint = 'http://localhost/php-oauth/api.php';
-+    var authorizeEndpoint = '{BASE_URL}/as/authorize.php';
-+    var apiEndpoint = '{BASE_URL}/as/api.php';
++    var authorizeEndpoint = '{BASE_URL}/php-oauth/authorize.php';
++    var apiEndpoint = '{BASE_URL}/php-oauth/api.php';
  
      jso_configure({
          "authorization_manager": {

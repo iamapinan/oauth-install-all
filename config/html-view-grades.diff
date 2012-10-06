@@ -9,9 +9,9 @@ index 3f4bd67..d5d4f82 100644
 -    var authorizeEndpoint   = 'http://localhost/php-oauth/authorize.php';
 -    var entitlementEndpoint = 'http://localhost/php-oauth/api.php/resource_owner/entitlement';
 -    var apiEndpoint         = 'http://localhost/php-oauth-grades-rs/api.php';
-+    var authorizeEndpoint   = '{BASE_URL}/as/authorize.php';
-+    var entitlementEndpoint = '{BASE_URL}/as/api.php/resource_owner/entitlement';
-+    var apiEndpoint         = '{BASE_URL}/grades/api.php';
++    var authorizeEndpoint   = '{BASE_URL}/php-oauth/authorize.php';
++    var entitlementEndpoint = '{BASE_URL}/php-oauth/api.php/resource_owner/entitlement';
++    var apiEndpoint         = '{BASE_URL}/php-oauth-grades-rs/api.php';
  
      jso_configure({
          "html-view-grades": {

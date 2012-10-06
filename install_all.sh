@@ -108,25 +108,25 @@ echo "Alias /oauth/ssp ${INSTALL_DIR}/ssp/www" > ${INSTALL_DIR}/apache/oauth_ssp
 # php-oauth #
 #############
 (
-mkdir -p ${INSTALL_DIR}/as
-cd ${INSTALL_DIR}/as
-git clone https://github.com/fkooman/php-oauth.git .
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-oauth.git
+cd php-oauth
 sh docs/configure.sh
 php docs/initOAuthDatabase.php
 
-# AS config
+# config
 cat config/oauth.ini.defaults \
     | sed "s|authenticationMechanism = \"DummyResourceOwner\"|;authenticationMechanism = \"DummyResourceOwner\"|g" \
     | sed "s|;authenticationMechanism = \"SspResourceOwner\"|authenticationMechanism = \"SspResourceOwner\"|g" \
     | sed "s|allowResourceOwnerScopeFiltering = FALSE|allowResourceOwnerScopeFiltering = TRUE|g" \
-    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/as|g" \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth|g" \
     | sed "s|enableApi = FALSE|enableApi = TRUE|g" \
     | sed "s|/var/simplesamlphp|${INSTALL_DIR}/ssp|g" > config/oauth.ini
 
 # Apache config
 cat docs/apache.conf \
-    | sed "s|/APPNAME|/oauth/as|g" \
-    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/as|g" > ${INSTALL_DIR}/apache/oauth_as.conf
+    | sed "s|/APPNAME|/oauth/php-oauth|g" \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth|g" > ${INSTALL_DIR}/apache/oauth_php-oauth.conf
 
 # Register Clients
 cat ${LAUNCH_DIR}/config/client_registrations.json \
@@ -138,9 +138,9 @@ php docs/registerClients.php docs/myregistration.json
 # html-manage-applications #
 ############################
 (
-mkdir -p ${INSTALL_DIR}/apps
-cd ${INSTALL_DIR}/apps
-git clone https://github.com/fkooman/html-manage-applications.git .
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/html-manage-applications.git
+cd html-manage-applications
 sh docs/install_dependencies.sh
 
 # configure
@@ -152,9 +152,9 @@ cat ${LAUNCH_DIR}/config/html-manage-applications.diff \
 # html-manage-authorizations #
 ##############################
 (
-mkdir -p ${INSTALL_DIR}/auth
-cd ${INSTALL_DIR}/auth
-git clone https://github.com/fkooman/html-manage-authorizations.git .
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/html-manage-authorizations.git
+cd html-manage-authorizations
 sh docs/install_dependencies.sh
 
 # configure
@@ -166,9 +166,9 @@ cat ${LAUNCH_DIR}/config/html-manage-authorizations.diff \
 # html-view-grades #
 ####################
 (
-mkdir -p ${INSTALL_DIR}/view-grades
-cd ${INSTALL_DIR}/view-grades
-git clone https://github.com/fkooman/html-view-grades.git .
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/html-view-grades.git
+cd html-view-grades
 sh docs/install_dependencies.sh
 
 # configure
@@ -180,12 +180,12 @@ cat ${LAUNCH_DIR}/config/html-view-grades.diff \
 # php-oauth-demo-client #
 #########################
 (
-mkdir -p ${INSTALL_DIR}/debug
-cd ${INSTALL_DIR}/debug
-git clone https://github.com/fkooman/php-oauth-demo-client.git .
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-oauth-demo-client.git
+cd php-oauth-demo-client
 
 # use libs from php-oauth
-ln -s ${INSTALL_DIR}/as/lib lib
+ln -s ${INSTALL_DIR}/php-oauth/lib lib
 
 cat ${LAUNCH_DIR}/config/debug_configuration.json \
     | sed "s|{BASE_URL}|${BASE_URL}|g" > config.json
@@ -195,18 +195,17 @@ cat ${LAUNCH_DIR}/config/debug_configuration.json \
 # php-oauth-client #
 ####################
 (
-mkdir -p ${INSTALL_DIR}/client
-cd ${INSTALL_DIR}/client
-git clone https://github.com/fkooman/php-oauth-client.git .
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-oauth-client.git
+cd php-oauth-client
 sh docs/configure.sh
 
 cat config/client.ini \
-    | sed "s|http://localhost/php-oauth/|${BASE_URL}/as/|g" \
-    | sed "s|http://localhost/php-oauth-client/index.php|${BASE_URL}/client/index.php|g" > config/tmp_client.ini
+    | sed "s|http://localhost/|${BASE_URL}/|g" > config/tmp_client.ini
 mv config/tmp_client.ini config/client.ini
 
 cat index.php \
-    | sed "s|http://localhost/php-oauth|${BASE_URL}/as|g" > tmp_index.php
+    | sed "s|http://localhost/|${BASE_URL}/|g" > tmp_index.php
 mv tmp_index.php index.php
 )
 
@@ -214,32 +213,32 @@ mv tmp_index.php index.php
 # php-oauth-grades-rs #
 #######################
 (
-mkdir -p ${INSTALL_DIR}/grades
-cd ${INSTALL_DIR}/grades
-git clone https://github.com/fkooman/php-oauth-grades-rs.git .
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-oauth-grades-rs.git
+cd php-oauth-grades-rs
 sh docs/configure.sh
 
 cat config/rs.ini \
-    | sed "s|/var/www/html/php-oauth|${INSTALL_DIR}/as|g" > config/tmp_rs.ini
+    | sed "s|/var/www/html/|${INSTALL_DIR}/|g" > config/tmp_rs.ini
 mv config/tmp_rs.ini config/rs.ini
 
 # Apache config
 cat docs/apache.conf \
-    | sed "s|/APPNAME|/oauth/grades|g" \
-    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/grades|g" > ${INSTALL_DIR}/apache/oauth_grades.conf
+    | sed "s|/APPNAME|/oauth/php-oauth-grades-rs|g" \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth-grades-rs|g" > ${INSTALL_DIR}/apache/oauth_php-oauth-grades-rs.conf
 )
 
 ########################
 # php-oauth-example-rs #
 ########################
 (
-mkdir -p ${INSTALL_DIR}/rs
-cd ${INSTALL_DIR}/rs
-git clone https://github.com/fkooman/php-oauth-example-rs.git .
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-oauth-example-rs.git
+cd php-oauth-example-rs
 sh docs/configure.sh
 
 cat config/rs.ini \
-    | sed "s|http://localhost/php-oauth/token.php|${BASE_URL}/as/token.php|g" > config/tmp_rs.ini
+    | sed "s|http://localhost/|${BASE_URL}/|g" > config/tmp_rs.ini
 mv config/tmp_rs.ini config/rs.ini
 )
 

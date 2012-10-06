@@ -1,38 +1,38 @@
 {
     "local_resource_owner_id": {
-        "api_endpoint": "{BASE_URL}/as/api.php/resource_owner/id", 
-        "authorize_endpoint": "{BASE_URL}/as/authorize.php", 
+        "api_endpoint": "{BASE_URL}/php-oauth/api.php/resource_owner/id", 
+        "authorize_endpoint": "{BASE_URL}/php-oauth/authorize.php", 
         "client_id": "debug_client", 
         "redirect_uri": null, 
         "scope": "read", 
         "secret": "s3cr3t", 
-        "token_endpoint": "{BASE_URL}/as/token.php"
+        "token_endpoint": "{BASE_URL}/php-oauth/token.php"
     },
     "local_resource_owner_entitlement": {
-        "api_endpoint": "{BASE_URL}/as/api.php/resource_owner/entitlement", 
-        "authorize_endpoint": "{BASE_URL}/as/authorize.php", 
+        "api_endpoint": "{BASE_URL}/php-oauth/api.php/resource_owner/entitlement", 
+        "authorize_endpoint": "{BASE_URL}/php-oauth/authorize.php", 
         "client_id": "debug_client", 
         "redirect_uri": null, 
         "scope": "read", 
         "secret": "s3cr3t", 
-        "token_endpoint": "{BASE_URL}/as/token.php"
+        "token_endpoint": "{BASE_URL}/php-oauth/token.php"
     },
     "local_get_grades": {
-        "api_endpoint": "{BASE_URL}/grades/api.php/grades/@me", 
-        "authorize_endpoint": "{BASE_URL}/as/authorize.php", 
+        "api_endpoint": "{BASE_URL}/php-oauth-grades-rs/api.php/grades/@me", 
+        "authorize_endpoint": "{BASE_URL}/php-oauth/authorize.php", 
         "client_id": "debug_client", 
         "redirect_uri": null, 
         "scope": "grades", 
         "secret": "s3cr3t", 
-        "token_endpoint": "{BASE_URL}/as/token.php"
+        "token_endpoint": "{BASE_URL}/php-oauth/token.php"
     },
     "example_rs": {
-        "api_endpoint": "{BASE_URL}/rs/index.php?protected=1", 
-        "authorize_endpoint": "{BASE_URL}/as/authorize.php", 
+        "api_endpoint": "{BASE_URL}/php-oauth-example-rs/index.php?protected=1", 
+        "authorize_endpoint": "{BASE_URL}/php-oauth/authorize.php", 
         "client_id": "debug_client", 
         "redirect_uri": null, 
         "scope": "grades", 
         "secret": "s3cr3t", 
-        "token_endpoint": "{BASE_URL}/as/token.php"
+        "token_endpoint": "{BASE_URL}/php-oauth/token.php"
     }
 }
