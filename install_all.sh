@@ -85,6 +85,7 @@ mkdir -p ${INSTALL_DIR}/apache
 
 # the index page
 cat ${LAUNCH_DIR}/res/index.html \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" \
     | sed "s|{ADMIN_PASSWORD}|${SSP_ADMIN_PASSWORD}|g" > ${INSTALL_DIR}/index.html
 
 #################

@@ -17,6 +17,17 @@ This page lists all the available components and services installed and some
 sample user accounts configured.
 </p>
 
+<h2>Service Information</h2>
+
+<table>
+<tr><th>URI</th><th>Description</th></tr>
+<tr><td><tt>{BASE_URL}/php-oauth/authorize.php<tt></td><td>Authorize Endpoint</td></tr>
+<tr><td><tt>{BASE_URL}/php-oauth/token.php<tt></td><td>Token Endpoint</td></tr>
+<tr><td><tt>{BASE_URL}/php-oauth/api.php/resource_owner/id<tt></td><td>[<strong>PROPRIETARY</strong>] Get resource owner ID</td></tr>
+<tr><td><tt>{BASE_URL}/php-oauth/api.php/resource_owner/entitlement<tt></td><td>[<strong>PROPRIETARY</strong>] Get resource owner entitlement</td></tr>
+<tr><td><tt>{BASE_URL}/php-oauth-grades-rs/api.php<tt></td><td><a href="{BASE_URL}/php-oauth-grades-rs/">API documentation</a></td></tr>
+</table>
+
 <h2>Accounts</h2>
 
 <p>
@@ -34,17 +45,14 @@ There are 7 accounts you can use:
 <tr><td>Margaret Cram</td><td><tt>mcram</tt></td><td><tt>62xX1Fid</tt></td><td>Student</td></tr>
 </table>
 
-<h2>Available Services</h2>
-<p>
-Below is a list of available services.
-</p>
+<h2>Available Applications</h2>
 
 <h3>OAuth Applications</h3>
 <ul>
 <li><a href="html-view-grades/index.html">View Grades</a> (with <tt>urn:vnd:grades:administration</tt> entitlement grades from all students can be viewed)</li>
 </ul>
 
-<h3>OAuth Management Services</h3>
+<h3>OAuth Management</h3>
 <ul>
 <li><a href="html-manage-authorizations/index.html">Manage OAuth Application Authorizations</a></li>
 <li><a href="html-manage-applications/index.html">Manage OAuth Application Registrations</a> (requires <tt>urn:vnd:oauth2:applications</tt> entitlement)</li>
