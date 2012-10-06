@@ -11,6 +11,11 @@ cat << EOF
     Fedora, CentOS, RHEL: /var/www/html/oauth
     Debian, Ubuntu: /var/www/oauth
     Mac OS X: /Library/WebServer/Documents/oauth
+
+    **********************************************************************
+    * WARNING: ALL FILES IN THE INSTALLATION DIRECTORY WILL BE ERASED!!! *
+    **********************************************************************
+
 EOF
 exit 1
 else
@@ -21,6 +26,7 @@ if [ -z "$2" ]
 then
 cat << EOF
     Please also specify the URL at which this installation will be available.
+
     Examples:
 
     http://localhost/oauth
@@ -29,6 +35,7 @@ EOF
 exit 1
 else
     BASE_URL=$2
+    BASE_PATH=`echo ${BASE_URL} | sed "s|[^/]*\/\/[^/]*||g"`
 fi
 
 SIMPLESAMLPHP_VERSION=1.10.0
@@ -39,15 +46,15 @@ SIMPLESAMLPHP_VERSION=1.10.0
 #                                                                             #
 # The following components will be installed:                                 #
 #                                                                             #
-# * php-oauth (the OAuth authorization server)                                #
-# * html-manage-applications (management interface for the OAuth AS for       #
-#   administrators)                                                           #
-# * html-manage-authorization (manage OAuth client consent, for end users)    #
-# * php-oauth-grades-rs (sample OAuth resource server)                        #
-# * simpleSAMLphp (both as a SAML identity and service provider)              #
-# * php-oauth-demo-client (a client to debug OAuth servers)                   #
-# * php-oauth-client (a client library)                                       #
-# * php-oauth-example-rs (a resource server library and example)              #
+# * simpleSAMLphp                                                             #
+# * php-oauth                                                                 #
+# * html-manage-applications                                                  #
+# * html-manage-authorization                                                 #
+# * html-view-grades                                                          #
+# * php-oauth-grades-rs                                                       #
+# * php-oauth-demo-client                                                     #
+# * php-oauth-client                                                          #
+# * php-oauth-example-rs                                                      #
 ###############################################################################
 
 if [ ! -d "${INSTALL_DIR}" ]
@@ -63,6 +70,14 @@ SSP_ADMIN_PASSWORD=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urando
 SSP_SECRET_SALT=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo`
 
 # remove the existing installation
+echo "ARE YOU SURE YOU WANT TO ERASE ALL FILES FROM: '${INSTALL_DIR}/'?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) break;;
+        No ) exit;;
+    esac
+done
+
 rm -rf ${INSTALL_DIR}/*
 
 mkdir -p ${INSTALL_DIR}/downloads
@@ -101,7 +116,7 @@ cat ${LAUNCH_DIR}/config/simpleSAMLphp.diff \
 touch modules/exampleauth/enable
 
 # Apache config
-echo "Alias /oauth/ssp ${INSTALL_DIR}/ssp/www" > ${INSTALL_DIR}/apache/oauth_ssp.conf
+echo "Alias ${BASE_PATH}/ssp ${INSTALL_DIR}/ssp/www" > ${INSTALL_DIR}/apache/oauth_ssp.conf
 )
 
 #############
@@ -125,7 +140,7 @@ cat config/oauth.ini.defaults \
 
 # Apache config
 cat docs/apache.conf \
-    | sed "s|/APPNAME|/oauth/php-oauth|g" \
+    | sed "s|/APPNAME|${BASE_PATH}/php-oauth|g" \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth|g" > ${INSTALL_DIR}/apache/oauth_php-oauth.conf
 
 # Register Clients
@@ -224,7 +239,7 @@ mv config/tmp_rs.ini config/rs.ini
 
 # Apache config
 cat docs/apache.conf \
-    | sed "s|/APPNAME|/oauth/php-oauth-grades-rs|g" \
+    | sed "s|/APPNAME|${BASE_PATH}/php-oauth-grades-rs|g" \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth-grades-rs|g" > ${INSTALL_DIR}/apache/oauth_php-oauth-grades-rs.conf
 )
 
