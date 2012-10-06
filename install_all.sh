@@ -144,8 +144,8 @@ cd html-manage-applications
 sh docs/install_dependencies.sh
 
 # configure
-cat ${LAUNCH_DIR}/config/html-manage-applications.diff \
-    | sed "s|{BASE_URL}|${BASE_URL}|g" | patch -p1
+cat config/config.js.default \
+    | sed "s|http://localhost|${BASE_URL}|g" > config/config.js
 )
 
 ##############################
@@ -158,8 +158,8 @@ cd html-manage-authorizations
 sh docs/install_dependencies.sh
 
 # configure
-cat ${LAUNCH_DIR}/config/html-manage-authorizations.diff \
-    | sed "s|{BASE_URL}|${BASE_URL}|g" | patch -p1
+cat config/config.js.default \
+    | sed "s|http://localhost|${BASE_URL}|g" > config/config.js
 )
 
 ####################
@@ -172,8 +172,8 @@ cd html-view-grades
 sh docs/install_dependencies.sh
 
 # configure
-cat ${LAUNCH_DIR}/config/html-view-grades.diff \
-    | sed "s|{BASE_URL}|${BASE_URL}|g" | patch -p1
+cat config/config.js.default \
+    | sed "s|http://localhost|${BASE_URL}|g" > config/config.js
 )
 
 #########################
