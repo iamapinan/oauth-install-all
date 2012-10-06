@@ -2,10 +2,10 @@
     {
         "allowed_scope": "authorizations", 
         "contact_email": null, 
-        "description": "This application can be used by end users to view and revoke application permissions.", 
+        "description": "Application for end-users to revoke OAuth application consent.", 
         "icon": null, 
-        "id": "authorization_manager", 
-        "name": "Manage Authorizations", 
+        "id": "html-manage-authorizations", 
+        "name": "Manage OAuth Application Authorizations", 
         "redirect_uri": "{BASE_URL}/html-manage-authorizations/index.html", 
         "secret": null, 
         "type": "user_agent_based_application"
@@ -13,14 +13,25 @@
     {
         "allowed_scope": "applications", 
         "contact_email": null, 
-        "description": "This application can be used by administrators to manage applications.", 
+        "description": "Application for administrators to manage OAuth application registrations.", 
         "icon": null, 
-        "id": "application_manager", 
-        "name": "Manage Applications", 
+        "id": "html-manage-applications", 
+        "name": "Manage OAuth Application Registrations", 
         "redirect_uri": "{BASE_URL}/html-manage-applications/index.html", 
         "secret": null, 
         "type": "user_agent_based_application"
-    },
+    }, 
+    {
+        "allowed_scope": "grades", 
+        "contact_email": null, 
+        "description": "Application for students and teachers to view grades.", 
+        "icon": null, 
+        "id": "html-view-grades", 
+        "name": "View Your Grades", 
+        "redirect_uri": "{BASE_URL}/html-view-grades/index.html", 
+        "secret": null, 
+        "type": "user_agent_based_application"
+    }, 
     {
         "allowed_scope": "read grades", 
         "contact_email": null, 
@@ -31,7 +42,7 @@
         "redirect_uri": "{BASE_URL}/php-oauth-demo-client/index.php", 
         "secret": "s3cr3t", 
         "type": "web_application"
-    },
+    }, 
     {
         "allowed_scope": "read", 
         "contact_email": null, 
@@ -42,16 +53,5 @@
         "redirect_uri": "{BASE_URL}/php-oauth-client/index.php", 
         "secret": "foo", 
         "type": "web_application"
-    },
-    {
-        "allowed_scope": "grades", 
-        "contact_email": null, 
-        "description": "This application can be used to view your grades.", 
-        "icon": null, 
-        "id": "html-view-grades", 
-        "name": "View Grades", 
-        "redirect_uri": "{BASE_URL}/html-view-grades/index.html", 
-        "secret": null, 
-        "type": "user_agent_based_application"
     }
 ]
