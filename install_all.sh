@@ -235,7 +235,7 @@ cd php-oauth-grades-rs
 sh docs/configure.sh
 
 cat config/rs.ini \
-    | sed "s|/var/www/html/|${INSTALL_DIR}/|g" > config/tmp_rs.ini
+    | sed "s|/var/www/html/php-oauth|${INSTALL_DIR}/php-oauth|g" > config/tmp_rs.ini
 mv config/tmp_rs.ini config/rs.ini
 
 # Apache config
