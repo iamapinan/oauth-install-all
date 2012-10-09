@@ -1,6 +1,6 @@
 diff -urN simplesamlphp-1.10.0.orig/config/authsources.php simplesamlphp-1.10.0/config/authsources.php
 --- simplesamlphp-1.10.0.orig/config/authsources.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/config/authsources.php	2012-10-02 16:33:35.000000000 +0200
++++ simplesamlphp-1.10.0/config/authsources.php	2012-10-09 11:25:30.000000000 +0200
 @@ -22,7 +22,7 @@
  
  		// The entity ID of the IdP this should SP should contact.
@@ -75,7 +75,7 @@ diff -urN simplesamlphp-1.10.0.orig/config/authsources.php simplesamlphp-1.10.0/
  		'exampleauth:UserPass',
 diff -urN simplesamlphp-1.10.0.orig/config/config.php simplesamlphp-1.10.0/config/config.php
 --- simplesamlphp-1.10.0.orig/config/config.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/config/config.php	2012-10-02 16:33:35.000000000 +0200
++++ simplesamlphp-1.10.0/config/config.php	2012-10-09 11:26:35.000000000 +0200
 @@ -22,7 +22,7 @@
  	 * external url, no matter where you come from (direct access or via the
  	 * reverse proxy).
@@ -121,7 +121,25 @@ diff -urN simplesamlphp-1.10.0.orig/config/config.php simplesamlphp-1.10.0/confi
  	'enable.shib13-idp'		=> false,
  	'enable.adfs-idp'		=> false,
  	'enable.wsfed-sp'		=> false,
-@@ -432,9 +432,9 @@
+@@ -377,7 +377,7 @@
+  		*/
+ 
+ 		// Adopts language from attribute to use in UI
+- 		30 => 'core:LanguageAdaptor',
++ 		// 30 => 'core:LanguageAdaptor',
+  		
+ 		/* Add a realm attribute from edupersonprincipalname
+ 		40 => 'core:AttributeRealm',
+@@ -416,7 +416,7 @@
+ 		),
+ 		 */
+ 		// If language is set in Consent module it will be added as an attribute.
+- 		99 => 'core:LanguageAdaptor',
++ 		// 99 => 'core:LanguageAdaptor',
+ 	),
+ 	/*
+ 	 * Authentication processing filters that will be executed for all SPs
+@@ -432,12 +432,12 @@
  		/*
  		 * Generate the 'group' attribute populated from other variables, including eduPersonAffiliation.
  		 */
@@ -132,10 +150,14 @@ diff -urN simplesamlphp-1.10.0.orig/config/config.php simplesamlphp-1.10.0/confi
 + 		//61 => array('class' => 'core:AttributeAdd', 'groups' => array('users', 'members')),
   		
  		// Adopts language from attribute to use in UI
-  		90 => 'core:LanguageAdaptor',
+- 		90 => 'core:LanguageAdaptor',
++ 		// 90 => 'core:LanguageAdaptor',
+ 
+ 	),
+ 	
 diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php
 --- simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php	2012-10-02 16:33:35.000000000 +0200
++++ simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php	2012-10-09 11:27:02.000000000 +0200
 @@ -14,14 +14,14 @@
  	'host' => '__DEFAULT__',
  
@@ -154,19 +176,26 @@ diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php simplesamlphp
  
  	/* Uncomment the following to use the uri NameFormat on attributes. */
  	/*
-@@ -32,4 +32,9 @@
+@@ -32,4 +32,16 @@
  	),
  	*/
  
 +	'authproc' => array(
 +		// Convert LDAP names to oids.
 +		100 => array('class' => 'core:AttributeMap', 'name2urn'),
++
++                110 => array(
++		        'class'     => 'consent:Consent', 
++		        'store'     => 'consent:Cookie', 
++		        'focus'     => 'yes', 
++		        'checked'   => TRUE
++                ),
 +	),
 +
  );
 diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-remote.php simplesamlphp-1.10.0/metadata/saml20-idp-remote.php
 --- simplesamlphp-1.10.0.orig/metadata/saml20-idp-remote.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-idp-remote.php	2012-10-02 16:34:05.000000000 +0200
++++ simplesamlphp-1.10.0/metadata/saml20-idp-remote.php	2012-10-09 11:25:30.000000000 +0200
 @@ -89,3 +89,27 @@
  	'SingleLogoutService'  => 'https://testidp.wayf.dk/saml2/idp/SingleLogoutService.php',
  	'certFingerprint'      => '04b3b08bce004c27458b3e85b125273e67ef062b'
@@ -197,7 +226,7 @@ diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-remote.php simplesamlphp
 +);
 diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-sp-remote.php simplesamlphp-1.10.0/metadata/saml20-sp-remote.php
 --- simplesamlphp-1.10.0.orig/metadata/saml20-sp-remote.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-sp-remote.php	2012-10-02 16:33:35.000000000 +0200
++++ simplesamlphp-1.10.0/metadata/saml20-sp-remote.php	2012-10-09 11:25:30.000000000 +0200
 @@ -25,3 +25,9 @@
  	'simplesaml.nameidattribute' => 'uid',
  	'simplesaml.attributes' => FALSE,
