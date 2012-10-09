@@ -232,10 +232,11 @@ mv tmp_index.php index.php
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-oauth-grades-rs.git
 cd php-oauth-grades-rs
+sh docs/install_dependencies.sh
 sh docs/configure.sh
 
 cat config/rs.ini \
-    | sed "s|/var/www/html/php-oauth|${INSTALL_DIR}/php-oauth|g" > config/tmp_rs.ini
+    | sed "s|http://localhost/php-oauth/token.php|${BASE_URL}/php-oauth/token.php|g" > config/tmp_rs.ini
 mv config/tmp_rs.ini config/rs.ini
 
 # Apache config
@@ -254,7 +255,7 @@ cd php-oauth-example-rs
 sh docs/configure.sh
 
 cat config/rs.ini \
-    | sed "s|http://localhost/|${BASE_URL}/|g" > config/tmp_rs.ini
+    | sed "s|http://localhost/php-oauth/token.php|${BASE_URL}/php-oauth/token.php|g" > config/tmp_rs.ini
 mv config/tmp_rs.ini config/rs.ini
 )
 
