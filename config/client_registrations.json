@@ -33,7 +33,7 @@
         "type": "user_agent_based_application"
     }, 
     {
-        "allowed_scope": "read grades", 
+        "allowed_scope": "read grades authorizations applications", 
         "contact_email": null, 
         "description": "Debug Client", 
         "icon": null, 
@@ -44,7 +44,7 @@
         "type": "web_application"
     }, 
     {
-        "allowed_scope": "read", 
+        "allowed_scope": "authorizations", 
         "contact_email": null, 
         "description": "Simple Client Library Demo App", 
         "icon": null, 
