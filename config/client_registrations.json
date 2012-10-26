@@ -53,5 +53,16 @@
         "redirect_uri": "{BASE_URL}/php-oauth-client/index.php", 
         "secret": "foo", 
         "type": "web_application"
+    }, 
+    {
+        "allowed_scope": "grades", 
+        "contact_email": null, 
+        "description": "OpenConext OAuth 2.0 Demo Application for testing OAuth in mobile applications.", 
+        "icon": null, 
+        "id": "oauth-mobile-app", 
+        "name": "OpenConext OAuth 2.0 Demo Application", 
+        "redirect_uri": "oauth-mobile-app://callback", 
+        "secret": null, 
+        "type": "native_application"
     }
 ]
