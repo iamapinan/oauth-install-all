@@ -22,6 +22,17 @@
         "type": "user_agent_based_application"
     }, 
     {
+        "allowed_scope": "read", 
+        "contact_email": null, 
+        "description": "Application to view your group membership and other members of your groups.", 
+        "icon": null, 
+        "id": "html-voot-client", 
+        "name": "View Your Group Membership", 
+        "redirect_uri": "{BASE_URL}/html-voot-client/index.html", 
+        "secret": null, 
+        "type": "user_agent_based_application"
+    }, 
+    {
         "allowed_scope": "grades", 
         "contact_email": null, 
         "description": "Application for students and teachers to view grades.", 

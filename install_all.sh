@@ -31,6 +31,8 @@ cat << EOF
 
     http://localhost/oauth
     https://www.example.edu/oauth
+    https://my.server.example.org
+
 EOF
 exit 1
 else
@@ -257,6 +259,58 @@ mv config/tmp_rs.ini config/rs.ini
 cat docs/apache.conf \
     | sed "s|/APPNAME|${BASE_PATH}/php-oauth-grades-rs|g" \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth-grades-rs|g" > ${INSTALL_DIR}/apache/oauth_php-oauth-grades-rs.conf
+)
+
+############
+# php-voot #
+############
+(
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-voot.git
+cd php-voot
+sh docs/configure.sh
+php docs/initVootDatabase.php
+cat docs/apache.conf \
+    | sed "s|/APPNAME|${BASE_PATH}/php-voot|g" \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-voot|g" > ${INSTALL_DIR}/apache/oauth_php-voot.conf
+)
+
+##################
+# php-voot-proxy #
+##################
+(
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-voot-proxy.git
+cd php-voot-proxy
+sh docs/configure.sh
+
+cat config/proxy.ini \
+    | sed "s|http://localhost/php-oauth/tokeninfo.php|${BASE_URL}/php-oauth/tokeninfo.php|g" > config/tmp_proxy.ini
+mv config/tmp_proxy.ini config/proxy.ini
+
+php docs/initProxyDatabase.php
+cat docs/apache.conf \
+    | sed "s|/APPNAME|${BASE_PATH}/php-voot-proxy|g" \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-voot-proxy|g" > ${INSTALL_DIR}/apache/oauth_php-voot-proxy.conf
+
+# Register Providers
+cat ${LAUNCH_DIR}/config/provider_registrations.json \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" > docs/myregistration.json
+php docs/registerProviders.php docs/myregistration.json
+)
+
+####################
+# html-voot-client #
+####################
+(
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/html-voot-client.git
+cd html-voot-client
+sh docs/install_dependencies.sh
+
+# configure
+cat config/config.js.default \
+    | sed "s|http://localhost|${BASE_URL}|g" > config/config.js
 )
 
 ###################################
