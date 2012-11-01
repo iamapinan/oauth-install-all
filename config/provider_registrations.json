@@ -1,7 +1,7 @@
 [
     {
         "description": "Demo Group Provider for OAuth Playground.", 
-        "endpoint": "{BASE_URL}/php-voot/api.php", 
+        "endpoint": "{BASE_URL}/php-voot-provider/voot.php", 
         "filter": null, 
         "id": "demo", 
         "name": "Demo Group Provider", 

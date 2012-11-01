@@ -261,18 +261,18 @@ cat docs/apache.conf \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth-grades-rs|g" > ${INSTALL_DIR}/apache/oauth_php-oauth-grades-rs.conf
 )
 
-############
-# php-voot #
-############
+#####################
+# php-voot-provider #
+#####################
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-voot.git
-cd php-voot
+git clone https://github.com/fkooman/php-voot-provider.git
+cd php-voot-provider
 sh docs/configure.sh
 php docs/initVootDatabase.php
 cat docs/apache.conf \
-    | sed "s|/APPNAME|${BASE_PATH}/php-voot|g" \
-    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-voot|g" > ${INSTALL_DIR}/apache/oauth_php-voot.conf
+    | sed "s|/APPNAME|${BASE_PATH}/php-voot-provider|g" \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-voot-provider|g" > ${INSTALL_DIR}/apache/oauth_php-voot-provider.conf
 )
 
 ##################
