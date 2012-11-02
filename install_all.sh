@@ -235,8 +235,8 @@ cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-oauth-demo-client.git
 cd php-oauth-demo-client
 
-# use libs from php-oauth
-ln -s ${INSTALL_DIR}/php-oauth/lib lib
+mkdir extlib
+ln -s ../../php-rest-service extlib/
 
 cat ${LAUNCH_DIR}/config/debug_configuration.json \
     | sed "s|{BASE_URL}|${BASE_URL}|g" > config.json
