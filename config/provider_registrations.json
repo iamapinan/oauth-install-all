@@ -1,11 +1,11 @@
 [
     {
-        "description": "Demo Group Provider for OAuth Playground.", 
         "endpoint": "{BASE_URL}/php-voot-provider/voot.php", 
-        "filter": null, 
+        "filter": [], 
         "id": "demo", 
         "name": "Demo Group Provider", 
-        "password": "bar", 
-        "username": "foo"
+        "basic_pass": "bar", 
+        "basic_user": "foo",
+        "contact_email": null
     }
 ]

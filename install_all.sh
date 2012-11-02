@@ -42,6 +42,7 @@ fi
 
 SIMPLESAMLPHP_VERSION=1.10.0
 
+cat << EOF
 ###############################################################################
 # This script installs the following components to have a fully functional    #
 # OAuth installation with all the components to quickly evaluate the software #
@@ -49,6 +50,7 @@ SIMPLESAMLPHP_VERSION=1.10.0
 # The following components will be installed:                                 #
 #                                                                             #
 # * simpleSAMLphp                                                             #
+# * php-rest-service                                                          #
 # * php-oauth                                                                 #
 # * html-manage-applications                                                  #
 # * html-manage-authorization                                                 #
@@ -57,7 +59,12 @@ SIMPLESAMLPHP_VERSION=1.10.0
 # * php-oauth-demo-client                                                     #
 # * php-oauth-client                                                          #
 # * php-oauth-example-rs                                                      #
+# * php-voot-proxy                                                            #
+# * php-voot-provider                                                         #
+# * html-voot-client                                                          #
+# * saml_info                                                                 #
 ###############################################################################
+EOF
 
 if [ ! -d "${INSTALL_DIR}" ]
 then
@@ -90,9 +97,11 @@ cat ${LAUNCH_DIR}/res/index.html \
     | sed "s|{BASE_URL}|${BASE_URL}|g" \
     | sed "s|{ADMIN_PASSWORD}|${SSP_ADMIN_PASSWORD}|g" > ${INSTALL_DIR}/index.html
 
+cat << EOF
 #################
 # simpleSAMLphp #
 #################
+EOF
 (
 cd ${INSTALL_DIR}/downloads
 curl -O https://simplesamlphp.googlecode.com/files/simplesamlphp-${SIMPLESAMLPHP_VERSION}.tar.gz
@@ -122,13 +131,29 @@ touch modules/exampleauth/enable
 echo "Alias ${BASE_PATH}/ssp ${INSTALL_DIR}/ssp/www" > ${INSTALL_DIR}/apache/oauth_ssp.conf
 )
 
+cat << EOF
+####################
+# php-rest-service #
+####################
+EOF
+(
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-rest-service.git
+)
+
+cat << EOF
 #############
 # php-oauth #
 #############
+EOF
 (
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-oauth.git
 cd php-oauth
+
+mkdir extlib
+ln -s ../../php-rest-service extlib/
+
 sh docs/configure.sh
 php docs/initOAuthDatabase.php
 
@@ -152,9 +177,11 @@ cat ${LAUNCH_DIR}/config/client_registrations.json \
 php docs/registerClients.php docs/myregistration.json
 )
 
+cat << EOF
 ############################
 # html-manage-applications #
 ############################
+EOF
 (
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/html-manage-applications.git
@@ -166,9 +193,11 @@ cat config/config.js.default \
     | sed "s|http://localhost|${BASE_URL}|g" > config/config.js
 )
 
+cat << EOF
 ##############################
 # html-manage-authorizations #
 ##############################
+EOF
 (
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/html-manage-authorizations.git
@@ -180,9 +209,11 @@ cat config/config.js.default \
     | sed "s|http://localhost|${BASE_URL}|g" > config/config.js
 )
 
+cat << EOF
 ####################
 # html-view-grades #
 ####################
+EOF
 (
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/html-view-grades.git
@@ -194,9 +225,11 @@ cat config/config.js.default \
     | sed "s|http://localhost|${BASE_URL}|g" > config/config.js
 )
 
+cat << EOF
 #########################
 # php-oauth-demo-client #
 #########################
+EOF
 (
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-oauth-demo-client.git
@@ -209,9 +242,11 @@ cat ${LAUNCH_DIR}/config/debug_configuration.json \
     | sed "s|{BASE_URL}|${BASE_URL}|g" > config.json
 )
 
+cat << EOF
 ####################
 # php-oauth-client #
 ####################
+EOF
 (
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-oauth-client.git
@@ -227,9 +262,11 @@ cat index.php \
 mv tmp_index.php index.php
 )
 
+cat << EOF
 ########################
 # php-oauth-example-rs #
 ########################
+EOF
 (
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-oauth-example-rs.git
@@ -241,14 +278,19 @@ cat config/rs.ini \
 mv config/tmp_rs.ini config/rs.ini
 )
 
+cat << EOF
 #######################
 # php-oauth-grades-rs #
 #######################
+EOF
 (
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-oauth-grades-rs.git
 cd php-oauth-grades-rs
-sh docs/install_dependencies.sh
+
+mkdir extlib
+ln -s ../../php-rest-service extlib/
+
 sh docs/configure.sh
 
 cat config/rs.ini \
@@ -261,13 +303,19 @@ cat docs/apache.conf \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth-grades-rs|g" > ${INSTALL_DIR}/apache/oauth_php-oauth-grades-rs.conf
 )
 
+cat << EOF
 #####################
 # php-voot-provider #
 #####################
+EOF
 (
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-voot-provider.git
 cd php-voot-provider
+
+mkdir extlib
+ln -s ../../php-rest-service extlib/
+
 sh docs/configure.sh
 php docs/initVootDatabase.php
 cat docs/apache.conf \
@@ -275,13 +323,19 @@ cat docs/apache.conf \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-voot-provider|g" > ${INSTALL_DIR}/apache/oauth_php-voot-provider.conf
 )
 
+cat << EOF
 ##################
 # php-voot-proxy #
 ##################
+EOF
 (
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-voot-proxy.git
 cd php-voot-proxy
+
+mkdir extlib
+ln -s ../../php-rest-service extlib/
+
 sh docs/configure.sh
 
 cat config/proxy.ini \
@@ -299,9 +353,11 @@ cat ${LAUNCH_DIR}/config/provider_registrations.json \
 php docs/registerProviders.php docs/myregistration.json
 )
 
+cat << EOF
 ####################
 # html-voot-client #
 ####################
+EOF
 (
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/html-voot-client.git
@@ -313,9 +369,11 @@ cat config/config.js.default \
     | sed "s|http://localhost|${BASE_URL}|g" > config/config.js
 )
 
+cat << EOF
 ###################################
 # SAML attribute list application #
 ###################################
+EOF
 (
 mkdir -p ${INSTALL_DIR}/saml_info
 cd ${INSTALL_DIR}/saml_info
