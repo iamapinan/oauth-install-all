@@ -51,6 +51,7 @@ cat << EOF
 #                                                                             #
 # * simpleSAMLphp                                                             #
 # * php-rest-service                                                          #
+# * php-lib-remote-rs                                                         #
 # * php-oauth                                                                 #
 # * html-manage-applications                                                  #
 # * html-manage-authorization                                                 #
@@ -132,13 +133,22 @@ echo "Alias ${BASE_PATH}/ssp ${INSTALL_DIR}/ssp/www" > ${INSTALL_DIR}/apache/oau
 )
 
 cat << EOF
-####################
-# php-rest-service #
-####################
+#####################################
+# php-rest-service (SHARED LIBRARY) #
+#####################################
 EOF
 (
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-rest-service.git
+)
+cat << EOF
+######################################
+# php-lib-remote-rs (SHARED LIBRARY) #
+######################################
+EOF
+(
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-lib-remote-rs.git
 )
 
 cat << EOF
@@ -271,6 +281,10 @@ EOF
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-oauth-example-rs.git
 cd php-oauth-example-rs
+
+mkdir extlib
+ln -s ../../php-lib-remote-rs extlib/
+
 sh docs/configure.sh
 
 cat config/rs.ini \
@@ -290,6 +304,7 @@ cd php-oauth-grades-rs
 
 mkdir extlib
 ln -s ../../php-rest-service extlib/
+ln -s ../../php-lib-remote-rs extlib/
 
 sh docs/configure.sh
 
@@ -335,6 +350,7 @@ cd php-voot-proxy
 
 mkdir extlib
 ln -s ../../php-rest-service extlib/
+ln -s ../../php-lib-remote-rs extlib/
 
 sh docs/configure.sh
 
