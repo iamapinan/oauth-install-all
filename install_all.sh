@@ -63,6 +63,7 @@ cat << EOF
 # * php-voot-proxy                                                            #
 # * php-voot-provider                                                         #
 # * html-voot-client                                                          #
+# * voot-specification                                                        #
 # * saml_info                                                                 #
 ###############################################################################
 EOF
@@ -386,15 +387,25 @@ cat config/config.js.default \
 )
 
 cat << EOF
+######################
+# voot-specification #
+######################
+EOF
+(
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/voot-specification.git
+)
+
+cat << EOF
 ###################################
 # SAML attribute list application #
 ###################################
 EOF
 (
-mkdir -p ${INSTALL_DIR}/saml_info
-cd ${INSTALL_DIR}/saml_info
-cat ${LAUNCH_DIR}/res/saml_info.php \
-    | sed "s|{INSTALL_DIR}|${INSTALL_DIR}|g" > ${INSTALL_DIR}/saml_info/index.php
+mkdir -p ${INSTALL_DIR}/saml
+cd ${INSTALL_DIR}/saml
+cat ${LAUNCH_DIR}/res/saml.php \
+    | sed "s|{INSTALL_DIR}|${INSTALL_DIR}|g" > ${INSTALL_DIR}/saml/index.php
 )
 
 # Done
