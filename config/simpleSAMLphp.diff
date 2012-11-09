@@ -1,6 +1,6 @@
 diff -urN simplesamlphp-1.10.0.orig/config/authsources.php simplesamlphp-1.10.0/config/authsources.php
 --- simplesamlphp-1.10.0.orig/config/authsources.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/config/authsources.php	2012-11-09 15:38:59.000000000 +0100
++++ simplesamlphp-1.10.0/config/authsources.php	2012-11-09 15:57:28.000000000 +0100
 @@ -22,7 +22,7 @@
  
  		// The entity ID of the IdP this should SP should contact.
@@ -75,7 +75,7 @@ diff -urN simplesamlphp-1.10.0.orig/config/authsources.php simplesamlphp-1.10.0/
  		'exampleauth:UserPass',
 diff -urN simplesamlphp-1.10.0.orig/config/config.php simplesamlphp-1.10.0/config/config.php
 --- simplesamlphp-1.10.0.orig/config/config.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/config/config.php	2012-11-09 15:38:59.000000000 +0100
++++ simplesamlphp-1.10.0/config/config.php	2012-11-09 15:58:09.000000000 +0100
 @@ -22,7 +22,7 @@
  	 * external url, no matter where you come from (direct access or via the
  	 * reverse proxy).
@@ -121,6 +121,24 @@ diff -urN simplesamlphp-1.10.0.orig/config/config.php simplesamlphp-1.10.0/confi
  	'enable.shib13-idp'		=> false,
  	'enable.adfs-idp'		=> false,
  	'enable.wsfed-sp'		=> false,
+@@ -274,7 +274,7 @@
+ 	/*
+ 	 * Languages available, RTL languages, and what language is default
+ 	 */
+-	'language.available'	=> array('en', 'no', 'nn', 'se', 'da', 'de', 'sv', 'fi', 'es', 'fr', 'it', 'nl', 'lb', 'cs', 'sl', 'lt', 'hr', 'hu', 'pl', 'pt', 'pt-br', 'tr', 'ja', 'zh', 'zh-tw', 'ru', 'et', 'he', 'id', 'sr'),
++	'language.available'	=> array('en', 'de', 'es', 'fr', 'nl'),
+ 	'language.rtl'		=> array('ar','dv','fa','ur','he'),
+ 	'language.default'		=> 'en',
+ 
+@@ -319,7 +319,7 @@
+ 	/*
+ 	 * Which theme directory should be used?
+ 	 */
+-	'theme.use' 		=> 'default',
++	'theme.use' 		=> 'themeSURFnet:SURFnet',
+ 
+ 	
+ 	/*
 @@ -377,7 +377,7 @@
   		*/
  
@@ -157,7 +175,7 @@ diff -urN simplesamlphp-1.10.0.orig/config/config.php simplesamlphp-1.10.0/confi
  	
 diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php
 --- simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php	2012-11-09 15:40:25.000000000 +0100
++++ simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php	2012-11-09 15:57:28.000000000 +0100
 @@ -14,14 +14,14 @@
  	'host' => '__DEFAULT__',
  
@@ -188,7 +206,7 @@ diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php simplesamlphp
  );
 diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-remote.php simplesamlphp-1.10.0/metadata/saml20-idp-remote.php
 --- simplesamlphp-1.10.0.orig/metadata/saml20-idp-remote.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-idp-remote.php	2012-11-09 15:38:59.000000000 +0100
++++ simplesamlphp-1.10.0/metadata/saml20-idp-remote.php	2012-11-09 15:57:28.000000000 +0100
 @@ -89,3 +89,27 @@
  	'SingleLogoutService'  => 'https://testidp.wayf.dk/saml2/idp/SingleLogoutService.php',
  	'certFingerprint'      => '04b3b08bce004c27458b3e85b125273e67ef062b'
@@ -219,7 +237,7 @@ diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-remote.php simplesamlphp
 +);
 diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-sp-remote.php simplesamlphp-1.10.0/metadata/saml20-sp-remote.php
 --- simplesamlphp-1.10.0.orig/metadata/saml20-sp-remote.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-sp-remote.php	2012-11-09 15:38:59.000000000 +0100
++++ simplesamlphp-1.10.0/metadata/saml20-sp-remote.php	2012-11-09 15:57:28.000000000 +0100
 @@ -25,3 +25,9 @@
  	'simplesaml.nameidattribute' => 'uid',
  	'simplesaml.attributes' => FALSE,
