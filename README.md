@@ -51,7 +51,7 @@ to!
 So assuming you are in the directory where you downloaded this project to, you
 can simply run it:
 
-    $ sh ./install_all.sh /var/www/html/oauth http://localhost/oauth
+    $ bash ./install_all.sh /var/www/html/oauth http://localhost/oauth
 
 The two parameters can be modified to reflect your installation directory
 and URL. The installation URL is optional and will default to 
