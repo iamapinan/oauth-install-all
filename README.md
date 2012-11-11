@@ -65,6 +65,10 @@ e.g. using `apt-get`:
 
     $ su -c "apt-get install git unzip php5-cli php5 php5-sqlite curl php5-curl sqlite3"
 
+On Fedora:
+
+    $ su -c "yum install git patch php-pdo httpd php php-xml"
+
 # Apache Configuration
 You have to add the Apache configuration files to the correct location. 
 They are generated in the installation directory under the `apache` directory.
