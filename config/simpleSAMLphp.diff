@@ -1,6 +1,6 @@
 diff -urN simplesamlphp-1.10.0.orig/config/authsources.php simplesamlphp-1.10.0/config/authsources.php
 --- simplesamlphp-1.10.0.orig/config/authsources.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/config/authsources.php	2012-11-12 22:48:27.000000000 +0100
++++ simplesamlphp-1.10.0/config/authsources.php	2012-11-12 23:17:22.000000000 +0100
 @@ -22,7 +22,7 @@
  
  		// The entity ID of the IdP this should SP should contact.
@@ -24,7 +24,7 @@ diff -urN simplesamlphp-1.10.0.orig/config/authsources.php simplesamlphp-1.10.0/
 +            'eduPersonEntitlement' => array('urn:vnd:oauth2:applications'),
 +            'eduPersonPrincipalName' => array('admin@example.edu'),
 +            'eduPersonAffiliation' => array('member', 'employee'),
-+            'cn' => array('Carlos Catalano'),
++            'displayName' => array('Carlos Catalano'),
 +        ),
 +
 +        // Teacher
@@ -34,7 +34,7 @@ diff -urN simplesamlphp-1.10.0.orig/config/authsources.php simplesamlphp-1.10.0/
 +            'eduPersonEntitlement' => array('urn:vnd:grades:administration'),
 +            'eduPersonPrincipalName' => array('teacher@example.edu'),
 +            'eduPersonAffiliation' => array('member', 'employee'),
-+            'cn' => array('Margie Korn'),
++            'displayName' => array('Margie Korn'),
 +        ),
 +
 +        // Students
@@ -42,31 +42,31 @@ diff -urN simplesamlphp-1.10.0.orig/config/authsources.php simplesamlphp-1.10.0/
 +            'uid' => array('jstroud'),
 +            'eduPersonAffiliation' => array('member', 'student'),
 +            'eduPersonPrincipalName' => array('jstroud@students.example.edu'),
-+            'cn' => array('Jerry Stroud'),
++            'displayName' => array('Jerry Stroud'),
 +        ),
 +        'mwisdom:LQ32xvaV' => array(
 +            'uid' => array('mwisdom'),
 +            'eduPersonAffiliation' => array('member', 'student'),
 +            'eduPersonPrincipalName' => array('mwisdom@students.example.edu'),
-+            'cn' => array('Myra Wisdom'),
++            'displayName' => array('Myra Wisdom'),
 +        ),
 +        'bmcatee:ySVk4B9d' => array(
 +            'uid' => array('bcatee'),
 +            'eduPersonAffiliation' => array('member', 'student'),
 +            'eduPersonPrincipalName' => array('bmcatee@students.example.edu'),
-+            'cn' => array('Bobby Mcatee'),
++            'displayName' => array('Bobby Mcatee'),
 +        ),
 +        'jmatson:8r5yyIV3' => array(
 +            'uid' => array('jmatson'),
 +            'eduPersonAffiliation' => array('member', 'student'),
 +            'eduPersonPrincipalName' => array('jmatson@students.example.edu'),
-+            'cn' => array('Janie Matson'),
++            'displayName' => array('Janie Matson'),
 +        ),
 +        'mcram:62xX1Fid' => array(
 +            'uid' => array('mcram'),
 +            'eduPersonAffiliation' => array('member', 'student'),
 +            'eduPersonPrincipalName' => array('mcram@students.example.edu'),
-+            'cn' => array('Margaret Cram'),
++            'displayName' => array('Margaret Cram'),
 +        ),
 +    ),
 +
@@ -75,7 +75,7 @@ diff -urN simplesamlphp-1.10.0.orig/config/authsources.php simplesamlphp-1.10.0/
  		'exampleauth:UserPass',
 diff -urN simplesamlphp-1.10.0.orig/config/config.php simplesamlphp-1.10.0/config/config.php
 --- simplesamlphp-1.10.0.orig/config/config.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/config/config.php	2012-11-12 22:48:27.000000000 +0100
++++ simplesamlphp-1.10.0/config/config.php	2012-11-12 23:16:04.000000000 +0100
 @@ -22,7 +22,7 @@
  	 * external url, no matter where you come from (direct access or via the
  	 * reverse proxy).
@@ -175,7 +175,7 @@ diff -urN simplesamlphp-1.10.0.orig/config/config.php simplesamlphp-1.10.0/confi
  	
 diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php
 --- simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php	2012-11-12 22:50:46.000000000 +0100
++++ simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php	2012-11-12 23:16:04.000000000 +0100
 @@ -14,22 +14,20 @@
  	'host' => '__DEFAULT__',
  
@@ -204,8 +204,8 @@ diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php simplesamlphp
  );
 diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-remote.php simplesamlphp-1.10.0/metadata/saml20-idp-remote.php
 --- simplesamlphp-1.10.0.orig/metadata/saml20-idp-remote.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-idp-remote.php	2012-11-12 22:52:58.000000000 +0100
-@@ -89,3 +89,23 @@
++++ simplesamlphp-1.10.0/metadata/saml20-idp-remote.php	2012-11-12 23:16:50.000000000 +0100
+@@ -89,3 +89,18 @@
  	'SingleLogoutService'  => 'https://testidp.wayf.dk/saml2/idp/SingleLogoutService.php',
  	'certFingerprint'      => '04b3b08bce004c27458b3e85b125273e67ef062b'
  );
@@ -222,16 +222,11 @@ diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-remote.php simplesamlphp
 +            'class' => 'core:AttributeMap',
 +            'oid2name',
 +        ),
-+        70 => array(
-+            'class' => 'core:AttributeMap',
-+            'eduPersonEntitlement' => 'entitlement',
-+            'cn' => 'displayName',
-+        ),
 +    ),
 +);
 diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-sp-remote.php simplesamlphp-1.10.0/metadata/saml20-sp-remote.php
 --- simplesamlphp-1.10.0.orig/metadata/saml20-sp-remote.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-sp-remote.php	2012-11-12 22:52:14.000000000 +0100
++++ simplesamlphp-1.10.0/metadata/saml20-sp-remote.php	2012-11-12 23:16:04.000000000 +0100
 @@ -25,3 +25,12 @@
  	'simplesaml.nameidattribute' => 'uid',
  	'simplesaml.attributes' => FALSE,
