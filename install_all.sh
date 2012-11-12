@@ -38,6 +38,7 @@ exit 1
 else
     BASE_URL=$2
     BASE_PATH=`echo ${BASE_URL} | sed "s|[^/]*\/\/[^/]*||g"`
+    DOMAIN_NAME=`echo ${BASE_URL} | sed "s|[^/]*\/\/||g" | sed "s|:.*||g" | sed "s|\/.*||g"`
 fi
 
 SIMPLESAMLPHP_VERSION=1.10.0
@@ -124,7 +125,8 @@ cat ${LAUNCH_DIR}/config/simpleSAMLphp.diff \
     | sed "s|{BASE_URL}|${BASE_URL}|g" \
     | sed "s|{ADMIN_PASSWORD}|${SSP_ADMIN_PASSWORD}|g" \
     | sed "s|{SECRET_SALT}|${SSP_SECRET_SALT}|g" \
-    | sed "s|{CERT_FINGERPRINT}|${CERT_FINGERPRINT}|g" | patch -p1
+    | sed "s|{CERT_FINGERPRINT}|${CERT_FINGERPRINT}|g" \
+    | sed "s|{DOMAIN_NAME}|${DOMAIN_NAME}|g" | patch -p1
 
 # enable the example-userpass module
 touch modules/exampleauth/enable
