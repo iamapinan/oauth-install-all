@@ -1,6 +1,6 @@
 diff -urN simplesamlphp-1.10.0.orig/config/authsources.php simplesamlphp-1.10.0/config/authsources.php
 --- simplesamlphp-1.10.0.orig/config/authsources.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/config/authsources.php	2012-11-12 11:55:26.000000000 +0100
++++ simplesamlphp-1.10.0/config/authsources.php	2012-11-12 22:48:27.000000000 +0100
 @@ -22,7 +22,7 @@
  
  		// The entity ID of the IdP this should SP should contact.
@@ -75,7 +75,7 @@ diff -urN simplesamlphp-1.10.0.orig/config/authsources.php simplesamlphp-1.10.0/
  		'exampleauth:UserPass',
 diff -urN simplesamlphp-1.10.0.orig/config/config.php simplesamlphp-1.10.0/config/config.php
 --- simplesamlphp-1.10.0.orig/config/config.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/config/config.php	2012-11-12 11:55:26.000000000 +0100
++++ simplesamlphp-1.10.0/config/config.php	2012-11-12 22:48:27.000000000 +0100
 @@ -22,7 +22,7 @@
  	 * external url, no matter where you come from (direct access or via the
  	 * reverse proxy).
@@ -175,8 +175,8 @@ diff -urN simplesamlphp-1.10.0.orig/config/config.php simplesamlphp-1.10.0/confi
  	
 diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php
 --- simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php	2012-11-12 11:56:04.000000000 +0100
-@@ -14,14 +14,14 @@
++++ simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php	2012-11-12 22:50:46.000000000 +0100
+@@ -14,22 +14,20 @@
  	'host' => '__DEFAULT__',
  
  	/* X.509 key and certificate. Relative to the cert directory. */
@@ -193,24 +193,19 @@ diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php simplesamlphp
 +	'auth' => 'my-userpass',
  
  	/* Uncomment the following to use the uri NameFormat on attributes. */
- 	/*
-@@ -32,4 +32,12 @@
+-	/*
+ 	'attributes.NameFormat' => 'urn:oasis:names:tc:SAML:2.0:attrname-format:uri',
+ 	'authproc' => array(
+ 		// Convert LDAP names to oids.
+ 		100 => array('class' => 'core:AttributeMap', 'name2oid'),
  	),
- 	*/
+-	*/
  
-+	'authproc' => array(
-+		// Convert LDAP names to URN
-+		100 => array('class' => 'core:AttributeMap', 'name2urn'),
-+
-+		// Add schacHomeOrganization
-+		110 => array('class' => 'core:AttributeAdd', 'urn:mace:terena.org:attribute-def:schacHomeOrganization' => '{DOMAIN_NAME}'),
-+	),
-+
  );
 diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-remote.php simplesamlphp-1.10.0/metadata/saml20-idp-remote.php
 --- simplesamlphp-1.10.0.orig/metadata/saml20-idp-remote.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-idp-remote.php	2012-11-12 11:57:40.000000000 +0100
-@@ -89,3 +89,31 @@
++++ simplesamlphp-1.10.0/metadata/saml20-idp-remote.php	2012-11-12 22:52:58.000000000 +0100
+@@ -89,3 +89,23 @@
  	'SingleLogoutService'  => 'https://testidp.wayf.dk/saml2/idp/SingleLogoutService.php',
  	'certFingerprint'      => '04b3b08bce004c27458b3e85b125273e67ef062b'
  );
@@ -225,15 +220,7 @@ diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-remote.php simplesamlphp
 +    'authproc' => array(
 +        50 => array(
 +            'class' => 'core:AttributeMap',
-+            'urn2name',
-+        ),
-+	55 => array(
-+            'class' => 'core:AttributeMap',
-+	    'urn:mace:terena.org:attribute-def:schacHomeOrganization' => 'schacHomeOrganization',
-+	),
-+        60 => array(
-+            'class' => 'core:AttributeLimit',
-+            'uid', 'cn', 'eduPersonEntitlement', 'schacHomeOrganization',
++            'oid2name',
 +        ),
 +        70 => array(
 +            'class' => 'core:AttributeMap',
@@ -244,13 +231,16 @@ diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-remote.php simplesamlphp
 +);
 diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-sp-remote.php simplesamlphp-1.10.0/metadata/saml20-sp-remote.php
 --- simplesamlphp-1.10.0.orig/metadata/saml20-sp-remote.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-sp-remote.php	2012-11-12 11:55:26.000000000 +0100
-@@ -25,3 +25,9 @@
++++ simplesamlphp-1.10.0/metadata/saml20-sp-remote.php	2012-11-12 22:52:14.000000000 +0100
+@@ -25,3 +25,12 @@
  	'simplesaml.nameidattribute' => 'uid',
  	'simplesaml.attributes' => FALSE,
  );
 +
 +$metadata['{BASE_URL}/ssp/module.php/saml/sp/metadata.php/default-sp'] = array(
++	'authproc' => array(
++                90 => array('class' => 'core:AttributeAdd', 'schacHomeOrganization' => '{DOMAIN_NAME}'),
++	),
 +	'NameIDFormat' => 'urn:oasis:names:tc:SAML:2.0:nameid-format:persistent',
 +	'AssertionConsumerService' => '{BASE_URL}/ssp/module.php/saml/sp/saml2-acs.php/default-sp',
 +	'SingleLogoutService' => '{BASE_URL}/ssp/module.php/saml/sp/saml2-logout.php/default-sp',
