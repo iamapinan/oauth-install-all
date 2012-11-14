@@ -79,7 +79,6 @@ LAUNCH_DIR=`pwd`
 
 # some simpleSAMLphp variables
 SSP_ADMIN_PASSWORD=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=8 count=1 2>/dev/null;echo`
-SSP_SECRET_SALT=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo`
 
 # remove the existing installation
 echo "ARE YOU SURE YOU WANT TO ERASE ALL FILES FROM: '${INSTALL_DIR}/'?"
@@ -101,31 +100,30 @@ cat ${LAUNCH_DIR}/res/index.html \
     | sed "s|{ADMIN_PASSWORD}|${SSP_ADMIN_PASSWORD}|g" > ${INSTALL_DIR}/index.html
 
 cat << EOF
-#################
-# simpleSAMLphp #
-#################
+#####################
+# simpleSAMLphp IdP #
+#####################
 EOF
 (
 cd ${INSTALL_DIR}/downloads
 curl -O https://simplesamlphp.googlecode.com/files/simplesamlphp-${SIMPLESAMLPHP_VERSION}.tar.gz
 cd ${INSTALL_DIR}
 tar -xzf downloads/simplesamlphp-${SIMPLESAMLPHP_VERSION}.tar.gz
-mv simplesamlphp-${SIMPLESAMLPHP_VERSION} ssp
-cd ${INSTALL_DIR}/ssp
+mkdir -p ssp
+mv simplesamlphp-${SIMPLESAMLPHP_VERSION} ssp/idp
+cd ${INSTALL_DIR}/ssp/idp
 
 # generate IdP certificate
 openssl req -subj '/O=Snake Oil, CN=Demo Identity Provider/' -newkey rsa:2048 -new -x509 -days 3652 -nodes -out cert/idp.crt -keyout cert/idp.pem
 
-# figure out the fingerprint of the certificate
-CERT_FINGERPRINT=`openssl x509 -inform PEM -in cert/idp.crt -noout -fingerprint | cut -d '=' -f 2 | sed "s|:||g" | tr '[A-F]' '[a-f]'`
+SSP_SECRET_SALT=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo`
 
 # update the BASE_URL in the patch and apply the simpleSAMLphp configuration 
 # patch to configure an IdP and SP
-cat ${LAUNCH_DIR}/config/simpleSAMLphp.diff \
+cat ${LAUNCH_DIR}/config/simpleSAMLphp-IdP.diff \
     | sed "s|{BASE_URL}|${BASE_URL}|g" \
     | sed "s|{ADMIN_PASSWORD}|${SSP_ADMIN_PASSWORD}|g" \
     | sed "s|{SECRET_SALT}|${SSP_SECRET_SALT}|g" \
-    | sed "s|{CERT_FINGERPRINT}|${CERT_FINGERPRINT}|g" \
     | sed "s|{DOMAIN_NAME}|${DOMAIN_NAME}|g" | patch -p1
 
 # enable the example-userpass module
@@ -136,7 +134,37 @@ git clone https://github.com/SURFnet/simpleSAMLphp-SURFnet.git modules/themeSURF
 touch modules/themeSURFnet/enable
 
 # Apache config
-echo "Alias ${BASE_PATH}/ssp ${INSTALL_DIR}/ssp/www" > ${INSTALL_DIR}/apache/oauth_ssp.conf
+echo "Alias ${BASE_PATH}/sspidp ${INSTALL_DIR}/ssp/idp/www" > ${INSTALL_DIR}/apache/oauth_sspidp.conf
+)
+
+
+cat << EOF
+####################
+# simpleSAMLphp SP #
+####################
+EOF
+(
+cd ${INSTALL_DIR}
+tar -xzf downloads/simplesamlphp-${SIMPLESAMLPHP_VERSION}.tar.gz
+mkdir -p ssp
+mv simplesamlphp-${SIMPLESAMLPHP_VERSION} ssp/sp
+cd ${INSTALL_DIR}/ssp/sp
+
+# figure out the fingerprint of the certificate from the IdP
+CERT_FINGERPRINT=`openssl x509 -inform PEM -in ../idp/cert/idp.crt -noout -fingerprint | cut -d '=' -f 2 | sed "s|:||g" | tr '[A-F]' '[a-f]'`
+
+SSP_SECRET_SALT=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo`
+
+# update the BASE_URL in the patch and apply the simpleSAMLphp configuration 
+# patch to configure an IdP and SP
+cat ${LAUNCH_DIR}/config/simpleSAMLphp-SP.diff \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" \
+    | sed "s|{ADMIN_PASSWORD}|${SSP_ADMIN_PASSWORD}|g" \
+    | sed "s|{SECRET_SALT}|${SSP_SECRET_SALT}|g" \
+    | sed "s|{CERT_FINGERPRINT}|${CERT_FINGERPRINT}|g" | patch -p1
+
+# Apache config
+echo "Alias ${BASE_PATH}/sspsp ${INSTALL_DIR}/ssp/sp/www" > ${INSTALL_DIR}/apache/oauth_sspsp.conf
 )
 
 cat << EOF
@@ -181,7 +209,7 @@ cat config/oauth.ini.defaults \
     | sed "s|allowResourceOwnerScopeFiltering = FALSE|allowResourceOwnerScopeFiltering = TRUE|g" \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth|g" \
     | sed "s|enableApi = FALSE|enableApi = TRUE|g" \
-    | sed "s|/var/simplesamlphp|${INSTALL_DIR}/ssp|g" > config/oauth.ini
+    | sed "s|/var/simplesamlphp|${INSTALL_DIR}/ssp/sp|g" > config/oauth.ini
 
 # Apache config
 cat docs/apache.conf \

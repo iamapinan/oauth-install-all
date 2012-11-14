@@ -1,5 +1,5 @@
 <?php
-    require_once('{INSTALL_DIR}/ssp/lib/_autoload.php');
+    require_once('{INSTALL_DIR}/ssp/sp/lib/_autoload.php');
     $as = new SimpleSAML_Auth_Simple('default-sp');
     $as->requireAuth();
     echo "<h1>NameID</h1>";
