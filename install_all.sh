@@ -187,6 +187,30 @@ git clone https://github.com/fkooman/php-lib-remote-rs.git
 )
 
 cat << EOF
+#############################
+# html-webapp-deps (SHARED) #
+#############################
+EOF
+(
+cd ${INSTALL_DIR}
+mkdir -p html-webapp-deps/js
+mkdir -p html-webapp-deps/bootstrap
+
+# jQuery
+curl -o html-webapp-deps/js/jquery.js http://code.jquery.com/jquery.min.js
+
+# JSrender (JavaScript Template Rendering for jQuery)
+curl -o html-webapp-deps/js/jsrender.js https://raw.github.com/BorisMoore/jsrender/master/jsrender.js
+
+# JSO (JavaScript OAuth 2 client)
+curl -o html-webapp-deps/js/jso.js https://raw.github.com/andreassolberg/jso/master/jso.js
+
+# Bootstrap
+curl -o html-webapp-deps/bootstrap.zip http://twitter.github.com/bootstrap/assets/bootstrap.zip
+(cd html-webapp-deps/ && unzip bootstrap.zip && rm bootstrap.zip)
+)
+
+cat << EOF
 #############
 # php-oauth #
 #############
@@ -231,7 +255,7 @@ EOF
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/html-manage-applications.git
 cd html-manage-applications
-sh docs/install_dependencies.sh
+ln -s ../html-webapp-deps ext
 
 # configure
 cat config/config.js.default \
@@ -247,7 +271,7 @@ EOF
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/html-manage-authorizations.git
 cd html-manage-authorizations
-sh docs/install_dependencies.sh
+ln -s ../html-webapp-deps ext
 
 # configure
 cat config/config.js.default \
@@ -263,7 +287,7 @@ EOF
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/html-view-grades.git
 cd html-view-grades
-sh docs/install_dependencies.sh
+ln -s ../html-webapp-deps ext
 
 # configure
 cat config/config.js.default \
@@ -413,7 +437,7 @@ EOF
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/html-voot-client.git
 cd html-voot-client
-sh docs/install_dependencies.sh
+ln -s ../html-webapp-deps ext
 
 # configure
 cat config/config.js.default \
