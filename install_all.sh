@@ -78,7 +78,7 @@ fi
 LAUNCH_DIR=`pwd`
 
 # some simpleSAMLphp variables
-SSP_ADMIN_PASSWORD=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=8 count=1 2>/dev/null;echo`
+SSP_ADMIN_PASSWORD=`env LC_CTYPE=C tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=8 count=1 2>/dev/null;echo`
 
 # remove the existing installation
 echo "ARE YOU SURE YOU WANT TO ERASE ALL FILES FROM: '${INSTALL_DIR}/'?"
@@ -116,7 +116,7 @@ cd ${INSTALL_DIR}/ssp/idp
 # generate IdP certificate
 openssl req -subj '/O=Snake Oil, CN=Demo Identity Provider/' -newkey rsa:2048 -new -x509 -days 3652 -nodes -out cert/idp.crt -keyout cert/idp.pem
 
-SSP_SECRET_SALT=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo`
+SSP_SECRET_SALT=`env LC_CTYPE=C tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo`
 
 # update the BASE_URL in the patch and apply the simpleSAMLphp configuration 
 # patch to configure an IdP and SP
@@ -153,7 +153,7 @@ cd ${INSTALL_DIR}/ssp/sp
 # figure out the fingerprint of the certificate from the IdP
 CERT_FINGERPRINT=`openssl x509 -inform PEM -in ../idp/cert/idp.crt -noout -fingerprint | cut -d '=' -f 2 | sed "s|:||g" | tr '[A-F]' '[a-f]'`
 
-SSP_SECRET_SALT=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo`
+SSP_SECRET_SALT=`env LC_CTYPE=C tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo`
 
 # update the BASE_URL in the patch and apply the simpleSAMLphp configuration 
 # patch to configure an IdP and SP
