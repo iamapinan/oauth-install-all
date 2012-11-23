@@ -1,5 +1,5 @@
 # Introduction
-This project installs all components for running an OAuth service for
+This project installs all components for running an OAuth 2.0 service for
 evaluating, testing and development.
 
 It consist of an authorization server, a resource server and test clients. For
