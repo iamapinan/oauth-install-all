@@ -59,6 +59,7 @@ cat << EOF
 # * html-view-grades                                                          #
 # * php-oauth-grades-rs                                                       #
 # * php-oauth-demo-client                                                     #
+# * php-oauth-lib-client (DEPRECATED)                                         #
 # * php-oauth-client                                                          #
 # * php-oauth-example-rs                                                      #
 # * php-voot-proxy                                                            #
@@ -320,6 +321,27 @@ EOF
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-oauth-client.git
 cd php-oauth-client
+
+mkdir extlib
+ln -s ../../php-rest-service extlib/
+
+sh docs/configure.sh
+php docs/initDatabase.php
+
+cat docs/apache.conf \
+    | sed "s|/APPNAME|${BASE_PATH}/php-oauth-client|g" \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth-client|g" > ${INSTALL_DIR}/apache/oauth_php-oauth-client.conf
+)
+
+cat << EOF
+#####################################
+# php-oauth-lib-client (DEPRECATED) #
+#####################################
+EOF
+(
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-oauth-lib-client.git
+cd php-oauth-lib-client
 sh docs/configure.sh
 
 cat config/client.ini \

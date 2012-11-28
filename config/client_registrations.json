@@ -61,7 +61,7 @@
         "icon": null, 
         "id": "demo", 
         "name": "OAuth Client Library Demo", 
-        "redirect_uri": "{BASE_URL}/php-oauth-client/index.php", 
+        "redirect_uri": "{BASE_URL}/php-oauth-lib-client/index.php", 
         "secret": "foo", 
         "type": "web_application"
     }, 
