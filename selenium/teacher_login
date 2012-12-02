@@ -48,7 +48,7 @@
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
-	<td>[0] =&gt; urn:vnd:grades:administration</td>
+	<td>[0] =&gt; urn:x-oauth:entitlement:administration</td>
 	<td></td>
 </tr>
 <tr>
