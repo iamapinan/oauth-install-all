@@ -59,14 +59,14 @@ cat << EOF
 # * html-view-grades                                                          #
 # * php-oauth-grades-rs                                                       #
 # * php-oauth-demo-client                                                     #
-# * php-oauth-lib-client (DEPRECATED)                                         #
 # * php-oauth-client                                                          #
 # * php-oauth-example-rs                                                      #
 # * php-voot-proxy                                                            #
 # * php-voot-provider                                                         #
 # * html-voot-client                                                          #
 # * voot-specification                                                        #
-# * saml_info                                                                 #
+# * SAML Demo SP                                                              #
+# * OAuth Demo App                                                            #
 ###############################################################################
 EOF
 
@@ -328,29 +328,15 @@ ln -s ../../php-rest-service extlib/
 sh docs/configure.sh
 php docs/initDatabase.php
 
+# Register Applications
+cat ${LAUNCH_DIR}/config/application_registrations.json \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" > docs/myregistration.json
+
+php docs/registerApplications.php docs/myregistration.json
+
 cat docs/apache.conf \
     | sed "s|/APPNAME|${BASE_PATH}/php-oauth-client|g" \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth-client|g" > ${INSTALL_DIR}/apache/oauth_php-oauth-client.conf
-)
-
-cat << EOF
-#####################################
-# php-oauth-lib-client (DEPRECATED) #
-#####################################
-EOF
-(
-cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-oauth-lib-client.git
-cd php-oauth-lib-client
-sh docs/configure.sh
-
-cat config/client.ini \
-    | sed "s|http://localhost/|${BASE_URL}/|g" > config/tmp_client.ini
-mv config/tmp_client.ini config/client.ini
-
-cat index.php \
-    | sed "s|http://localhost/|${BASE_URL}/|g" > tmp_index.php
-mv tmp_index.php index.php
 )
 
 cat << EOF
@@ -486,6 +472,19 @@ mkdir -p ${INSTALL_DIR}/saml
 cd ${INSTALL_DIR}/saml
 cat ${LAUNCH_DIR}/res/saml.php \
     | sed "s|{INSTALL_DIR}|${INSTALL_DIR}|g" > ${INSTALL_DIR}/saml/index.php
+)
+
+cat << EOF
+##################
+# OAuth Demo App #
+##################
+EOF
+(
+mkdir -p ${INSTALL_DIR}/demo-oauth-app
+cd ${INSTALL_DIR}/demo-oauth-app
+cat ${LAUNCH_DIR}/res/oauth.php \
+    | sed "s|{INSTALL_DIR}|${INSTALL_DIR}|g" \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" > ${INSTALL_DIR}/demo-oauth-app/index.php
 )
 
 # Done

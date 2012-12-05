@@ -57,12 +57,12 @@
     {
         "allowed_scope": "authorizations", 
         "contact_email": null, 
-        "description": "Simple Client Library Demo App", 
+        "description": "Simple Demo OAuth Application", 
         "icon": null, 
-        "id": "demo", 
-        "name": "OAuth Client Library Demo", 
-        "redirect_uri": "{BASE_URL}/php-oauth-lib-client/index.php", 
-        "secret": "foo", 
+        "id": "demo-oauth-client", 
+        "name": "Demo OAuth App", 
+        "redirect_uri": "{BASE_URL}/php-oauth-client/callback.php?id=demo-oauth-app", 
+        "secret": "foobar", 
         "type": "web_application"
     }, 
     {
