@@ -54,8 +54,7 @@ can simply run it:
     $ bash ./install_all.sh /var/www/html/oauth http://localhost/oauth
 
 The two parameters can be modified to reflect your installation directory
-and URL. The installation URL is optional and will default to 
-`http://localhost/oauth`.
+and URL. Both parameters are mandatory.
 
 If there are any warnings or errors about missing software you can just install
 them and run the script again.
