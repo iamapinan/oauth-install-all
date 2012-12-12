@@ -75,5 +75,27 @@
         "redirect_uri": "oauth-mobile-app://callback", 
         "secret": null, 
         "type": "native_application"
+    }, 
+    {
+        "allowed_scope": "read authorizations grades owncloud", 
+        "contact_email": null, 
+        "description": null, 
+        "icon": null, 
+        "id": "com.demo.test.my", 
+        "name": "App Demo Test oAuth", 
+        "redirect_uri": "owncloud://callback", 
+        "secret": null, 
+        "type": "native_application"
+    }, 
+    {
+        "allowed_scope": "read", 
+        "contact_email": null, 
+        "description": null, 
+        "icon": null, 
+        "id": "wordpress", 
+        "name": "WordPress", 
+        "redirect_uri": "{BASE_URL}/php-oauth-client/callback.php?id=wordpress", 
+        "secret": "wp", 
+        "type": "web_application"
     }
 ]
