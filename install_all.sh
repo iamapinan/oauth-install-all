@@ -530,6 +530,9 @@ ln -s ../../php-rest-service extlib/
 ln -s ../../php-lib-remote-rs extlib/
 
 sh docs/configure.sh
+php docs/initDatabase.php
+
+# FIXME: add our entries to the DB
 
 cat config/config.ini \
     | sed "s|http://localhost/php-oauth/tokeninfo.php|${BASE_URL}/php-oauth/tokeninfo.php|g" > config/tmp_config.ini
