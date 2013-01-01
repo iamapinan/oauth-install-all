@@ -67,6 +67,8 @@ cat << EOF
 # * voot-specification                                                        #
 # * SAML Demo SP                                                              #
 # * OAuth Demo App                                                            #
+# * php-remoteStorage                                                         #
+# * php-ssp-api                                                               #
 ###############################################################################
 EOF
 
@@ -485,6 +487,57 @@ cd ${INSTALL_DIR}/demo-oauth-app
 cat ${LAUNCH_DIR}/res/oauth.php \
     | sed "s|{INSTALL_DIR}|${INSTALL_DIR}|g" \
     | sed "s|{BASE_URL}|${BASE_URL}|g" > ${INSTALL_DIR}/demo-oauth-app/index.php
+)
+
+cat << EOF
+#####################
+# php-remoteStorage #
+#####################
+EOF
+(
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-remoteStorage.git
+cd php-remoteStorage
+git checkout devel      # for now use devel branch
+
+mkdir extlib
+ln -s ../../php-rest-service extlib/
+ln -s ../../php-lib-remote-rs extlib/
+
+sh docs/configure.sh
+
+cat config/remoteStorage.ini \
+    | sed "s|http://localhost/php-oauth/tokeninfo.php|${BASE_URL}/php-oauth/tokeninfo.php|g" > config/tmp_remoteStorage.ini
+mv config/tmp_remoteStorage.ini config/remoteStorage.ini
+
+cat docs/apache.conf \
+    | sed "s|/APPNAME|${BASE_PATH}/php-remoteStorage|g" \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-remoteStorage|g" > ${INSTALL_DIR}/apache/oauth_php-remoteStorage.conf
+)
+
+cat << EOF
+###############
+# php-ssp-api #
+###############
+EOF
+(
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-ssp-api.git
+cd php-ssp-api
+
+mkdir extlib
+ln -s ../../php-rest-service extlib/
+ln -s ../../php-lib-remote-rs extlib/
+
+sh docs/configure.sh
+
+cat config/config.ini \
+    | sed "s|http://localhost/php-oauth/tokeninfo.php|${BASE_URL}/php-oauth/tokeninfo.php|g" > config/tmp_config.ini
+mv config/tmp_config.ini config/config.ini
+
+cat docs/apache.conf \
+    | sed "s|/APPNAME|${BASE_PATH}/php-ssp-api|g" \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-ssp-api|g" > ${INSTALL_DIR}/apache/oauth_php-ssp-api.conf
 )
 
 # Done
