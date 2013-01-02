@@ -53,6 +53,7 @@ cat << EOF
 # * simpleSAMLphp                                                             #
 # * php-rest-service                                                          #
 # * php-lib-remote-rs                                                         #
+# * php-ssp-api                                                               #
 # * php-oauth                                                                 #
 # * html-manage-applications                                                  #
 # * html-manage-authorization                                                 #
@@ -68,7 +69,6 @@ cat << EOF
 # * SAML Demo SP                                                              #
 # * OAuth Demo App                                                            #
 # * php-remoteStorage                                                         #
-# * php-ssp-api                                                               #
 ###############################################################################
 EOF
 
@@ -140,7 +140,6 @@ touch modules/themeSURFnet/enable
 echo "Alias ${BASE_PATH}/sspidp ${INSTALL_DIR}/ssp/idp/www" > ${INSTALL_DIR}/apache/oauth_sspidp.conf
 )
 
-
 cat << EOF
 ####################
 # simpleSAMLphp SP #
@@ -187,6 +186,46 @@ EOF
 (
 cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-lib-remote-rs.git
+)
+
+cat << EOF
+###############
+# php-ssp-api #
+###############
+EOF
+(
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-ssp-api.git
+cd php-ssp-api
+
+mkdir extlib
+ln -s ../../php-rest-service extlib/
+ln -s ../../php-lib-remote-rs extlib/
+
+sh docs/configure.sh
+php docs/initDatabase.php
+
+# figure out the fingerprint of the certificate from the IdP
+CERT_FINGERPRINT=`openssl x509 -inform PEM -in ../ssp/idp/cert/idp.crt -noout -fingerprint | cut -d '=' -f 2 | sed "s|:||g" | tr '[A-F]' '[a-f]'`
+
+# import the entries in the database
+mkdir tmp/
+cat ${LAUNCH_DIR}/config/saml20-idp-remote.json \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" \
+    | sed "s|{CERT_FINGERPRINT}|${CERT_FINGERPRINT}|g" > tmp/saml20-idp-remote.json
+
+cat ${LAUNCH_DIR}/config/saml20-sp-remote.json \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" > tmp/saml20-sp-remote.json
+
+php docs/importJsonMetadataPdo.php tmp/
+
+cat config/config.ini \
+    | sed "s|http://localhost/php-oauth/tokeninfo.php|${BASE_URL}/php-oauth/tokeninfo.php|g" > config/tmp_config.ini
+mv config/tmp_config.ini config/config.ini
+
+cat docs/apache.conf \
+    | sed "s|/APPNAME|${BASE_PATH}/php-ssp-api|g" \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-ssp-api|g" > ${INSTALL_DIR}/apache/oauth_php-ssp-api.conf
 )
 
 cat << EOF
@@ -513,34 +552,6 @@ mv config/tmp_remoteStorage.ini config/remoteStorage.ini
 cat docs/apache.conf \
     | sed "s|/APPNAME|${BASE_PATH}/php-remoteStorage|g" \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-remoteStorage|g" > ${INSTALL_DIR}/apache/oauth_php-remoteStorage.conf
-)
-
-cat << EOF
-###############
-# php-ssp-api #
-###############
-EOF
-(
-cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-ssp-api.git
-cd php-ssp-api
-
-mkdir extlib
-ln -s ../../php-rest-service extlib/
-ln -s ../../php-lib-remote-rs extlib/
-
-sh docs/configure.sh
-php docs/initDatabase.php
-
-# FIXME: add our entries to the DB
-
-cat config/config.ini \
-    | sed "s|http://localhost/php-oauth/tokeninfo.php|${BASE_URL}/php-oauth/tokeninfo.php|g" > config/tmp_config.ini
-mv config/tmp_config.ini config/config.ini
-
-cat docs/apache.conf \
-    | sed "s|/APPNAME|${BASE_PATH}/php-ssp-api|g" \
-    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-ssp-api|g" > ${INSTALL_DIR}/apache/oauth_php-ssp-api.conf
 )
 
 # Done

@@ -1,14 +1,16 @@
-{
-    "AssertionConsumerService": "{BASE_URL}/sspsp/module.php/saml/sp/saml2-acs.php/default-sp", 
-    "SingleLogoutService": "{BASE_URL}/sspsp/module.php/saml/sp/saml2-logout.php/default-sp", 
-    "authproc": {
-        "1": {
-            "class": "saml:TransientNameID"
+[
+    {
+        "AssertionConsumerService": "{BASE_URL}/sspsp/module.php/saml/sp/saml2-acs.php/default-sp", 
+        "SingleLogoutService": "{BASE_URL}/sspsp/module.php/saml/sp/saml2-logout.php/default-sp", 
+        "authproc": {
+            "1": {
+                "class": "saml:TransientNameID"
+            }, 
+            "2": {
+                "attribute": "eduPersonPrincipalName", 
+                "class": "saml:PersistentNameID"
+            }
         }, 
-        "2": {
-            "attribute": "eduPersonPrincipalName", 
-            "class": "saml:PersistentNameID"
-        }
-    }, 
-    "entityid": "{BASE_URL}/sspsp/module.php/saml/sp/metadata.php/default-sp"
-}
+        "entityid": "{BASE_URL}/sspsp/module.php/saml/sp/metadata.php/default-sp"
+    }
+]
