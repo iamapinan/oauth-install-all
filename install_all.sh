@@ -124,10 +124,14 @@ SSP_SECRET_SALT=`env LC_CTYPE=C tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' 
 # update the BASE_URL in the patch and apply the simpleSAMLphp configuration 
 # patch to configure an IdP and SP
 cat ${LAUNCH_DIR}/config/simpleSAMLphp-IdP.diff \
+    | sed "s|{INSTALL_DIR}|${INSTALL_DIR}|g" \
     | sed "s|{BASE_URL}|${BASE_URL}|g" \
     | sed "s|{ADMIN_PASSWORD}|${SSP_ADMIN_PASSWORD}|g" \
     | sed "s|{SECRET_SALT}|${SSP_SECRET_SALT}|g" \
     | sed "s|{DOMAIN_NAME}|${DOMAIN_NAME}|g" | patch -p1
+
+# patch in PDO support
+patch -p0 < ${LAUNCH_DIR}/res/simplesamlphp-add-pdo-metadata-source-v4.diff
 
 # enable the example-userpass module
 touch modules/exampleauth/enable
@@ -160,10 +164,14 @@ SSP_SECRET_SALT=`env LC_CTYPE=C tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' 
 # update the BASE_URL in the patch and apply the simpleSAMLphp configuration 
 # patch to configure an IdP and SP
 cat ${LAUNCH_DIR}/config/simpleSAMLphp-SP.diff \
+    | sed "s|{INSTALL_DIR}|${INSTALL_DIR}|g" \
     | sed "s|{BASE_URL}|${BASE_URL}|g" \
     | sed "s|{ADMIN_PASSWORD}|${SSP_ADMIN_PASSWORD}|g" \
     | sed "s|{SECRET_SALT}|${SSP_SECRET_SALT}|g" \
     | sed "s|{CERT_FINGERPRINT}|${CERT_FINGERPRINT}|g" | patch -p1
+
+# patch in PDO support
+patch -p0 < ${LAUNCH_DIR}/res/simplesamlphp-add-pdo-metadata-source-v4.diff
 
 # Apache config
 echo "Alias ${BASE_PATH}/sspsp ${INSTALL_DIR}/ssp/sp/www" > ${INSTALL_DIR}/apache/oauth_sspsp.conf

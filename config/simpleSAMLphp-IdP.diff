@@ -1,6 +1,6 @@
 diff -urN simplesamlphp-1.10.0.orig/config/authsources.php simplesamlphp-1.10.0/config/authsources.php
---- simplesamlphp-1.10.0.orig/config/authsources.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/config/authsources.php	2012-12-17 09:49:37.000000000 +0100
+--- simplesamlphp-1.10.0.orig/config/authsources.php	2012-09-25 17:16:10.000000000 +0700
++++ simplesamlphp-1.10.0/config/authsources.php	2013-01-02 16:44:31.000000000 +0700
 @@ -49,6 +49,83 @@
  	),
  	*/
@@ -86,8 +86,8 @@ diff -urN simplesamlphp-1.10.0.orig/config/authsources.php simplesamlphp-1.10.0/
  	'example-userpass' => array(
  		'exampleauth:UserPass',
 diff -urN simplesamlphp-1.10.0.orig/config/config.php simplesamlphp-1.10.0/config/config.php
---- simplesamlphp-1.10.0.orig/config/config.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/config/config.php	2012-12-17 09:49:14.000000000 +0100
+--- simplesamlphp-1.10.0.orig/config/config.php	2012-09-25 17:16:10.000000000 +0700
++++ simplesamlphp-1.10.0/config/config.php	2013-01-02 16:44:50.000000000 +0700
 @@ -22,7 +22,7 @@
  	 * external url, no matter where you come from (direct access or via the
  	 * reverse proxy).
@@ -151,9 +151,17 @@ diff -urN simplesamlphp-1.10.0.orig/config/config.php simplesamlphp-1.10.0/confi
  
  	
  	/*
+@@ -491,6 +491,7 @@
+ 	 */
+ 	'metadata.sources' => array(
+ 		array('type' => 'flatfile'),
++		array('type' => 'pdo', 'dsn' => 'sqlite:{INSTALL_DIR}/php-ssp-api/data/metadata.sqlite'),
+ 	),
+ 
+ 
 diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php
---- simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php	2012-12-17 09:49:14.000000000 +0100
+--- simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php	2012-09-25 17:16:10.000000000 +0700
++++ simplesamlphp-1.10.0/metadata/saml20-idp-hosted.php	2013-01-02 16:44:31.000000000 +0700
 @@ -14,22 +14,22 @@
  	'host' => '__DEFAULT__',
  
@@ -182,25 +190,3 @@ diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-idp-hosted.php simplesamlphp
 -	*/
  
  );
-diff -urN simplesamlphp-1.10.0.orig/metadata/saml20-sp-remote.php simplesamlphp-1.10.0/metadata/saml20-sp-remote.php
---- simplesamlphp-1.10.0.orig/metadata/saml20-sp-remote.php	2012-09-25 12:16:10.000000000 +0200
-+++ simplesamlphp-1.10.0/metadata/saml20-sp-remote.php	2012-12-17 09:49:14.000000000 +0100
-@@ -25,3 +25,18 @@
- 	'simplesaml.nameidattribute' => 'uid',
- 	'simplesaml.attributes' => FALSE,
- );
-+
-+$metadata['{BASE_URL}/sspsp/module.php/saml/sp/metadata.php/default-sp'] = array(
-+	// support both transient and persistent NameID
-+	'authproc' => array(
-+		1 => array(
-+			'class' => 'saml:TransientNameID',
-+		),
-+		2 => array(
-+			'class' => 'saml:PersistentNameID',
-+			'attribute' => 'eduPersonPrincipalName',
-+		),	
-+	),
-+	'AssertionConsumerService' => '{BASE_URL}/sspsp/module.php/saml/sp/saml2-acs.php/default-sp',
-+	'SingleLogoutService' => '{BASE_URL}/sspsp/module.php/saml/sp/saml2-logout.php/default-sp',
-+);
