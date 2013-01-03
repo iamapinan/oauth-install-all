@@ -55,6 +55,7 @@ cat << EOF
 # * php-lib-remote-rs                                                         #
 # * php-ssp-api                                                               #
 # * php-oauth                                                                 #
+# * html-manage-ssp                                                           #
 # * html-manage-applications                                                  #
 # * html-manage-authorization                                                 #
 # * html-view-grades                                                          #
@@ -294,6 +295,22 @@ cat docs/apache.conf \
 cat ${LAUNCH_DIR}/config/client_registrations.json \
     | sed "s|{BASE_URL}|${BASE_URL}|g" > docs/myregistration.json
 php docs/registerClients.php docs/myregistration.json
+)
+
+cat << EOF
+###################
+# html-manage-ssp #
+###################
+EOF
+(
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/html-manage-ssp.git
+cd html-manage-ssp
+ln -s ../html-webapp-deps ext
+
+# configure
+cat config/config.js.default \
+    | sed "s|http://localhost|${BASE_URL}|g" > config/config.js
 )
 
 cat << EOF

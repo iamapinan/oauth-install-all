@@ -38,7 +38,7 @@
         "description": "Application for students and teachers to view grades.", 
         "icon": null, 
         "id": "html-view-grades", 
-        "name": "Grade Viewer",
+        "name": "Grade Viewer", 
         "redirect_uri": "{BASE_URL}/html-view-grades/index.html", 
         "secret": null, 
         "type": "user_agent_based_application"
@@ -97,5 +97,16 @@
         "redirect_uri": "{BASE_URL}/php-oauth-client/callback.php?id=wordpress", 
         "secret": "wp", 
         "type": "web_application"
+    }, 
+    {
+        "allowed_scope": "ssp", 
+        "contact_email": null, 
+        "description": "Application to manage the simpleSAMLphp metadata registrations.", 
+        "icon": null, 
+        "id": "html-manage-ssp", 
+        "name": "Manage simpleSAMLphp Metadata", 
+        "redirect_uri": "{BASE_URL}/html-manage-ssp/index.html", 
+        "secret": null, 
+        "type": "user_agent_based_application"
     }
 ]
