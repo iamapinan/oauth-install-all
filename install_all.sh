@@ -70,6 +70,7 @@ cat << EOF
 # * SAML Demo SP                                                              #
 # * OAuth Demo App                                                            #
 # * php-remoteStorage                                                         #
+# * html-music-player                                                         #
 ###############################################################################
 EOF
 
@@ -577,6 +578,22 @@ mv config/tmp_remoteStorage.ini config/remoteStorage.ini
 cat docs/apache.conf \
     | sed "s|/APPNAME|${BASE_PATH}/php-remoteStorage|g" \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-remoteStorage|g" > ${INSTALL_DIR}/apache/oauth_php-remoteStorage.conf
+)
+
+cat << EOF
+#####################
+# html-music-player #
+#####################
+EOF
+(
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/html-music-player.git
+cd html-music-player
+ln -s ../html-webapp-deps ext
+
+# configure
+cat config/config.js.default \
+    | sed "s|http://localhost|${BASE_URL}|g" > config/config.js
 )
 
 # Done
