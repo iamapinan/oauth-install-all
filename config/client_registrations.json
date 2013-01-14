@@ -110,7 +110,7 @@
         "type": "user_agent_based_application"
     },
     {
-        "allowed_scope": "music:r",
+        "allowed_scope": "music:r playlist:rw",
         "contact_email": null,
         "description": "Play your music stored on a remoteStorage server.",
         "icon": null,
