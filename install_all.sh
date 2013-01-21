@@ -134,6 +134,8 @@ cat ${LAUNCH_DIR}/config/simpleSAMLphp-IdP.diff \
 
 # patch in PDO support
 patch -p0 < ${LAUNCH_DIR}/res/simplesamlphp-add-pdo-metadata-source-v4.diff
+# very weird default context: unconfined_u:object_r:user_tmp_t:s0, restore it
+restorecon lib/SimpleSAML/Metadata/MetaDataStorageHandlerPdo.php
 
 # enable the example-userpass module
 touch modules/exampleauth/enable
@@ -174,6 +176,8 @@ cat ${LAUNCH_DIR}/config/simpleSAMLphp-SP.diff \
 
 # patch in PDO support
 patch -p0 < ${LAUNCH_DIR}/res/simplesamlphp-add-pdo-metadata-source-v4.diff
+# very weird default context: unconfined_u:object_r:user_tmp_t:s0, restore it
+restorecon lib/SimpleSAML/Metadata/MetaDataStorageHandlerPdo.php
 
 # Apache config
 echo "Alias ${BASE_PATH}/sspsp ${INSTALL_DIR}/ssp/sp/www" > ${INSTALL_DIR}/apache/oauth_sspsp.conf
