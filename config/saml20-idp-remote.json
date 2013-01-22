@@ -9,6 +9,7 @@
             }
         }, 
         "certFingerprint": "{CERT_FINGERPRINT}", 
-        "entityid": "{BASE_URL}/sspidp/saml2/idp/metadata.php"
+        "entityid": "{BASE_URL}/sspidp/saml2/idp/metadata.php", 
+        "name": "Identity Provider for '{DOMAIN_NAME}'"
     }
 ]

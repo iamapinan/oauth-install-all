@@ -133,7 +133,7 @@ cat ${LAUNCH_DIR}/config/simpleSAMLphp-IdP.diff \
     | sed "s|{DOMAIN_NAME}|${DOMAIN_NAME}|g" | patch -p1
 
 # patch in PDO support
-patch -p0 < ${LAUNCH_DIR}/res/simplesamlphp-add-pdo-metadata-source-v4.diff
+patch -p0 < ${LAUNCH_DIR}/res/simplesamlphp-add-pdo-metadata-source-v5.diff
 # very weird default context: unconfined_u:object_r:user_tmp_t:s0, restore it
 restorecon lib/SimpleSAML/Metadata/MetaDataStorageHandlerPdo.php
 
@@ -175,7 +175,7 @@ cat ${LAUNCH_DIR}/config/simpleSAMLphp-SP.diff \
     | sed "s|{CERT_FINGERPRINT}|${CERT_FINGERPRINT}|g" | patch -p1
 
 # patch in PDO support
-patch -p0 < ${LAUNCH_DIR}/res/simplesamlphp-add-pdo-metadata-source-v4.diff
+patch -p0 < ${LAUNCH_DIR}/res/simplesamlphp-add-pdo-metadata-source-v5.diff
 # very weird default context: unconfined_u:object_r:user_tmp_t:s0, restore it
 restorecon lib/SimpleSAML/Metadata/MetaDataStorageHandlerPdo.php
 
@@ -226,9 +226,11 @@ CERT_FINGERPRINT=`openssl x509 -inform PEM -in ../ssp/idp/cert/idp.crt -noout -f
 mkdir tmp/
 cat ${LAUNCH_DIR}/config/saml20-idp-remote.json \
     | sed "s|{BASE_URL}|${BASE_URL}|g" \
+    | sed "s|{DOMAIN_NAME}|${DOMAIN_NAME}|g" \
     | sed "s|{CERT_FINGERPRINT}|${CERT_FINGERPRINT}|g" > tmp/saml20-idp-remote.json
 
 cat ${LAUNCH_DIR}/config/saml20-sp-remote.json \
+    | sed "s|{DOMAIN_NAME}|${DOMAIN_NAME}|g" \
     | sed "s|{BASE_URL}|${BASE_URL}|g" > tmp/saml20-sp-remote.json
 
 php docs/importJsonMetadataPdo.php tmp/

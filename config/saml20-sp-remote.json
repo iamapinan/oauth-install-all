@@ -11,6 +11,7 @@
                 "class": "saml:PersistentNameID"
             }
         }, 
-        "entityid": "{BASE_URL}/sspsp/module.php/saml/sp/metadata.php/default-sp"
+        "entityid": "{BASE_URL}/sspsp/module.php/saml/sp/metadata.php/default-sp", 
+        "name": "Service Provider for '{DOMAIN_NAME}'"
     }
 ]
