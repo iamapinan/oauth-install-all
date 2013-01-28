@@ -133,7 +133,7 @@ cat ${LAUNCH_DIR}/config/simpleSAMLphp-IdP.diff \
     | sed "s|{DOMAIN_NAME}|${DOMAIN_NAME}|g" | patch -p1
 
 # patch in PDO support
-patch -p0 < ${LAUNCH_DIR}/res/simplesamlphp-add-pdo-metadata-source-v5.diff
+patch -p0 < ${LAUNCH_DIR}/res/simplesamlphp-add-pdo-metadata-source-v6.diff
 # very weird default context: unconfined_u:object_r:user_tmp_t:s0, restore it
 restorecon lib/SimpleSAML/Metadata/MetaDataStorageHandlerPdo.php
 
@@ -175,7 +175,7 @@ cat ${LAUNCH_DIR}/config/simpleSAMLphp-SP.diff \
     | sed "s|{CERT_FINGERPRINT}|${CERT_FINGERPRINT}|g" | patch -p1
 
 # patch in PDO support
-patch -p0 < ${LAUNCH_DIR}/res/simplesamlphp-add-pdo-metadata-source-v5.diff
+patch -p0 < ${LAUNCH_DIR}/res/simplesamlphp-add-pdo-metadata-source-v6.diff
 # very weird default context: unconfined_u:object_r:user_tmp_t:s0, restore it
 restorecon lib/SimpleSAML/Metadata/MetaDataStorageHandlerPdo.php
 
