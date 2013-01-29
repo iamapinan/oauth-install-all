@@ -319,6 +319,7 @@ ln -s ../html-webapp-deps ext
 cat config/config.js.default \
     | sed "s|http://localhost|${BASE_URL}|g" > config/config.js
 )
+cp config/attributes.js.default config/attributes.js
 
 cat << EOF
 ############################
