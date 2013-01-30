@@ -1,9 +1,13 @@
 [
     {
-        "AssertionConsumerService": "{BASE_URL}/sspsp/module.php/saml/sp/saml2-acs.php/default-sp", 
+        "AssertionConsumerService": {
+            "Binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST", 
+            "Location": "{BASE_URL}/sspsp/module.php/saml/sp/saml2-acs.php/default-sp"
+        }, 
         "IDPList": [
             "{BASE_URL}/sspidp/saml2/idp/metadata.php"
         ], 
+        "NameIDFormat": "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent", 
         "SingleLogoutService": "{BASE_URL}/sspsp/module.php/saml/sp/saml2-logout.php/default-sp", 
         "attributes": [
             "uid", 
