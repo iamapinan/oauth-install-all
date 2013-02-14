@@ -27,6 +27,11 @@
             "2": {
                 "attribute": "eduPersonPrincipalName", 
                 "class": "saml:PersistentNameID"
+            }, 
+            "3": {
+                "Format": "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress", 
+                "attribute": "mail", 
+                "class": "saml:AttributeNameID"
             }
         }, 
         "entityid": "{BASE_URL}/sspsp/module.php/saml/sp/metadata.php/default-sp", 
