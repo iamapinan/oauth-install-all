@@ -10,15 +10,8 @@
         "NameIDFormat": "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent", 
         "SingleLogoutService": "{BASE_URL}/sspsp/module.php/saml/sp/saml2-logout.php/default-sp", 
         "attributes": [
-            "uid", 
             "eduPersonEntitlement", 
-            "eduPersonPrincipalName", 
-            "eduPersonAffiliation", 
             "cn", 
-            "givenName", 
-            "sn", 
-            "mail", 
-            "schacHomeOrganization"
         ], 
         "authproc": {
             "1": {

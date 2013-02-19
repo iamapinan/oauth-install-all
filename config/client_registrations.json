@@ -108,16 +108,27 @@
         "redirect_uri": "{BASE_URL}/html-manage-ssp/index.html", 
         "secret": null, 
         "type": "user_agent_based_application"
-    },
+    }, 
     {
-        "allowed_scope": "music:r playlist:rw",
-        "contact_email": null,
-        "description": "Play your music stored on a remoteStorage server.",
-        "icon": null,
-        "id": "html-music-player",
-        "name": "Music Player",
-        "redirect_uri": "{BASE_URL}/html-music-player/index.html",
-        "secret": null,
+        "allowed_scope": "music:r playlist:rw", 
+        "contact_email": null, 
+        "description": "Play your music stored on a remoteStorage server.", 
+        "icon": null, 
+        "id": "html-music-player", 
+        "name": "Music Player", 
+        "redirect_uri": "{BASE_URL}/html-music-player/index.html", 
+        "secret": null, 
         "type": "user_agent_based_application"
+    }, 
+    {
+        "allowed_scope": "read", 
+        "contact_email": "mark@overmeer.net", 
+        "description": null, 
+        "icon": null, 
+        "id": "sympa", 
+        "name": "sympa mailinglist software", 
+        "redirect_uri": "http://localhost/sympa", 
+        "secret": "apsym", 
+        "type": "web_application"
     }
 ]
