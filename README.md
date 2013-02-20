@@ -3,10 +3,9 @@ This project installs all components for running an OAuth 2.0 service for
 evaluating, testing and development.
 
 It consist of an authorization server, a resource server and test clients. For
-authentication the simpleSAMLphp framework is used as a SAML identity provider
-and service provider. That way, the full stack is controlled and there are 
-no outside dependencies anymore which is perfect for development purposes and
-running it for instance in a virtual machine.
+authentication the SimpleAuth library is used. This way, the full stack is 
+controlled and there are no outside dependencies anymore which is perfect for 
+development purposes and running it for instance in a virtual machine.
 
 You can run this script on Linux and Mac OS X systems.
 
