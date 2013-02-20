@@ -11,7 +11,9 @@
         "SingleLogoutService": "{BASE_URL}/sspsp/module.php/saml/sp/saml2-logout.php/default-sp", 
         "attributes": [
             "eduPersonEntitlement", 
-            "cn"
+            "cn", 
+            "uid", 
+            "schacHomeOrganization"
         ], 
         "authproc": {
             "1": {
