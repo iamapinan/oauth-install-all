@@ -50,6 +50,7 @@ cat << EOF
 #                                                                             #
 # * php-rest-service                                                          #
 # * php-lib-remote-rs                                                         #
+# * php-simple-auth
 # * php-oauth                                                                 #
 # * html-manage-applications                                                  #
 # * html-manage-authorization                                                 #
@@ -139,6 +140,24 @@ curl -o html-webapp-deps/bootstrap.zip http://twitter.github.com/bootstrap/asset
 )
 
 cat << EOF
+###################
+# php-simple-auth #
+###################
+EOF
+(
+cd ${INSTALL_DIR}
+git clone https://github.com/fkooman/php-simple-auth.git
+cd php-simple-auth
+cp config/users.json.example config/users.json
+ln -s ../../html-webapp-deps www/ext
+
+# Apache config
+cat docs/apache.conf \
+    | sed "s|/APPNAME|${BASE_PATH}/php-simple-auth|g" \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-simple-auth|g" > ${INSTALL_DIR}/apache/oauth_php-simple-auth.conf
+)
+
+cat << EOF
 #############
 # php-oauth #
 #############
@@ -161,7 +180,11 @@ cat config/oauth.ini.defaults \
     | sed "s|allowResourceOwnerScopeFiltering = FALSE|allowResourceOwnerScopeFiltering = TRUE|g" \
     | sed "s|accessTokenExpiry = 3600|accessTokenExpiry = 28800|g" \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth|g" \
-    | sed "s|enableApi = FALSE|enableApi = TRUE|g" > config/oauth.ini
+    | sed "s|enableApi = FALSE|enableApi = TRUE|g" \
+    | sed "s|/var/www/html/php-simple-auth|${INSTALL_DIR}/php-simple-auth|g" > config/oauth.ini
+
+# copy the attributes file
+cp config/simpleAuthAttributes.json.example config/simpleAuthAttributes.json
 
 # Apache config
 cat docs/apache.conf \
