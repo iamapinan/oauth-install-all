@@ -41,8 +41,6 @@ else
     DOMAIN_NAME=`echo ${BASE_URL} | sed "s|[^/]*\/\/||g" | sed "s|:.*||g" | sed "s|\/.*||g"`
 fi
 
-SIMPLESAMLPHP_VERSION=1.10.0
-
 cat << EOF
 ###############################################################################
 # This script installs the following components to have a fully functional    #

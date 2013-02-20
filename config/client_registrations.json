@@ -99,17 +99,6 @@
         "type": "web_application"
     }, 
     {
-        "allowed_scope": "ssp", 
-        "contact_email": null, 
-        "description": "Application to manage the simpleSAMLphp metadata registrations.", 
-        "icon": null, 
-        "id": "html-manage-ssp", 
-        "name": "Manage simpleSAMLphp Metadata", 
-        "redirect_uri": "{BASE_URL}/html-manage-ssp/index.html", 
-        "secret": null, 
-        "type": "user_agent_based_application"
-    }, 
-    {
         "allowed_scope": "music:r playlist:rw", 
         "contact_email": null, 
         "description": "Play your music stored on a remoteStorage server.", 
