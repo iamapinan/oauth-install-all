@@ -82,7 +82,6 @@ done
 
 rm -rf ${INSTALL_DIR}/*
 
-mkdir -p ${INSTALL_DIR}/downloads
 mkdir -p ${INSTALL_DIR}/apache
 
 # the index page
