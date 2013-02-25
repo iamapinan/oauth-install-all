@@ -56,13 +56,7 @@ cat << EOF
 # * html-manage-authorization                                                 #
 # * html-view-grades                                                          #
 # * php-oauth-grades-rs                                                       #
-# * php-oauth-demo-client                                                     #
 # * php-oauth-client                                                          #
-# * php-oauth-example-rs                                                      #
-# * php-voot-proxy                                                            #
-# * php-voot-provider                                                         #
-# * html-voot-client                                                          #
-# * voot-specification                                                        #
 # * OAuth Demo App                                                            #
 # * php-remoteStorage                                                         #
 # * html-music-player                                                         #
@@ -245,23 +239,6 @@ cat config/config.js.default \
 )
 
 cat << EOF
-#########################
-# php-oauth-demo-client #
-#########################
-EOF
-(
-cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-oauth-demo-client.git
-cd php-oauth-demo-client
-
-mkdir extlib
-ln -s ../../php-rest-service extlib/
-
-cat ${LAUNCH_DIR}/config/debug_configuration.json \
-    | sed "s|{BASE_URL}|${BASE_URL}|g" > config.json
-)
-
-cat << EOF
 ####################
 # php-oauth-client #
 ####################
@@ -289,26 +266,6 @@ cat docs/apache.conf \
 )
 
 cat << EOF
-########################
-# php-oauth-example-rs #
-########################
-EOF
-(
-cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-oauth-example-rs.git
-cd php-oauth-example-rs
-
-mkdir extlib
-ln -s ../../php-lib-remote-rs extlib/
-
-sh docs/configure.sh
-
-cat config/rs.ini \
-    | sed "s|http://localhost/php-oauth/tokeninfo.php|${BASE_URL}/php-oauth/tokeninfo.php|g" > config/tmp_rs.ini
-mv config/tmp_rs.ini config/rs.ini
-)
-
-cat << EOF
 #######################
 # php-oauth-grades-rs #
 #######################
@@ -332,83 +289,6 @@ mv config/tmp_rs.ini config/rs.ini
 cat docs/apache.conf \
     | sed "s|/APPNAME|${BASE_PATH}/php-oauth-grades-rs|g" \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth-grades-rs|g" > ${INSTALL_DIR}/apache/oauth_php-oauth-grades-rs.conf
-)
-
-cat << EOF
-#####################
-# php-voot-provider #
-#####################
-EOF
-(
-cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-voot-provider.git
-cd php-voot-provider
-
-mkdir extlib
-ln -s ../../php-rest-service extlib/
-
-sh docs/configure.sh
-php docs/initVootDatabase.php
-cat docs/apache.conf \
-    | sed "s|/APPNAME|${BASE_PATH}/php-voot-provider|g" \
-    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-voot-provider|g" > ${INSTALL_DIR}/apache/oauth_php-voot-provider.conf
-)
-
-cat << EOF
-##################
-# php-voot-proxy #
-##################
-EOF
-(
-cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-voot-proxy.git
-cd php-voot-proxy
-
-mkdir extlib
-ln -s ../../php-rest-service extlib/
-ln -s ../../php-lib-remote-rs extlib/
-
-sh docs/configure.sh
-
-cat config/proxy.ini \
-    | sed "s|http://localhost/php-oauth/tokeninfo.php|${BASE_URL}/php-oauth/tokeninfo.php|g" > config/tmp_proxy.ini
-mv config/tmp_proxy.ini config/proxy.ini
-
-php docs/initProxyDatabase.php
-cat docs/apache.conf \
-    | sed "s|/APPNAME|${BASE_PATH}/php-voot-proxy|g" \
-    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-voot-proxy|g" > ${INSTALL_DIR}/apache/oauth_php-voot-proxy.conf
-
-# Register Providers
-cat ${LAUNCH_DIR}/config/provider_registrations.json \
-    | sed "s|{BASE_URL}|${BASE_URL}|g" > docs/myregistration.json
-php docs/registerProviders.php docs/myregistration.json
-)
-
-cat << EOF
-####################
-# html-voot-client #
-####################
-EOF
-(
-cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/html-voot-client.git
-cd html-voot-client
-ln -s ../html-webapp-deps ext
-
-# configure
-cat config/config.js.default \
-    | sed "s|http://localhost|${BASE_URL}|g" > config/config.js
-)
-
-cat << EOF
-######################
-# voot-specification #
-######################
-EOF
-(
-cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/voot-specification.git
 )
 
 cat << EOF

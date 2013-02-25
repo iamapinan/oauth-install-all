@@ -22,17 +22,6 @@
         "type": "user_agent_based_application"
     }, 
     {
-        "allowed_scope": "read", 
-        "contact_email": null, 
-        "description": "Application to view your group membership and other members of your groups.", 
-        "icon": null, 
-        "id": "html-voot-client", 
-        "name": "Group Membership Viewer", 
-        "redirect_uri": "{BASE_URL}/html-voot-client/index.html", 
-        "secret": null, 
-        "type": "user_agent_based_application"
-    }, 
-    {
         "allowed_scope": "grades", 
         "contact_email": null, 
         "description": "Application for students and teachers to view grades.", 
@@ -42,17 +31,6 @@
         "redirect_uri": "{BASE_URL}/html-view-grades/index.html", 
         "secret": null, 
         "type": "user_agent_based_application"
-    }, 
-    {
-        "allowed_scope": "read grades authorizations applications", 
-        "contact_email": null, 
-        "description": "Debug Client", 
-        "icon": null, 
-        "id": "debug_client", 
-        "name": "OAuth Debug Client", 
-        "redirect_uri": "{BASE_URL}/php-oauth-demo-client/index.php", 
-        "secret": "s3cr3t", 
-        "type": "web_application"
     }, 
     {
         "allowed_scope": "authorizations", 
@@ -66,39 +44,6 @@
         "type": "web_application"
     }, 
     {
-        "allowed_scope": "grades", 
-        "contact_email": null, 
-        "description": "OpenConext OAuth 2.0 Demo Application for testing OAuth in mobile applications.", 
-        "icon": null, 
-        "id": "oauth-mobile-app", 
-        "name": "OpenConext OAuth 2.0 Demo Application", 
-        "redirect_uri": "oauth-mobile-app://callback", 
-        "secret": null, 
-        "type": "native_application"
-    }, 
-    {
-        "allowed_scope": "read authorizations grades owncloud", 
-        "contact_email": null, 
-        "description": null, 
-        "icon": null, 
-        "id": "com.demo.test.my", 
-        "name": "App Demo Test oAuth", 
-        "redirect_uri": "owncloud://callback", 
-        "secret": null, 
-        "type": "native_application"
-    }, 
-    {
-        "allowed_scope": "read", 
-        "contact_email": null, 
-        "description": null, 
-        "icon": null, 
-        "id": "wordpress", 
-        "name": "WordPress", 
-        "redirect_uri": "{BASE_URL}/php-oauth-client/callback.php?id=wordpress", 
-        "secret": "wp", 
-        "type": "web_application"
-    }, 
-    {
         "allowed_scope": "music:r playlist:rw", 
         "contact_email": null, 
         "description": "Play your music stored on a remoteStorage server.", 
@@ -108,16 +53,5 @@
         "redirect_uri": "{BASE_URL}/html-music-player/index.html", 
         "secret": null, 
         "type": "user_agent_based_application"
-    }, 
-    {
-        "allowed_scope": "read", 
-        "contact_email": "mark@overmeer.net", 
-        "description": null, 
-        "icon": null, 
-        "id": "sympa", 
-        "name": "sympa mailinglist software", 
-        "redirect_uri": "http://localhost/sympa", 
-        "secret": "apsym", 
-        "type": "web_application"
     }
 ]
