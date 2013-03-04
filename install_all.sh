@@ -39,6 +39,7 @@ else
     BASE_URL=$2
     BASE_PATH=`echo ${BASE_URL} | sed "s|[^/]*\/\/[^/]*||g"`
     DOMAIN_NAME=`echo ${BASE_URL} | sed "s|[^/]*\/\/||g" | sed "s|:.*||g" | sed "s|\/.*||g"`
+    DATE_TIME=`date`
 fi
 
 cat << EOF
@@ -86,7 +87,8 @@ mkdir -p ${INSTALL_DIR}/apache
 
 # the index page
 cat ${LAUNCH_DIR}/res/index.html \
-    | sed "s|{BASE_URL}|${BASE_URL}|g" > ${INSTALL_DIR}/index.html
+    | sed "s|{BASE_URL}|${BASE_URL}|g" \
+    | sed "s|{DATE_TIME}|${DATE_TIME}|g" > ${INSTALL_DIR}/index.html
 
 cat << EOF
 #####################################
