@@ -1,4 +1,5 @@
-{    "demo-oauth-app": {
+{
+    "demo-oauth-app": {
         "authorize_endpoint": "{BASE_URL}/php-oauth/authorize.php", 
         "client_id": "demo-oauth-client", 
         "client_secret": "foobar", 
