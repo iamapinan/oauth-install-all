@@ -120,16 +120,16 @@ mkdir -p html-webapp-deps/js
 mkdir -p html-webapp-deps/bootstrap
 
 # jQuery
-curl -o html-webapp-deps/js/jquery.js http://code.jquery.com/jquery.min.js
+curl -L -o html-webapp-deps/js/jquery.js http://code.jquery.com/jquery.min.js
 
 # JSrender (JavaScript Template Rendering for jQuery)
-curl -o html-webapp-deps/js/jsrender.js https://raw.github.com/BorisMoore/jsrender/master/jsrender.js
+curl -L -o html-webapp-deps/js/jsrender.js https://raw.github.com/BorisMoore/jsrender/master/jsrender.js
 
 # JSO (JavaScript OAuth 2 client)
-curl -o html-webapp-deps/js/jso.js https://raw.github.com/andreassolberg/jso/master/jso.js
+curl -L -o html-webapp-deps/js/jso.js https://raw.github.com/andreassolberg/jso/master/jso.js
 
 # Bootstrap
-curl -o html-webapp-deps/bootstrap.zip http://twitter.github.com/bootstrap/assets/bootstrap.zip
+curl -L -o html-webapp-deps/bootstrap.zip http://twitter.github.io/bootstrap/assets/bootstrap.zip
 (cd html-webapp-deps/ && unzip bootstrap.zip && rm bootstrap.zip)
 )
 
