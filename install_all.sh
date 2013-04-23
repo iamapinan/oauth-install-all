@@ -50,8 +50,8 @@ cat << EOF
 # The following components will be installed:                                 #
 #                                                                             #
 # * php-rest-service                                                          #
-# * php-lib-remote-rs                                                         #
-# * php-simple-auth
+# * php-oauth-lib-rs                                                          #
+# * php-simple-auth                                                           #
 # * php-oauth                                                                 #
 # * html-manage-applications                                                  #
 # * html-manage-authorization                                                 #
@@ -100,13 +100,13 @@ cd ${INSTALL_DIR}
 git clone https://github.com/fkooman/php-rest-service.git
 )
 cat << EOF
-######################################
-# php-lib-remote-rs (SHARED LIBRARY) #
-######################################
+#####################################
+# php-oauth-lib-rs (SHARED LIBRARY) #
+#####################################
 EOF
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-lib-remote-rs.git
+git clone https://github.com/fkooman/php-oauth-lib-rs.git
 )
 
 cat << EOF
@@ -278,7 +278,7 @@ cd php-oauth-grades-rs
 
 mkdir extlib
 ln -s ../../php-rest-service extlib/
-ln -s ../../php-lib-remote-rs extlib/
+ln -s ../../php-oauth-lib-rs extlib/
 
 sh docs/configure.sh
 
@@ -318,7 +318,7 @@ git checkout devel      # for now use devel branch
 
 mkdir extlib
 ln -s ../../php-rest-service extlib/
-ln -s ../../php-lib-remote-rs extlib/
+ln -s ../../php-oauth-lib-rs extlib/
 
 sh docs/configure.sh
 
