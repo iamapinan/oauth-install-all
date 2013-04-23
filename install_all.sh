@@ -283,7 +283,7 @@ ln -s ../../php-oauth-lib-rs extlib/
 sh docs/configure.sh
 
 cat config/rs.ini \
-    | sed "s|http://localhost/php-oauth/tokeninfo.php|${BASE_URL}/php-oauth/tokeninfo.php|g" > config/tmp_rs.ini
+    | sed "s|http://localhost/php-oauth/introspect.php|${BASE_URL}/php-oauth/introspect.php|g" > config/tmp_rs.ini
 mv config/tmp_rs.ini config/rs.ini
 
 # Apache config
@@ -323,7 +323,7 @@ ln -s ../../php-oauth-lib-rs extlib/
 sh docs/configure.sh
 
 cat config/remoteStorage.ini \
-    | sed "s|http://localhost/php-oauth/tokeninfo.php|${BASE_URL}/php-oauth/tokeninfo.php|g" > config/tmp_remoteStorage.ini
+    | sed "s|http://localhost/php-oauth/introspect.php|${BASE_URL}/php-oauth/introspect.php|g" > config/tmp_remoteStorage.ini
 mv config/tmp_remoteStorage.ini config/remoteStorage.ini
 
 cat docs/apache.conf \
