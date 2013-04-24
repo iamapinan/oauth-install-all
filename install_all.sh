@@ -56,7 +56,7 @@ cat << EOF
 # * html-manage-applications                                                  #
 # * html-manage-authorization                                                 #
 # * html-view-grades                                                          #
-# * php-oauth-grades-rs                                                       #
+# * php-grades-rs                                                             #
 # * php-oauth-client                                                          #
 # * OAuth Demo App                                                            #
 # * php-remoteStorage                                                         #
@@ -267,14 +267,14 @@ cat docs/apache.conf \
 )
 
 cat << EOF
-#######################
-# php-oauth-grades-rs #
-#######################
+#################
+# php-grades-rs #
+#################
 EOF
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-oauth-grades-rs.git
-cd php-oauth-grades-rs
+git clone https://github.com/fkooman/php-grades-rs.git
+cd php-grades-rs
 
 mkdir extlib
 ln -s ../../php-rest-service extlib/
@@ -288,8 +288,8 @@ mv config/tmp_rs.ini config/rs.ini
 
 # Apache config
 cat docs/apache.conf \
-    | sed "s|/APPNAME|${BASE_PATH}/php-oauth-grades-rs|g" \
-    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth-grades-rs|g" > ${INSTALL_DIR}/apache/oauth_php-oauth-grades-rs.conf
+    | sed "s|/APPNAME|${BASE_PATH}/php-grades-rs|g" \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-grades-rs|g" > ${INSTALL_DIR}/apache/oauth_php-grades-rs.conf
 )
 
 cat << EOF
