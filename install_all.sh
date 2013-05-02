@@ -257,9 +257,7 @@ php docs/initDatabase.php
 
 # Register Applications
 cat ${LAUNCH_DIR}/config/application_registrations.json \
-    | sed "s|{BASE_URL}|${BASE_URL}|g" > docs/myregistration.json
-
-php docs/registerApplications.php docs/myregistration.json
+    | sed "s|{BASE_URL}|${BASE_URL}|g" > config/clientConfig.json
 
 cat docs/apache.conf \
     | sed "s|/APPNAME|${BASE_PATH}/php-oauth-client|g" \
