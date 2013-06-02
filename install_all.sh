@@ -1,9 +1,19 @@
 #!/bin/bash
 
+if [ -f "versions.sh" ]
+then
+    echo "**** Using custom 'versions.sh'..."
+    source versions.sh
+else
+    echo "**** Using default 'versions.sh.default'..."
+    source versions.sh.default
+fi
+
 if [ -z "$1" ]
 then
 
 cat << EOF
+
     Please specify the location to install to. 
 
     Examples:
@@ -84,11 +94,17 @@ done
 rm -rf ${INSTALL_DIR}/*
 
 mkdir -p ${INSTALL_DIR}/apache
+mkdir -p ${INSTALL_DIR}/downloads
 
 # the index page
 cat ${LAUNCH_DIR}/res/index.html \
     | sed "s|{BASE_URL}|${BASE_URL}|g" \
     | sed "s|{DATE_TIME}|${DATE_TIME}|g" > ${INSTALL_DIR}/index.html
+
+(
+cd ${INSTALL_DIR}/downloads
+curl -O http://getcomposer.org/composer.phar
+)
 
 cat << EOF
 #####################################
@@ -97,7 +113,7 @@ cat << EOF
 EOF
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-rest-service.git
+git clone -b ${PHP_REST_SERVICE_BRANCH} https://github.com/fkooman/php-rest-service.git
 )
 cat << EOF
 #####################################
@@ -106,7 +122,7 @@ cat << EOF
 EOF
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-oauth-lib-rs.git
+git clone -b ${PHP_OAUTH_LIB_RS_BRANCH} https://github.com/fkooman/php-oauth-lib-rs.git
 )
 
 cat << EOF
@@ -140,7 +156,7 @@ cat << EOF
 EOF
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-simple-auth.git
+git clone -b ${PHP_SIMPLE_AUTH_BRANCH} https://github.com/fkooman/php-simple-auth.git
 cd php-simple-auth
 cp config/users.json.example config/users.json
 ln -s ../../html-webapp-deps www/ext
@@ -158,7 +174,7 @@ cat << EOF
 EOF
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-oauth.git
+git clone -b ${PHP_OAUTH_BRANCH} https://github.com/fkooman/php-oauth.git
 cd php-oauth
 
 mkdir extlib
@@ -178,7 +194,7 @@ cat config/oauth.ini.defaults \
     | sed "s|/var/www/html/php-simple-auth|${INSTALL_DIR}/php-simple-auth|g" > config/oauth.ini
 
 # copy the attributes file
-cp config/simpleAuthAttributes.json.example config/simpleAuthAttributes.json
+cp config/simpleAuthEntitlement.json.example config/simpleAuthEntitlement.json
 
 # Apache config
 cat docs/apache.conf \
@@ -198,7 +214,7 @@ cat << EOF
 EOF
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/html-manage-applications.git
+git clone -b ${HTML_MANAGE_APPLICATIONS_BRANCH} https://github.com/fkooman/html-manage-applications.git
 cd html-manage-applications
 ln -s ../html-webapp-deps ext
 
@@ -214,7 +230,7 @@ cat << EOF
 EOF
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/html-manage-authorizations.git
+git clone -b ${HTML_MANAGE_AUTHORIZATIONS_BRANCH} https://github.com/fkooman/html-manage-authorizations.git
 cd html-manage-authorizations
 ln -s ../html-webapp-deps ext
 
@@ -230,7 +246,7 @@ cat << EOF
 EOF
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/html-view-grades.git
+git clone -b ${HTML_VIEW_GRADES_BRANCH} https://github.com/fkooman/html-view-grades.git
 cd html-view-grades
 ln -s ../html-webapp-deps ext
 
@@ -246,11 +262,10 @@ cat << EOF
 EOF
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-oauth-client.git
+git clone -b ${PHP_OAUTH_CLIENT_BRANCH} https://github.com/fkooman/php-oauth-client.git
 cd php-oauth-client
 
-mkdir extlib
-ln -s ../../php-rest-service extlib/
+php ${INSTALL_DIR}/downloads/composer.phar install
 
 sh docs/configure.sh
 php docs/initDatabase.php
@@ -271,7 +286,7 @@ cat << EOF
 EOF
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-grades-rs.git
+git clone -b ${PHP_GRADES_RS_BRANCH} https://github.com/fkooman/php-grades-rs.git
 cd php-grades-rs
 
 mkdir extlib
@@ -310,9 +325,8 @@ cat << EOF
 EOF
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/php-remoteStorage.git
+git clone -b ${PHP_REMOTE_STORAGE_BRANCH} https://github.com/fkooman/php-remoteStorage.git
 cd php-remoteStorage
-git checkout devel      # for now use devel branch
 
 mkdir extlib
 ln -s ../../php-rest-service extlib/
@@ -336,7 +350,7 @@ cat << EOF
 EOF
 (
 cd ${INSTALL_DIR}
-git clone https://github.com/fkooman/html-music-player.git
+git clone -b ${HTML_MUSIC_PLAYER_BRANCH} https://github.com/fkooman/html-music-player.git
 cd html-music-player
 ln -s ../html-webapp-deps ext
 
