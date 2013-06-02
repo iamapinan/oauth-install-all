@@ -3,10 +3,10 @@
 if [ -f "versions.sh" ]
 then
     echo "**** Using custom 'versions.sh'..."
-    source versions.sh
+    source ./versions.sh
 else
     echo "**** Using default 'versions.sh.default'..."
-    source versions.sh.default
+    source ./versions.sh.default
 fi
 
 if [ -z "$1" ]
