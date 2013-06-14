@@ -266,13 +266,14 @@ git clone -b ${PHP_OAUTH_CLIENT_BRANCH} https://github.com/fkooman/php-oauth-cli
 cd php-oauth-client
 
 php ${INSTALL_DIR}/downloads/composer.phar install
+restorecon -R vendor
 
-sh docs/configure.sh
-php docs/initDatabase.php
+sh bin/configure.sh
+php bin/initDatabase.php
 
-# Register Applications
-cat ${LAUNCH_DIR}/config/application_registrations.json \
-    | sed "s|{BASE_URL}|${BASE_URL}|g" > config/clientConfig.json
+# Registration
+cat ${LAUNCH_DIR}/config/registration.yaml \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" >> config/config.yaml
 
 cat docs/apache.conf \
     | sed "s|/APPNAME|${BASE_PATH}/php-oauth-client|g" \
