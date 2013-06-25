@@ -13,7 +13,6 @@ if [ -z "$1" ]
 then
 
 cat << EOF
-
     Please specify the location to install to. 
 
     Examples:

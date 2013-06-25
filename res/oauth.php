@@ -10,14 +10,13 @@ try {
 
     // then we go and obtain an access token and bind it to the
     // user logged into this application...
-    $a = new \fkooman\OAuth\Client\Api("demo-oauth-app");
-    $a->setUserId($userId);
-    $a->setScope(array("authorizations"));
+    $a = new \fkooman\OAuth\Client\Api("demo-oauth-app", $userId, array("authorizations"));
+    $a->setReturnUri("{BASE_URL}/demo-oauth-app/index.php");
     $response = $a->makeRequest("{BASE_URL}/php-oauth/api.php/authorizations/");
     header("Content-Type: application/json");
     echo $response->getBody();
-} catch (\fkooman\OAuth\Client\ApiException $e) {
-    echo $e->getMessage();
 } catch (SimpleAuthException $e) {
-    echo $e->getMessage();
+    echo sprintf("SimpleAuthException: %s", $e->getMessage());
+} catch (Exception $e) {
+    echo sprintf("Exception: %s", $e->getMessage());
 }
