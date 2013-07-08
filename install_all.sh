@@ -186,7 +186,6 @@ php docs/initOAuthDatabase.php
 cat config/oauth.ini.defaults \
     | sed "s|authenticationMechanism = \"DummyResourceOwner\"|;authenticationMechanism = \"DummyResourceOwner\"|g" \
     | sed "s|;authenticationMechanism = \"SimpleAuthResourceOwner\"|authenticationMechanism = \"SimpleAuthResourceOwner\"|g" \
-    | sed "s|allowResourceOwnerScopeFiltering = FALSE|allowResourceOwnerScopeFiltering = TRUE|g" \
     | sed "s|accessTokenExpiry = 3600|accessTokenExpiry = 28800|g" \
     | sed "s|/PATH/TO/APP|${INSTALL_DIR}/php-oauth|g" \
     | sed "s|enableApi = FALSE|enableApi = TRUE|g" \
