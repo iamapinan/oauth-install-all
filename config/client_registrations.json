@@ -37,9 +37,9 @@
         "contact_email": null, 
         "description": "Simple Demo OAuth Application", 
         "icon": "{BASE_URL}/php-oauth/img/placeholder.png", 
-        "id": "demo-oauth-client", 
+        "id": "demo-oauth-app", 
         "name": "Demo OAuth App", 
-        "redirect_uri": "{BASE_URL}/php-oauth-client/callback.php?id=demo-oauth-app", 
+        "redirect_uri": "{BASE_URL}/demo-oauth-app/callback.php",
         "secret": "foobar", 
         "type": "web_application"
     }, 
