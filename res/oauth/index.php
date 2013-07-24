@@ -1,6 +1,7 @@
 <?php
 
 use fkooman\OAuth\Client\Api;
+use fkooman\OAuth\Client\Context;
 use fkooman\OAuth\Client\ClientConfig;
 use fkooman\OAuth\Client\SessionStorage;
 use Guzzle\Http\Client;
@@ -16,64 +17,53 @@ try {
     $userId = $auth->authenticate();
 
     /* OAuth client configuration */
-    $clientConfig = ClientConfig::fromArray(array(
-        "authorize_endpoint" => "{BASE_URL}/php-oauth/authorize.php",
-        "client_id" => "demo-oauth-app",
-        "client_secret" => "foobar",
-        "token_endpoint" => "{BASE_URL}/php-oauth/token.php",
-    ));
+    $clientConfig = new ClientConfig(
+        array(
+            "authorize_endpoint" => "{BASE_URL}/php-oauth/authorize.php",
+            "client_id" => "demo-oauth-app",
+            "client_secret" => "foobar",
+            "token_endpoint" => "{BASE_URL}/php-oauth/token.php",
+        )
+    );
 
     /* the OAuth 2.0 protected URI */
     $apiUri = "{BASE_URL}/php-oauth/api.php/authorizations/";
 
     /* initialize the API */
-    $api = new Api();
-    $api->setClientConfig("demo-oauth-app", $clientConfig);
-    $api->setStorage(new SessionStorage());
-    $api->setHttpClient(new Client());
+    $api = new Api("demo-oauth-app", $clientConfig, new SessionStorage(), new Client());
+    $context = new Context($userId, array("authorizations"));
 
-    /* the user to bind the tokens to */
-    $api->setUserId($userId);
-
-    /* the scope you want to request */
-    $api->setScope(array("authorizations"));
-
-    $output = fetchTokenAndData($api, $apiUri);
-
-    header("Content-Type: application/json");
-    echo $output;
-
-} catch (\Exception $e) {
-    echo sprintf("ERROR: %s", $e->getMessage());
-}
-
-function fetchTokenAndData(Api $api, $apiUri)
-{
     /* check if an access token is available */
-    $accessToken = $api->getAccessToken();
+    $accessToken = $api->getAccessToken($context);
     if (false === $accessToken) {
         /* no valid access token available, go to authorization server */
         header("HTTP/1.1 302 Found");
-        header("Location: " . $api->getAuthorizeUri());
+        header("Location: " . $api->getAuthorizeUri($context));
         exit;
     }
 
-    /* we have an access token that appears valid */
     try {
         $client = new Client();
         $bearerAuth = new BearerAuth($accessToken->getAccessToken());
         $client->addSubscriber($bearerAuth);
         $response = $client->get($apiUri)->send();
 
-        return $response->getBody();
+        header("Content-Type: application/json");
+        echo $response->getBody();
     } catch (BearerErrorResponseException $e) {
         if ("invalid_token" === $e->getBearerReason()) {
             // the token we used was invalid, possibly revoked, we throw it away
-            $api->deleteAccessToken();
-            // and try again...
-            return fetchTokenAndData($api, $apiUri);
+            $api->deleteAccessToken($context);
+            $api->deleteRefreshToken($context);
+
+            /* no valid access token available, go to authorization server */
+            header("HTTP/1.1 302 Found");
+            header("Location: " . $api->getAuthorizeUri($context));
+            exit;
         }
         throw $e;
     }
 
+} catch (\Exception $e) {
+    echo sprintf("ERROR: %s", $e->getMessage());
 }
