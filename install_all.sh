@@ -51,6 +51,22 @@ else
     DATE_TIME=`date`
 fi
 
+# for development purposes it can be useful to disable the SSL certificate 
+# check for backchannel calls where accepting a self-signed certificate in
+# the browser is not enough. SSL CHECK IS ENABLED BY DEFAULT AND *REALLY* MUST
+# be used. UNDOCUMENTED ON PURPOSE! DO NOT USE!
+if [ -z "$3" ]
+then
+    ENABLE_CERTIFICATE_CHECK="true"
+else
+    if [ "disable_cert_check" == "$3" ]
+    then
+        ENABLE_CERTIFICATE_CHECK="false"
+    else
+        ENABLE_CERTIFICATE_CHECK="true"
+    fi
+fi
+
 cat << EOF
 ###############################################################################
 # This script installs the following components to have a fully functional    #
@@ -288,9 +304,11 @@ mkdir -p ${INSTALL_DIR}/demo-oauth-app
 cd ${INSTALL_DIR}/demo-oauth-app
 cat ${LAUNCH_DIR}/res/oauth/index.php \
     | sed "s|{INSTALL_DIR}|${INSTALL_DIR}|g" \
+    | sed "s|{ENABLE_CERTIFICATE_CHECK}|${ENABLE_CERTIFICATE_CHECK}|g" \
     | sed "s|{BASE_URL}|${BASE_URL}|g" > ${INSTALL_DIR}/demo-oauth-app/index.php
 cat ${LAUNCH_DIR}/res/oauth/callback.php \
     | sed "s|{INSTALL_DIR}|${INSTALL_DIR}|g" \
+    | sed "s|{ENABLE_CERTIFICATE_CHECK}|${ENABLE_CERTIFICATE_CHECK}|g" \
     | sed "s|{BASE_URL}|${BASE_URL}|g" > ${INSTALL_DIR}/demo-oauth-app/callback.php
 cp ${LAUNCH_DIR}/res/oauth/composer.json ${INSTALL_DIR}/demo-oauth-app/composer.json
 

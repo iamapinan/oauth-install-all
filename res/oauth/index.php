@@ -11,6 +11,8 @@ use fkooman\Guzzle\Plugin\BearerAuth\Exception\BearerErrorResponseException;
 require_once '{INSTALL_DIR}/php-simple-auth/lib/SimpleAuth.php';
 require_once 'vendor/autoload.php';
 
+$guzzleConfig = array("ssl.certificate_authority" => {ENABLE_CERTIFICATE_CHECK});
+
 try {
     // first we login to this app...
     $auth = new SimpleAuth();
@@ -30,7 +32,7 @@ try {
     $apiUri = "{BASE_URL}/php-oauth/api.php/authorizations/";
 
     /* initialize the API */
-    $api = new Api("demo-oauth-app", $clientConfig, new SessionStorage(), new Client());
+    $api = new Api("demo-oauth-app", $clientConfig, new SessionStorage(), new Client('', $guzzleConfig));
     $context = new Context($userId, array("authorizations"));
 
     /* check if an access token is available */
@@ -43,7 +45,7 @@ try {
     }
 
     try {
-        $client = new Client();
+        $client = new Client('', $guzzleConfig);
         $bearerAuth = new BearerAuth($accessToken->getAccessToken());
         $client->addSubscriber($bearerAuth);
         $response = $client->get($apiUri)->send();

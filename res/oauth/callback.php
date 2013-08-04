@@ -8,6 +8,8 @@ use Guzzle\Http\Client;
 
 require_once 'vendor/autoload.php';
 
+$guzzleConfig = array("ssl.certificate_authority" => {ENABLE_CERTIFICATE_CHECK});
+
 /* OAuth client configuration */
 $clientConfig = new ClientConfig(
     array(
@@ -19,7 +21,7 @@ $clientConfig = new ClientConfig(
 );
 
 try {
-    $cb = new Callback("demo-oauth-app", $clientConfig, new SessionStorage(), new Client());
+    $cb = new Callback("demo-oauth-app", $clientConfig, new SessionStorage(), new Client('', $guzzleConfig));
     $cb->handleCallback($_GET);
 
     header("HTTP/1.1 302 Found");
