@@ -27,8 +27,8 @@ try {
     header("HTTP/1.1 302 Found");
     header("Location: {BASE_URL}/demo-oauth-app/index.php");
 } catch (AuthorizeException $e) {
-    // this exception is thrown by Callback when the OAuth server returns a 
-    // specific error message for the client, e.g.: the user did not authorize 
+    // this exception is thrown by Callback when the OAuth server returns a
+    // specific error message for the client, e.g.: the user did not authorize
     // the request
     echo sprintf("ERROR: %s, DESCRIPTION: %s", $e->getMessage(), $e->getDescription());
 } catch (Exception $e) {

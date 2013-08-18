@@ -75,7 +75,6 @@ cat << EOF
 # The following components will be installed:                                 #
 #                                                                             #
 # * php-rest-service                                                          #
-# * php-oauth-lib-rs                                                          #
 # * php-simple-auth                                                           #
 # * php-oauth                                                                 #
 # * html-manage-applications                                                  #
@@ -129,15 +128,6 @@ EOF
 cd ${INSTALL_DIR}
 git clone -b ${PHP_REST_SERVICE_BRANCH} https://github.com/fkooman/php-rest-service.git
 )
-cat << EOF
-#####################################
-# php-oauth-lib-rs (SHARED LIBRARY) #
-#####################################
-EOF
-(
-cd ${INSTALL_DIR}
-git clone -b ${PHP_OAUTH_LIB_RS_BRANCH} https://github.com/fkooman/php-oauth-lib-rs.git
-)
 
 cat << EOF
 #############################
@@ -159,7 +149,7 @@ curl -L -o html-webapp-deps/js/jsrender.js https://raw.github.com/BorisMoore/jsr
 curl -L -o html-webapp-deps/js/jso.js https://raw.github.com/andreassolberg/jso/master/jso.js
 
 # Bootstrap
-curl -L -o html-webapp-deps/bootstrap.zip http://twitter.github.io/bootstrap/assets/bootstrap.zip
+curl -L -o html-webapp-deps/bootstrap.zip http://getbootstrap.com/2.3.2/assets/bootstrap.zip
 (cd html-webapp-deps/ && unzip bootstrap.zip && rm bootstrap.zip)
 )
 
@@ -278,15 +268,22 @@ cd ${INSTALL_DIR}
 git clone -b ${PHP_GRADES_RS_BRANCH} https://github.com/fkooman/php-grades-rs.git
 cd php-grades-rs
 
-mkdir extlib
-ln -s ../../php-rest-service extlib/
-ln -s ../../php-oauth-lib-rs extlib/
+php ${INSTALL_DIR}/downloads/composer.phar install
+restorecon -R vendor
 
 sh docs/configure.sh
 
 cat config/rs.ini \
     | sed "s|http://localhost/php-oauth/introspect.php|${BASE_URL}/php-oauth/introspect.php|g" > config/tmp_rs.ini
 mv config/tmp_rs.ini config/rs.ini
+
+# check for disabling SSL cert check
+if [ "${ENABLE_CERTIFICATE_CHECK}" == "false" ]
+then
+    cat config/rs.ini \
+        | sed "s|;disableCertCheck = 1|disableCertCheck = 1|g" > config/tmp_rs.ini
+    mv config/tmp_rs.ini config/rs.ini 
+fi
 
 # Apache config
 cat docs/apache.conf \
@@ -326,15 +323,22 @@ cd ${INSTALL_DIR}
 git clone -b ${PHP_REMOTE_STORAGE_BRANCH} https://github.com/fkooman/php-remoteStorage.git
 cd php-remoteStorage
 
-mkdir extlib
-ln -s ../../php-rest-service extlib/
-ln -s ../../php-oauth-lib-rs extlib/
+php ${INSTALL_DIR}/downloads/composer.phar install
+restorecon -R vendor
 
 sh docs/configure.sh
 
 cat config/remoteStorage.ini \
     | sed "s|http://localhost/php-oauth/introspect.php|${BASE_URL}/php-oauth/introspect.php|g" > config/tmp_remoteStorage.ini
 mv config/tmp_remoteStorage.ini config/remoteStorage.ini
+
+# check for disabling SSL cert check
+if [ "${ENABLE_CERTIFICATE_CHECK}" == "false" ]
+then
+    cat config/remoteStorage.ini \
+        | sed "s|;disableCertCheck = 1|disableCertCheck = 1|g" > config/tmp_remoteStorage.ini
+    mv config/tmp_remoteStorage.ini config/remoteStorage.ini 
+fi
 
 cat docs/apache.conf \
     | sed "s|/APPNAME|${BASE_PATH}/php-remoteStorage|g" \
