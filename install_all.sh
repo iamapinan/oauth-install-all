@@ -54,7 +54,7 @@ fi
 # for development purposes it can be useful to disable the SSL certificate 
 # check for backchannel calls where accepting a self-signed certificate in
 # the browser is not enough. SSL CHECK IS ENABLED BY DEFAULT AND *REALLY* MUST
-# be used. UNDOCUMENTED ON PURPOSE! DO NOT USE!
+# be used. UNDOCUMENTED ON PURPOSE! Seriously, DO NOT USE!
 if [ -z "$3" ]
 then
     ENABLE_CERTIFICATE_CHECK="true"
@@ -74,7 +74,6 @@ cat << EOF
 #                                                                             #
 # The following components will be installed:                                 #
 #                                                                             #
-# * php-rest-service                                                          #
 # * php-simple-auth                                                           #
 # * php-oauth                                                                 #
 # * html-manage-applications                                                  #
@@ -117,16 +116,6 @@ cat ${LAUNCH_DIR}/res/index.html \
 (
 cd ${INSTALL_DIR}/downloads
 curl -O http://getcomposer.org/composer.phar
-)
-
-cat << EOF
-#####################################
-# php-rest-service (SHARED LIBRARY) #
-#####################################
-EOF
-(
-cd ${INSTALL_DIR}
-git clone -b ${PHP_REST_SERVICE_BRANCH} https://github.com/fkooman/php-rest-service.git
 )
 
 cat << EOF
