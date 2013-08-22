@@ -4,6 +4,8 @@ use fkooman\OAuth\Client\Api;
 use fkooman\OAuth\Client\Context;
 use fkooman\OAuth\Client\ClientConfig;
 use fkooman\OAuth\Client\SessionStorage;
+use fkooman\OAuth\Client\Scope;
+
 use Guzzle\Http\Client;
 use fkooman\Guzzle\Plugin\BearerAuth\BearerAuth;
 use fkooman\Guzzle\Plugin\BearerAuth\Exception\BearerErrorResponseException;
@@ -33,7 +35,7 @@ try {
 
     /* initialize the API */
     $api = new Api("demo-oauth-app", $clientConfig, new SessionStorage(), new Client('', $guzzleConfig));
-    $context = new Context($userId, array("authorizations"));
+    $context = new Context($userId, new Scope("authorizations"));
 
     /* check if an access token is available */
     $accessToken = $api->getAccessToken($context);
