@@ -300,6 +300,12 @@ cp ${LAUNCH_DIR}/res/oauth/composer.json ${INSTALL_DIR}/demo-oauth-app/composer.
 
 php ${INSTALL_DIR}/downloads/composer.phar install
 restorecon -R vendor
+
+# initialize the SQlite database
+mkdir data
+sqlite3 data/client.sqlite < vendor/fkooman/php-oauth-client/schema/db.sql
+chmod o+w data data/client.sqlite
+chcon -R -t httpd_sys_rw_content_t data/
 )
 
 cat << EOF

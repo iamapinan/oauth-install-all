@@ -1,7 +1,8 @@
 {
     "name": "fkooman/demo-oauth-app",
     "require": {
-        "fkooman/guzzle-bearer-auth-plugin": "0.2.1",
+	"monolog/monolog": "1.6.*",
+        "fkooman/guzzle-bearer-auth-plugin": "0.2.*",
         "fkooman/php-oauth-client": "dev-master"
     }
 }
