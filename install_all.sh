@@ -107,11 +107,16 @@ rm -rf ${INSTALL_DIR}/*
 
 mkdir -p ${INSTALL_DIR}/apache
 mkdir -p ${INSTALL_DIR}/downloads
+mkdir -p ${INSTALL_DIR}/img
 
 # the index page
 cat ${LAUNCH_DIR}/res/index.html \
     | sed "s|{BASE_URL}|${BASE_URL}|g" \
+    | sed "s|@example.org|@${DOMAIN_NAME}|g" \
     | sed "s|{DATE_TIME}|${DATE_TIME}|g" > ${INSTALL_DIR}/index.html
+
+# copy the image resources
+cp ${LAUNCH_DIR}/res/img/* ${INSTALL_DIR}/img/
 
 (
 cd ${INSTALL_DIR}/downloads
@@ -151,8 +156,11 @@ EOF
 cd ${INSTALL_DIR}
 git clone -b ${PHP_SIMPLE_AUTH_BRANCH} https://github.com/fkooman/php-simple-auth.git
 cd php-simple-auth
-cp config/users.json.example config/users.json
-ln -s ../../html-webapp-deps www/ext
+cat config/users.json.example \
+    | sed "s|@example.org|@${DOMAIN_NAME}|g" > config/users.json
+
+php ${INSTALL_DIR}/downloads/composer.phar install
+restorecon -R vendor
 
 # Apache config
 cat docs/apache.conf \
@@ -185,8 +193,9 @@ cat config/oauth.ini.defaults \
     | sed "s|enableApi = FALSE|enableApi = TRUE|g" \
     | sed "s|/var/www/html/php-simple-auth|${INSTALL_DIR}/php-simple-auth|g" > config/oauth.ini
 
-# copy the attributes file
-cp config/simpleAuthEntitlement.json.example config/simpleAuthEntitlement.json
+# copy the entitlements file
+cat config/simpleAuthEntitlement.json.example \
+    | sed "s|@example.org|@${DOMAIN_NAME}|g" > config/simpleAuthEntitlement.json
 
 # Apache config
 cat docs/apache.conf \
@@ -261,6 +270,9 @@ php ${INSTALL_DIR}/downloads/composer.phar install
 restorecon -R vendor
 
 sh docs/configure.sh
+
+cat data/grades.json.example \
+    | sed "s|@example.org|@${DOMAIN_NAME}|g" > data/grades.json
 
 cat config/rs.ini \
     | sed "s|http://localhost/php-oauth/introspect.php|${BASE_URL}/php-oauth/introspect.php|g" > config/tmp_rs.ini
