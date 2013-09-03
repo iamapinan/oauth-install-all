@@ -15,10 +15,12 @@ use Guzzle\Log\MonologLogAdapter;
 use fkooman\Guzzle\Plugin\BearerAuth\BearerAuth;
 use fkooman\Guzzle\Plugin\BearerAuth\Exception\BearerErrorResponseException;
 
+use fkooman\SimpleAuth\SimpleAuth;
+
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-require_once '{INSTALL_DIR}/php-simple-auth/lib/SimpleAuth.php';
+require_once '{INSTALL_DIR}/php-simple-auth/vendor/autoload.php';
 require_once 'vendor/autoload.php';
 
 /* if the SSL certificate check should not be performed, set this to false */

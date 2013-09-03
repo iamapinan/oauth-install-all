@@ -49,12 +49,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-oauth-client.git",
-                "reference": "dbd3d255e41b831af0f48d7df1d124506b0ab0df"
+                "reference": "b0499e47da2dd9fee8d31decd7e3062381ce3d87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-oauth-client/zipball/dbd3d255e41b831af0f48d7df1d124506b0ab0df",
-                "reference": "dbd3d255e41b831af0f48d7df1d124506b0ab0df",
+                "url": "https://api.github.com/repos/fkooman/php-oauth-client/zipball/b0499e47da2dd9fee8d31decd7e3062381ce3d87",
+                "reference": "b0499e47da2dd9fee8d31decd7e3062381ce3d87",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
                 }
             ],
             "description": "PHP OAuth 2.0 Client",
-            "time": "2013-08-23 09:24:57"
+            "time": "2013-08-29 13:14:11"
         },
         {
             "name": "guzzle/guzzle",
@@ -277,7 +277,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.3.3",
+            "version": "v2.3.4",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
