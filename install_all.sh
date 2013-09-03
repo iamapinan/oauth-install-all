@@ -368,6 +368,21 @@ cat config/config.js.default \
     | sed "s|http://localhost|${BASE_URL}|g" > config/config.js
 )
 
+cat << EOF
+#############
+# Webfinger #
+#############
+EOF
+(
+cd ${INSTALL_DIR}
+mkdir webfinger/
+cat ${LAUNCH_DIR}/res/webfinger.php \
+    | sed "s|{BASE_URL}|${BASE_URL}|g" > webfinger/index.php
+
+cat ${LAUNCH_DIR}/res/webfinger-apache.conf \
+    | sed "s|/PATH/TO/APP|${INSTALL_DIR}/webfinger|g" > ${INSTALL_DIR}/apache/oauth_webfinger.conf
+)
+
 # Done
 echo "**********************************************************************"
 echo "* INSTALLATION DONE                                                  *"
