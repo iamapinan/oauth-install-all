@@ -6,7 +6,7 @@ $resource = isset($_GET['resource']) ? $_GET['resource'] : null;
 if (null === $resource) {
     header("HTTP/1.1 400 Bad Request");
     header("Content-Type: application/json; charset=UTF-8");
-    json_encode(array("error" => "resource missing"));
+    echo json_encode(array("error" => "resource missing"));
     exit;
 }
 
