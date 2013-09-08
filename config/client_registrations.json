@@ -1,5 +1,16 @@
 [
     {
+        "allowed_scope": "sockethub:rw rss:rw articles:rw",
+        "contact_email": null,
+        "description": "A lightweight RSS reader, built with Sockethub and remoteStorage.",
+        "icon": "{BASE_URL}/img/dogfeed-icon.png",
+        "id": "https://dogfeed.5apps.com",
+        "name": "Dogfeed",
+        "redirect_uri": "https://dogfeed.5apps.com/",
+        "secret": null,
+        "type": "user_agent_based_application"
+    },
+    {
         "allowed_scope": "documents:rw documents:r",
         "contact_email": null,
         "description": "This is a distraction-free app designed for simple note taking and writing.",
