@@ -9,6 +9,42 @@ else
     source ./versions.sh.default
 fi
 
+# we need Bower in path and executable, too hard to install with this script...
+if [ `which bower` ]
+then
+    echo "* Bower found, OK"
+else
+
+cat << EOF
+    * Bower NOT found. Please make sure "bower" is available in your PATH.
+
+    ---- Installation Instructions ----
+    Make sure nodejs and npm are installed and working.
+    On Fedora: 
+    
+        $ yum install npm
+
+    On CentOS/RHEL: Add the "EPEL" repository and:
+    
+        $ yum install npm
+
+    Then install Bower:
+
+        $ npm install bower
+
+    Create a symlink from node_modules/bower/bin/bower to a directory in your
+    path. E.g.:
+
+        $ ln -s ~/node_modules/bower/bin/bower ~/bin/bower
+
+    That should be enough! On Ubuntu/Debian you need to install nodejs and npm
+    manually or from a PPA as node on Ubuntu is too old and unavailable on 
+    Debian. 
+
+EOF
+fi
+
+# check command line parameters
 if [ -z "$1" ]
 then
 
@@ -233,7 +269,8 @@ EOF
 cd ${INSTALL_DIR}
 git clone -b ${HTML_MANAGE_AUTHORIZATIONS_BRANCH} https://github.com/fkooman/html-manage-authorizations.git
 cd html-manage-authorizations
-ln -s ../html-webapp-deps ext
+# install dependencies using Bower
+bower install
 
 # configure
 cat config/config.js.default \
