@@ -253,7 +253,8 @@ EOF
 cd ${INSTALL_DIR}
 git clone -b ${HTML_MANAGE_APPLICATIONS_BRANCH} https://github.com/fkooman/html-manage-applications.git
 cd html-manage-applications
-ln -s ../html-webapp-deps ext
+# install dependencies using Bower
+bower install
 
 # configure
 cat config/config.js.default \
